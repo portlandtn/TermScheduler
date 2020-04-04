@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">TermScheduler</string>
+    <string name="termsButton">Go To Terms</string>
+    <string name="progress_tracker_button">Progress Tracker</string>
+    <string name="title_activity_terms">Terms</string>
+
+    <string name="dropped">Dropped:</string>
+    <string name="completed">Completed:</string>
+    <string name="courses">Courses</string>
+    <string name="in_progress">In Progress:</string>
+    <string name="passed">Passed:</string>
+    <string name="failed">Failed</string>
+    <string name="assessments">Assessments</string>
+    <string name="create_sample_data">Create Sample Data</string>
+    <string name="clear_data_base">Clear Database</string>
+    <string name="dummyNumber">10</string>
+</resources>
