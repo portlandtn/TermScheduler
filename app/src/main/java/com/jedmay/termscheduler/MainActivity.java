@@ -56,13 +56,11 @@ public class MainActivity extends AppCompatActivity {
         clearDatabase = findViewById(R.id.clearDatabaseButton);
         createSampleDataButton = findViewById(R.id.createSampleDataButton);
         goToTermsActivity = findViewById(R.id.termsButton);
-        showMeSomethingButton = findViewById(R.id.showDataButton);
 
         //Listeners for Buttons
         createClearDatabaseOnClickListener(clearDatabase);
         createCreateSampleDataButtonListener(createSampleDataButton);
         createGoToTermsActivityListener(goToTermsActivity);
-        createShowMeSomethingListener(showMeSomethingButton);
 
         //TextViews
         inProgressCourseTextView = findViewById(R.id.inProgressCountTextView);
@@ -95,24 +93,6 @@ public class MainActivity extends AppCompatActivity {
         failedAssessmentTextView.setText(db.assessmentDao().getCountOfAssessmentType(AssessmentStatus.FAILED));
     }
 
-    private void createShowMeSomethingListener(Button showMeSomethingButton) {
-
-        showMeSomethingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title = "";
-                try {
-                    title = db.termDao().getAllTerms().get(0).getMTitle();
-                } catch (Exception ex) {
-                    Log.d("Setting Title", ex.getLocalizedMessage());
-                }
-
-                Toast.makeText(getApplicationContext(),"Term1 title is: " + title, Toast.LENGTH_LONG).show();
-
-            }
-        });
-    }
-
 
     @Override
     protected void onResume() {
@@ -125,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         createSampleDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                sampleData.populateDatabaseWithSampleData(getApplicationContext());
 
             }
         });

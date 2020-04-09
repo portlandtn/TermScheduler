@@ -22,6 +22,9 @@ public interface MentorDao {
     @Insert
     long insert(Mentor mentor);
 
+    @Insert
+    long insertAllMentors(Mentor... mentor);
+
     @Update
     void update(Mentor mentor);
 
@@ -30,4 +33,5 @@ public interface MentorDao {
 
     @Query("DELETE FROM mentor_table")
     void deleteAllMentors();
+
 }
