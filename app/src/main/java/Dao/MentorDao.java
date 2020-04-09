@@ -6,13 +6,18 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.List;
+
 import Model.Mentor;
 
 @Dao
 public interface MentorDao {
 
+    @Query("SELECT * FROM mentor_table ORDER BY id")
+    List<Mentor> getAllMentors();
+
     @Query("SELECT * FROM mentor_table WHERE id = :courseId ORDER BY id")
-    Mentor getMentor(long courseId);
+    Mentor getMentorForCourse(long courseId);
 
     @Insert
     long insert(Mentor mentor);

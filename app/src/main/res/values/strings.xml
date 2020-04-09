@@ -14,4 +14,6 @@
     <string name="create_sample_data">Create Sample Data</string>
     <string name="clear_data_base">Clear Database</string>
     <string name="dummyNumber">10</string>
+    <string name="planned">Planned:</string>
+
 </resources>

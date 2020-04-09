@@ -13,6 +13,9 @@ import Model.Note;
 @Dao
 public interface NoteDao {
 
+    @Query("SELECT * FROM note_table ORDER BY id")
+    List<Note> getAlNotes();
+
     @Query("SELECT * FROM note_table WHERE id = :noteId")
     Note getNote(long noteId);
 

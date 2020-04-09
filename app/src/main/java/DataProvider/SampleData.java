@@ -39,15 +39,16 @@ public class SampleData extends AppCompatActivity {
 
     WGUTermRoomDatabase db;
 
-    public void populateDatabaseWithSampleData(Context context) {
+    public Object[] populateDatabaseWithSampleData(Context context) {
         db = WGUTermRoomDatabase.getDatabase(context);
 
-        // order is important since some objects rely on others existing (foreign keys).
-        populateTerms();
-        populateMentors();
-        populateCourses();
-        populateAssessments();
-        populateNotes();
+        return new Object[]{
+                populateTerms(),
+                populateMentors(),
+                populateCourses(),
+                populateAssessments(),
+                populateNotes()
+        };
 
     }
 
@@ -62,7 +63,7 @@ public class SampleData extends AppCompatActivity {
         db.termDao().deleteAllTerms();
     }
 
-    private void populateTerms() {
+    private Term[] populateTerms() {
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
 
@@ -85,9 +86,11 @@ public class SampleData extends AppCompatActivity {
         term3.setMStartDate(start.getTime());
         term3.setMEndDate(end.getTime());
         term3.setId(db.termDao().insert(term3));
+
+        return new Term[]{term1, term2, term3};
     }
 
-    private void populateCourses() {
+    private Course[] populateCourses() {
 
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
@@ -108,6 +111,7 @@ public class SampleData extends AppCompatActivity {
         course2.setMEndDate(end.getTime());
         course2.setMTermId(term1.getId());
         course2.setMMentorId(mentor1.getId());
+        course2.setMStatus(CourseStatus.IN_PROGRESS);
         course2.setId(db.courseDao().insert(course2));
 
         start.add(Calendar.MONTH, 2);
@@ -117,11 +121,14 @@ public class SampleData extends AppCompatActivity {
         course3.setMEndDate(end.getTime());
         course3.setMTermId(term2.getId());
         course3.setMMentorId(mentor2.getId());
+        course3.setMStatus(CourseStatus.FAILED);
         course3.setId(db.courseDao().insert(course3));
+
+        return new Course[] {course1, course2, course3};
 
     }
 
-    private void populateAssessments() {
+    private Assessment[] populateAssessments() {
 
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
@@ -131,6 +138,7 @@ public class SampleData extends AppCompatActivity {
         assessment1.setMStartDate(start.getTime());
         assessment1.setMEndDate(end.getTime());
         assessment1.setMCourseId(course1.getId());
+        assessment1.setMStatus(AssessmentStatus.PASSED);
         assessment1.setId(db.assessmentDao().insert(assessment1));
 
         start.add(Calendar.DATE, 6);
@@ -139,6 +147,7 @@ public class SampleData extends AppCompatActivity {
         assessment2.setMStartDate(start.getTime());
         assessment2.setMEndDate(end.getTime());
         assessment2.setMCourseId(course1.getId());
+        assessment2.setMStatus(AssessmentStatus.PLANNED);
         assessment2.setId(db.assessmentDao().insert(assessment2));
 
         start.add(Calendar.DATE, 6);
@@ -147,11 +156,14 @@ public class SampleData extends AppCompatActivity {
         assessment3.setMStartDate(start.getTime());
         assessment3.setMEndDate(end.getTime());
         assessment3.setMCourseId(course3.getId());
+        assessment3.setMStatus(AssessmentStatus.FAILED);
         assessment3.setId(db.assessmentDao().insert(assessment3));
+
+        return new Assessment[]{assessment1, assessment2, assessment3};
 
     }
 
-    private void populateMentors() {
+    private Mentor[] populateMentors() {
         mentor1.setMName("Amanda Huginkiss");
         mentor1.setMPhone("270-493-8182");
         mentor1.setMEmail("man2hugNkiss@fakeNews.com");
@@ -167,9 +179,11 @@ public class SampleData extends AppCompatActivity {
         mentor3.setMEmail("butnotreally@fakeNews.com");
         mentor3.setId(db.mentorDao().insert(mentor3));
 
+        return new Mentor[] {mentor1, mentor2, mentor3};
+
     }
 
-    private void populateNotes() {
+    private Note[] populateNotes() {
         note1.setMNote("This is a test note. Shouldn't do much more than this.");
         note1.setMCourseId(assessment1.getId());
         note1.setId(db.noteDao().insert(note1));
@@ -181,6 +195,8 @@ public class SampleData extends AppCompatActivity {
         note3.setMNote("Yet one more note test for the assessments.");
         note3.setMCourseId(assessment3.getId());
         note3.setId(db.noteDao().insert(note3));
+
+        return new Note[] {note1, note2, note3};
 
     }
 
