@@ -1,7 +1,10 @@
 package com.jedmay.termscheduler;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -50,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
         //Sample Data
         sampleData = new SampleData();
 
-        sampleData.deleteAllDataFromDatabase(getApplicationContext());
-
         //Buttons
         clearDatabase = findViewById(R.id.clearDatabaseButton);
         createSampleDataButton = findViewById(R.id.createSampleDataButton);
@@ -72,25 +73,8 @@ public class MainActivity extends AppCompatActivity {
         passedAssessmentTextView = findViewById(R.id.passedCountTextView);
         failedAssessmentTextView = findViewById(R.id.failedAssessmentsCountTextView);
 
-        //Get totals for courses
-        //getTotalsForCourses();
+        updateList();
 
-        //Get totals for assessments
-        //getTotalsForAssessments();
-
-    }
-
-    private void getTotalsForCourses() {
-        inProgressAssessmentTextView.setText(db.courseDao().getCountOfCourseType(CourseStatus.IN_PROGRESS));
-        completedCourseTextView.setText(db.courseDao().getCountOfCourseType(CourseStatus.COMPLETED));
-        droppedCourseTextView.setText(db.courseDao().getCountOfCourseType(CourseStatus.DROPPED));
-        failedCourseTextView.setText(db.courseDao().getCountOfCourseType(CourseStatus.FAILED));
-    }
-
-    private void getTotalsForAssessments() {
-        inProgressAssessmentTextView.setText(db.assessmentDao().getCountOfAssessmentType(AssessmentStatus.PLANNED));
-        passedAssessmentTextView.setText(db.assessmentDao().getCountOfAssessmentType(AssessmentStatus.PASSED));
-        failedAssessmentTextView.setText(db.assessmentDao().getCountOfAssessmentType(AssessmentStatus.FAILED));
     }
 
 
@@ -106,20 +90,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sampleData.populateDatabaseWithSampleData(getApplicationContext());
-
+                Toast.makeText(getApplicationContext(), "Sample Data Created", Toast.LENGTH_SHORT).show();
+                updateList();
             }
         });
     }
 
     private void createGoToTermsActivityListener(Button goToTermsActivity) {
-
+    try {
         goToTermsActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "You Clicked Terms", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
+                startActivity(intent);
+                //Toast.makeText(getApplicationContext(), "You Clicked Terms", Toast.LENGTH_LONG).show();
 
             }
         });
+    } catch (Exception ex) {
+        Log.d("TermsActivityButton", ex.getLocalizedMessage());
+    }
     }
 
     private void createClearDatabaseOnClickListener(Button clearDatabase) {
@@ -127,16 +117,56 @@ public class MainActivity extends AppCompatActivity {
         clearDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sampleData.deleteAllDataFromDatabase(getApplicationContext());
-                Toast.makeText(getApplicationContext(), "Database Cleared", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setMessage("This will clear out the database. Are you sure you want to proceed?");
+                alertDialogBuilder.setPositiveButton("ERASE",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                sampleData.deleteAllDataFromDatabase(getApplicationContext());
+                                updateList();
+                                Toast.makeText(MainActivity.this,"Database has been erased.",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                alertDialogBuilder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do nothing
+                    }
+                });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
+
         });
     }
 
-
-
     private void updateList() {
+        getTotalsForCourses();
+        getTotalsForAssessments();
     }
 
+    private void getTotalsForCourses() {
+        try {
+            inProgressCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.IN_PROGRESS)));
+            completedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.COMPLETED)));
+            droppedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.DROPPED)));
+            failedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.FAILED)));
+        } catch (Exception ex) {
+            Log.d("TotalsForCourse",ex.getLocalizedMessage());
+        }
+
+    }
+
+    private void getTotalsForAssessments() {
+        try {
+            inProgressAssessmentTextView.setText(String.valueOf(db.assessmentDao().getCountOfAssessmentType(AssessmentStatus.PLANNED)));
+            passedAssessmentTextView.setText(String.valueOf(db.assessmentDao().getCountOfAssessmentType(AssessmentStatus.PASSED)));
+            failedAssessmentTextView.setText(String.valueOf(db.assessmentDao().getCountOfAssessmentType(AssessmentStatus.FAILED)));
+        } catch (Exception ex) {
+            Log.d("TotalsForAssessments",ex.getLocalizedMessage());
+        }
+    }
 
 }

@@ -23,7 +23,7 @@ public interface MentorDao {
     long insert(Mentor mentor);
 
     @Insert
-    long insertAllMentors(Mentor... mentor);
+    void insertAllMentors(Mentor... mentor);
 
     @Update
     void update(Mentor mentor);

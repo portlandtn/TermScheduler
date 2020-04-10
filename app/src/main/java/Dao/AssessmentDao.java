@@ -33,7 +33,7 @@ public interface AssessmentDao {
     long insert(Assessment assessment);
 
     @Insert
-    long[] insertAllAssessments(Assessment... assessments);
+    void insertAllAssessments(Assessment... assessments);
 
     @Update
     void update(Assessment assessment);

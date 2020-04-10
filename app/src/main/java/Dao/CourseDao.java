@@ -39,7 +39,7 @@ public interface CourseDao {
     long insert(Course course);
 
     @Insert
-    long insertAllCourses(Course... course);
+    void insertAllCourses(Course... course);
 
     @Query("DELETE FROM course_table")
     void deleteAllCourses();

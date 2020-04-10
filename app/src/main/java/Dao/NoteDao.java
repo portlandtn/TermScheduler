@@ -26,7 +26,7 @@ public interface NoteDao {
     long insert(Note note);
 
     @Insert
-    long[] insertAllNotes(Note... notes);
+    void insertAllNotes(Note... notes);
 
     @Delete
     void delete(Note note);
