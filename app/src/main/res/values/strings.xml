@@ -15,5 +15,15 @@
     <string name="clear_data_base">Clear Database</string>
     <string name="dummyNumber">10</string>
     <string name="planned">Planned:</string>
+    <string name="termName">TermName</string>
+    <string name="start_date">Start Date:</string>
+    <string name="dummy_start_date">1/1/2020</string>
+    <string name="end_date">End Date:</string>
+    <string name="dummy_end_date_value">6/18/2020</string>
+    <string name="term_name">Term Name:</string>
+    <string name="enter_term_name">Enter Term Name</string>
+    <string name="choose_start_date">Choose Start Date</string>
+    <string name="choose_End_Date">Choose End Date</string>
+    <string name="save">Save</string>
 
 </resources>
