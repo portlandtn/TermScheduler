@@ -7,21 +7,6 @@
     tools:context=".TermDetailActivity">
 
     <TextView
-        android:id="@+id/termNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/termName"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/startDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +16,7 @@
         android:text="@string/start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/termNameTextView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/startDateValueTextView"
@@ -39,11 +24,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
         android:text="@string/dummy_start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toEndOf="@+id/startDateTextView"
-        app:layout_constraintTop_toBottomOf="@+id/termNameTextView" />
+        app:layout_constraintTop_toTopOf="@+id/startDateTextView" />
 
     <TextView
         android:id="@+id/endDateTextView"
@@ -66,22 +50,22 @@
         android:layout_marginTop="16dp"
         android:text="@string/dummy_end_date_value"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/endDateTextView"
+        app:layout_constraintStart_toEndOf="@+id/startDateTextView"
         app:layout_constraintTop_toBottomOf="@+id/startDateValueTextView" />
 
     <ListView
         android:id="@+id/courseListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/endDateTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/coursesIncludedTextView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/newCourseFloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -93,6 +77,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add_black_24dp" />
+
+    <TextView
+        android:id="@+id/coursesIncludedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/courses_included"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endDateTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

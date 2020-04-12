@@ -22,7 +22,7 @@ public class TermDetailActivity extends AppCompatActivity {
     Term term;
     long termId;
     WGUTermRoomDatabase db;
-    Intent intent = getIntent();
+    Intent intent;
     TextView startDateValueTextView;
     TextView endDateValueTextView;
     FloatingActionButton fab;
@@ -39,8 +39,9 @@ public class TermDetailActivity extends AppCompatActivity {
         // Setup resources
         startDateValueTextView = findViewById(R.id.startDateValueTextView);
         endDateValueTextView = findViewById(R.id.endDateValueTextView);
-        fab = findViewById(R.id.floatingActionButton);
+        fab = findViewById(R.id.newCourseFloatingActionButton);
         listView = findViewById(R.id.courseListView);
+        intent = getIntent();
         termId = intent.getLongExtra("termId", 0);
 
         // Setup the screen
@@ -53,14 +54,17 @@ public class TermDetailActivity extends AppCompatActivity {
 
         try {
             term = db.termDao().getTerm(termId);
+            setTitle(term.getMTitle() + " Detail");
+            String start = DataProvider.Formatter.formatDate(term.getMStartDate());
+            String end = DataProvider.Formatter.formatDate(term.getMEndDate());
+            startDateValueTextView.setText(start);
+            endDateValueTextView.setText(end);
+
+            //startDateValueTextView.setText(String.valueOf(term.getMStartDate()));
+            //endDateValueTextView.setText(String.valueOf(term.getMEndDate()));
         } catch (Exception ex) {
             Log.d("GetTerm", ex.getLocalizedMessage());
         }
-
-        setTitle(term.getMTitle() + " Detail");
-        startDateValueTextView.setText(String.valueOf(term.getMStartDate()));
-        endDateValueTextView.setText(String.valueOf(term.getMEndDate()));
-
 
     }
 

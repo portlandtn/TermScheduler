@@ -5,15 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Calendar;
 import java.util.List;
 
 import Database.WGUTermRoomDatabase;
@@ -41,7 +38,7 @@ public class TermListActivity extends AppCompatActivity {
 
         //General Setup
         setTitle(title);
-        fab = findViewById(R.id.floatingActionButton);
+        fab = findViewById(R.id.newTermFloatingActionButton);
 
         //Database
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
@@ -55,7 +52,6 @@ public class TermListActivity extends AppCompatActivity {
                 terms = db.termDao().getAllTerms();
                 long termId = terms.get(position).getId();
                 intent.putExtra("termId", termId);
-                intent.putExtra("isEditing", true);
                 startActivity(intent);
             }
         });
