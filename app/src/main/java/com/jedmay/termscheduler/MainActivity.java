@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     TextView completedCourseTextView;
     TextView droppedCourseTextView;
     TextView failedCourseTextView;
+    TextView plannedToTakeTextView;
 
     TextView inProgressAssessmentTextView;
     TextView passedAssessmentTextView;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         completedCourseTextView = findViewById(R.id.completedCountTextView);
         droppedCourseTextView = findViewById(R.id.droppedCountTextView);
         failedCourseTextView = findViewById(R.id.failedCoursesCountTextView);
+        plannedToTakeTextView = findViewById(R.id.plannedToTakeCountTextView);
 
         inProgressAssessmentTextView = findViewById(R.id.inProgressAssessmentCountTextView);
         passedAssessmentTextView = findViewById(R.id.passedCountTextView);
@@ -103,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
                 startActivity(intent);
-                //Toast.makeText(getApplicationContext(), "You Clicked Terms", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -153,6 +154,8 @@ public class MainActivity extends AppCompatActivity {
             completedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.COMPLETED)));
             droppedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.DROPPED)));
             failedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.FAILED)));
+            plannedToTakeTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.PLAN_TO_TAKE)));
+
         } catch (Exception ex) {
             Log.d("TotalsForCourse",ex.getLocalizedMessage());
         }

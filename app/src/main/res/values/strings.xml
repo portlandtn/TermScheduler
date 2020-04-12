@@ -25,5 +25,6 @@
     <string name="choose_start_date">Choose Start Date</string>
     <string name="choose_End_Date">Choose End Date</string>
     <string name="save">Save</string>
+    <string name="plan_to_take">Plan To Take:</string>
 
 </resources>

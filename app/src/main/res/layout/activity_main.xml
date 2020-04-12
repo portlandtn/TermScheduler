@@ -7,6 +7,28 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/plannedToTakeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/plan_to_take"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/failedCoursesTextView" />
+
+    <TextView
+        android:id="@+id/plannedToTakeCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/dummyNumber"
+        app:layout_constraintStart_toEndOf="@+id/plannedToTakeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/failedCoursesTextView" />
+
+    <TextView
         android:id="@+id/failedCoursesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -189,7 +211,7 @@
         android:text="@string/assessments"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/failedCoursesTextView" />
+        app:layout_constraintTop_toBottomOf="@id/plannedToTakeTextView" />
 
     <TextView
         android:id="@+id/inProgressAssessmentTextView"

@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".TermEditActivity">
 
+    <Button
+        android:id="@+id/setEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set"
+        android:onClick="setEndDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/startDate_DatePicker"
+        app:layout_constraintTop_toTopOf="@+id/startDate_DatePicker" />
+
     <TextView
         android:id="@+id/termNameTextView"
         android:layout_width="wrap_content"
@@ -101,6 +111,38 @@
         android:text="@android:string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/setStartDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Set"
+        android:onClick="setStartDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/termNameEditText"
+        app:layout_constraintTop_toTopOf="@+id/termNameEditText" />
+
+    <TextView
+        android:id="@+id/startText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/start_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endDate_DatePicker" />
+
+    <TextView
+        android:id="@+id/endText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/end_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
