@@ -29,9 +29,10 @@ public class MainActivity extends AppCompatActivity {
     Button clearDatabase;
     Button createSampleDataButton;
     Button goToTermsActivity;
-    Button showMeSomethingButton;
     SampleData sampleData;
     WGUTermRoomDatabase db;
+
+    String title = "WGU Scheduler";
 
     TextView inProgressCourseTextView;
     TextView completedCourseTextView;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("WGU Scheduler");
+        setTitle(title);
 
         //Database
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());

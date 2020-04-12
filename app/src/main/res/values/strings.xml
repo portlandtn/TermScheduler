@@ -27,5 +27,7 @@
     <string name="save">Save</string>
     <string name="plan_to_take">Plan To Take:</string>
     <string name="courses_included">Courses In This Term</string>
+    <string name="set_end">Set End</string>
+    <string name="set_start">Set Start</string>
 
 </resources>

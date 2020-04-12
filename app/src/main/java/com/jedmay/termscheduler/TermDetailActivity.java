@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,11 +23,13 @@ public class TermDetailActivity extends AppCompatActivity {
 
     Term term;
     long termId;
+    String title;
     WGUTermRoomDatabase db;
     Intent intent;
     TextView startDateValueTextView;
     TextView endDateValueTextView;
-    FloatingActionButton fab;
+    FloatingActionButton addCourseToTerm;
+    FloatingActionButton editTermFAB;
     List<Course> courses;
     ListView listView;
 
@@ -39,10 +43,46 @@ public class TermDetailActivity extends AppCompatActivity {
         // Setup resources
         startDateValueTextView = findViewById(R.id.startDateValueTextView);
         endDateValueTextView = findViewById(R.id.endDateValueTextView);
-        fab = findViewById(R.id.newCourseFloatingActionButton);
+        addCourseToTerm = findViewById(R.id.addCourseToTermFAB);
+        editTermFAB = findViewById(R.id.editTermFAB);
         listView = findViewById(R.id.courseListView);
         intent = getIntent();
         termId = intent.getLongExtra("termId", 0);
+
+        //Courses list ListView on click listener
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO Will need to fix to go to course details
+                //Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
+//                courses = db.courseDao().getCoursesForTerm(termId);
+//                long courseId = courses.get(position).getId();
+//                intent.putExtra("courseId", courseId);
+//                startActivity(intent);
+            }
+        });
+
+        //edit Term on click Listener
+        editTermFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TermEditActivity.class);
+                intent.putExtra("termId", termId);
+                intent.putExtra("isEditing", true);
+                startActivity(intent);
+            }
+        });
+
+        //Add Course to Term on click Listener
+        addCourseToTerm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO - this will have to be created after
+                //Intent intent = new Intent(getApplicationContext(), CourseEditActivity.class);
+                //intent.putExtra("termId", termId);
+                //startActivity(intent);
+            }
+        });
 
         // Setup the screen
         updateTextViews();
@@ -54,14 +94,12 @@ public class TermDetailActivity extends AppCompatActivity {
 
         try {
             term = db.termDao().getTerm(termId);
-            setTitle(term.getMTitle() + " Detail");
+            title = term.getMTitle();
+            setTitle(title + " Detail");
             String start = DataProvider.Formatter.formatDate(term.getMStartDate());
             String end = DataProvider.Formatter.formatDate(term.getMEndDate());
             startDateValueTextView.setText(start);
             endDateValueTextView.setText(end);
-
-            //startDateValueTextView.setText(String.valueOf(term.getMStartDate()));
-            //endDateValueTextView.setText(String.valueOf(term.getMEndDate()));
         } catch (Exception ex) {
             Log.d("GetTerm", ex.getLocalizedMessage());
         }

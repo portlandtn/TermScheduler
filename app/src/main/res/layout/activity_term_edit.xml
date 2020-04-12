@@ -6,15 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".TermEditActivity">
 
-    <Button
-        android:id="@+id/setEndDate"
+    <TextView
+        android:id="@+id/endDateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/dummy_end_date_value"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toEndOf="@+id/termNameTextView"
+        app:layout_constraintTop_toTopOf="@+id/termEditEndDateTextView" />
+
+    <TextView
+        android:id="@+id/startDateValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/dummy_start_date"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toEndOf="@+id/termNameTextView"
+        app:layout_constraintTop_toTopOf="@+id/termEditStartDateTextView" />
+
+    <Button
+        android:id="@+id/setEndDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:onClick="setEndDate"
+        android:text="@string/set_end"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/startDate_DatePicker"
-        app:layout_constraintTop_toTopOf="@+id/startDate_DatePicker" />
+        app:layout_constraintStart_toEndOf="@+id/endDateValueTextView"
+        app:layout_constraintTop_toTopOf="@+id/endDateValueTextView" />
 
     <TextView
         android:id="@+id/termNameTextView"
@@ -48,23 +70,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/startDate_DatePicker" />
-
-    <EditText
-        android:id="@+id/startDate_DatePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/choose_start_date"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="@+id/termNameEditText"
-        app:layout_constraintTop_toBottomOf="@+id/termNameEditText"
-        tools:ignore="Autofill" />
+        app:layout_constraintTop_toBottomOf="@+id/termNameEditText" />
 
     <TextView
         android:id="@+id/termEditEndDateTextView"
@@ -76,19 +86,7 @@
         android:text="@string/end_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/endDate_DatePicker" />
-
-    <EditText
-        android:id="@+id/endDate_DatePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/choose_End_Date"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="@+id/termNameEditText"
-        app:layout_constraintTop_toBottomOf="@+id/startDate_DatePicker"
-        tools:ignore="Autofill"/>
+        app:layout_constraintTop_toBottomOf="@+id/setStartDateButton" />
 
     <Button
         android:id="@+id/saveTermButton"
@@ -113,36 +111,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/setStartDate"
-        android:layout_width="0dp"
+        android:id="@+id/setStartDateButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set"
         android:onClick="setStartDate"
+        android:text="@string/set_start"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/termNameEditText"
-        app:layout_constraintTop_toTopOf="@+id/termNameEditText" />
-
-    <TextView
-        android:id="@+id/startText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/start_date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endDate_DatePicker" />
-
-    <TextView
-        android:id="@+id/endText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/end_date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startText" />
+        app:layout_constraintStart_toEndOf="@+id/startDateValueTextView"
+        app:layout_constraintTop_toTopOf="@+id/startDateValueTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

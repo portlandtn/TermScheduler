@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
 import Database.WGUTermRoomDatabase;
@@ -24,18 +25,13 @@ import Model.Term;
 public class TermEditActivity extends AppCompatActivity {
 
     EditText termNameEditText;
-    EditText startDateEditText;
-    EditText endDateEditText;
     boolean isEditing;
     WGUTermRoomDatabase db;
     Term term;
-    Button cancelButton;
-    Button saveButton;
+    long termId;
+    Button cancelButton, saveButton, setStartButton, setEndButton;
 
-    TextView startText;
-    TextView endText;
-    Button setStart;
-    Button setEnd;
+    TextView startText, endText;
 
     int month, day, year;
     Calendar calendar;
@@ -47,28 +43,35 @@ public class TermEditActivity extends AppCompatActivity {
 
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
 
+        Intent intent = getIntent();
+        isEditing = intent.getBooleanExtra("isEditing", false);
+        if (isEditing) {
+            termId = intent.getLongExtra("termId", 0);
+        }
+
+        //TextViews
+        termNameEditText = findViewById(R.id.termNameEditText);
+        startText = findViewById(R.id.startDateValueTextView);
+        endText = findViewById(R.id.endDateValueTextView);
+
+        //Buttons
+        saveButton = findViewById(R.id.saveTermButton);
+        cancelButton = findViewById(R.id.cancelTermButton);
+        setStartButton = findViewById(R.id.setStartDateButton);
+        setEndButton = findViewById(R.id.setEndDateButton);
+
+        //Populate Data
         calendar = Calendar.getInstance();
+
+        setUpDates();
+
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-  //      showDate(year, month, day, startText);
-    //    showDate(year, month, day, endText);
 
-        Intent intent = getIntent();
-        isEditing = intent.getBooleanExtra("isEditing", false);
-        Toast.makeText(getApplicationContext(), "Editing = " + isEditing, Toast.LENGTH_SHORT).show();
+        populateScreenWithExistingData(isEditing);
 
-        termNameEditText = findViewById(R.id.termNameEditText);
-        startDateEditText = findViewById(R.id.startDate_DatePicker);
-        endDateEditText = findViewById(R.id.endDate_DatePicker);
-
-        populateScreenWithExistingData(isEditing, intent);
-
-        saveButton = findViewById(R.id.saveTermButton);
-        cancelButton = findViewById(R.id.cancelTermButton);
-        setStart = findViewById(R.id.setStartDate);
-        setEnd = findViewById(R.id.setEndDate);
-
+        //Listeners
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +99,7 @@ public class TermEditActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!inputIsValid(termNameEditText.getText().toString(), startDateEditText.getText().toString(), endDateEditText.getText().toString())) {
+                if (!inputIsValid(termNameEditText.getText().toString(), startText.getText().toString(), endText.getText().toString())) {
                     Toast.makeText(getApplicationContext(), "At a minimum, a term must have a name, start date, and end date", Toast.LENGTH_LONG).show();
                 } else {
                     try {
@@ -112,28 +115,42 @@ public class TermEditActivity extends AppCompatActivity {
 
     }
 
+    private void setUpDates() {
+        String startDate;
+        String endDate;
+        Calendar tempCalendar = Calendar.getInstance();
+
+        if (isEditing) {
+            startDate = DataProvider.Formatter.formatDate(db.termDao().getTerm(termId).getMStartDate());
+            endDate = DataProvider.Formatter.formatDate(db.termDao().getTerm(termId).getMEndDate());
+        }
+        else {
+            startDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
+            tempCalendar.add(Calendar.MONTH , 6);
+            endDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
+        }
+        startText.setText(startDate);
+        endText.setText(endDate);
+
+    }
+
     public void setStartDate(View view) {
         showDialog(999);
-        Toast.makeText(getApplicationContext(), "Set Start Date Method Entered", Toast.LENGTH_SHORT).show();
-
     }
 
     public void setEndDate(View view) {
-        showDialog(999);
-        Toast.makeText(getApplicationContext(), "Set End Date Method Entered", Toast.LENGTH_SHORT).show();
-    }
-
-    public void setDate(View view) {
-        showDialog(999);
-        Toast.makeText(getApplicationContext(), "SetDate Method Entered", Toast.LENGTH_SHORT).show();
+        showDialog(998);
     }
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        // TODO Auto-generated method stub
         if (id == 999) {
             return new DatePickerDialog(this,
                     startDateListener, year, month, day);
+        } else
+            if (id == 998) {
+            return new DatePickerDialog(this,
+                    endDateListener, year, month, day);
         }
         return null;
     }
@@ -141,7 +158,7 @@ public class TermEditActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener startDateListener = new
             DatePickerDialog.OnDateSetListener() {
                 @Override
-                public void onDateSet(DatePicker arg0,
+                public void onDateSet(DatePicker view,
                                       int arg1, int arg2, int arg3) {
                     // TODO Auto-generated method stub
                      arg1 = year;
@@ -165,23 +182,23 @@ public class TermEditActivity extends AppCompatActivity {
             };
 
     private void showDate(int year, int month, int day, TextView textView) {
-        textView.setText(new StringBuilder().append(month).append("/")
-                .append(day).append("/").append(year));
+
+        String monthString = new DateFormatSymbols().getMonths()[month-1];
+
+        textView.setText(new StringBuilder().append(monthString).append(" ")
+                .append(day).append(", ").append(year));
+
     }
 
     private boolean inputIsValid(String termName, String startDate, String endDate) {
         return !termName.isEmpty() && !startDate.isEmpty() && endDate.isEmpty();
     }
 
-    private void populateScreenWithExistingData(boolean isEditing, Intent intent) {
+    private void populateScreenWithExistingData(boolean isEditing) {
         if (!isEditing) return;
 
-        long termId = intent.getLongExtra("termId", 0);
         term = db.termDao().getTerm(termId);
-
         termNameEditText.setText(term.getMTitle());
-        startDateEditText.setText(String.valueOf(term.getMStartDate()));
-        endDateEditText.setText(String.valueOf(term.getMEndDate()));
 
     }
 }
