@@ -30,5 +30,6 @@
     <string name="set_end">Set End</string>
     <string name="set_start">Set Start</string>
     <string name="delete">Delete</string>
+    <string name="assements_included">Assessments In This Course</string>
 
 </resources>

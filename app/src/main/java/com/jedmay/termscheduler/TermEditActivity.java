@@ -48,7 +48,6 @@ public class TermEditActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-
         //TextViews
         termNameEditText = findViewById(R.id.termNameEditText);
         startText = findViewById(R.id.startDateValueTextView);

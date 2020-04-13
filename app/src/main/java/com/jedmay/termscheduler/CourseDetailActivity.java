@@ -19,10 +19,11 @@ import Database.WGUTermRoomDatabase;
 import Model.Course;
 import Model.Term;
 
-public class TermDetailActivity extends AppCompatActivity {
+public class CourseDetailActivity extends AppCompatActivity {
 
     Term term;
     long termId;
+    Course course;
     String title;
     WGUTermRoomDatabase db;
     Intent intent;
@@ -36,7 +37,7 @@ public class TermDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_term_detail);
+        setContentView(R.layout.activity_course_detail);
 
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
 
