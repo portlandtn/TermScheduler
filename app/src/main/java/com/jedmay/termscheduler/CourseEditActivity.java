@@ -10,9 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,17 +23,18 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
 import Database.WGUTermRoomDatabase;
+import Model.Course;
 import Model.Term;
 
-public class TermEditActivity extends AppCompatActivity {
+public class CourseEditActivity extends AppCompatActivity {
 
-    EditText termNameEditText;
+    EditText courseNameEditText;
     boolean isEditing;
     WGUTermRoomDatabase db;
-    Term term;
-    long termId;
+    Course course;
+    long courseId;
     java.util.Date startDate, endDate;
-    String termName;
+    String courseName;
     Button cancelButton, deleteButton, saveButton, setStartButton, setEndButton;
 
     TextView startText, endText;
@@ -39,38 +42,46 @@ public class TermEditActivity extends AppCompatActivity {
     int month, day, year;
     Calendar calendar;
 
+
+    Spinner spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_term_edit);
+        setContentView(R.layout.activity_course_edit);
+
+
+
+        spinner = findViewById(R.id.courseStatusSpinner);
+        populateSpinner();
 
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
 
         Intent intent = getIntent();
 
         //TextViews
-        termNameEditText = findViewById(R.id.termNameEditText);
+        courseNameEditText = findViewById(R.id.courseNameEditText);
         startText = findViewById(R.id.startDateValueTextView);
         endText = findViewById(R.id.endDateValueTextView);
 
         //Buttons
-        saveButton = findViewById(R.id.saveTermButton);
-        cancelButton = findViewById(R.id.cancelTermButton);
-        deleteButton = findViewById(R.id.deleteTermButton);
+        saveButton = findViewById(R.id.saveCourseButton);
+        cancelButton = findViewById(R.id.cancelCourseButton);
+        deleteButton = findViewById(R.id.deleteCourseButton);
         setStartButton = findViewById(R.id.setStartDateButton);
         setEndButton = findViewById(R.id.setEndDateButton);
 
         isEditing = intent.getBooleanExtra("isEditing", false);
         if (isEditing) {
-            termId = intent.getLongExtra("termId", 0);
-            term = db.termDao().getTerm(termId);
-            startDate = term.getMStartDate();
-            endDate = term.getMEndDate();
-            termName = term.getMTitle();
+            courseId = intent.getLongExtra("courseId", 0);
+            course = db.courseDao().getCourse(courseId);
+            startDate = course.getMStartDate();
+            endDate = course.getMEndDate();
+            courseName = course.getMTitle();
             deleteButton.setEnabled(true);
         } else {
             deleteButton.setEnabled(false);
-            term = new Term();
+            course = new Course();
         }
 
         //Populate Data
@@ -88,13 +99,13 @@ public class TermEditActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TermEditActivity.this);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CourseEditActivity.this);
                 alertDialogBuilder.setMessage("Are you sure you want to quit editing?");
                 alertDialogBuilder.setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                                Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
                                 startActivity(intent);
                             }
                         });
@@ -110,67 +121,58 @@ public class TermEditActivity extends AppCompatActivity {
         });
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TermEditActivity.this);
-                                                alertDialogBuilder.setMessage("Are you sure you want to delete this term?");
-                                                alertDialogBuilder.setPositiveButton("Yes",
-                                                        new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface arg0, int arg1) {
-                                                                db.termDao().delete(term);
-                                                                Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
-                                                                startActivity(intent);
-                                                            }
-                                                        });
-                                                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        //do nothing
-                                                    }
-                                                });
-                                                AlertDialog alertDialog = alertDialogBuilder.create();
-                                                alertDialog.show();
-                                            }
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CourseEditActivity.this);
+                alertDialogBuilder.setMessage("Are you sure you want to delete this course?");
+                alertDialogBuilder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                db.courseDao().delete(course);
+                                Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do nothing
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
         });
 
 
 
-                saveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String[] validationString = createValidationString();
-                        if (!inputIsValid(validationString)) {
-                            Toast.makeText(getApplicationContext(), "At a minimum, a term must have a name, start date, and end date", Toast.LENGTH_LONG).show();
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] validationString = createValidationString();
+                if (!inputIsValid(validationString)) {
+                    Toast.makeText(getApplicationContext(), "At a minimum, a term must have a name, start date, and end date", Toast.LENGTH_LONG).show();
+                } else {
+                    try {
+                        courseName = courseNameEditText.getText().toString();
+                        course.setMTitle(courseName);
+                        course.setMStartDate(startDate);
+                        course.setMEndDate(endDate);
+                        if (!isEditing) {
+                            db.courseDao().insert(course);
                         } else {
-                            try {
-                                termName = termNameEditText.getText().toString();
-                                term.setMTitle(termName);
-                                term.setMStartDate(startDate);
-                                term.setMEndDate(endDate);
-                                if (!isEditing) {
-                                    db.termDao().insert(term);
-                                } else {
-                                    db.termDao().update(term);
-                                }
-                                Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
-                                startActivity(intent);
-                            } catch (Exception ex) {
-                                Log.d("InsertTerm", ex.getLocalizedMessage());
-                            }
+                            db.courseDao().update(course);
                         }
+                        Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
+                        startActivity(intent);
+                    } catch (Exception ex) {
+                        Log.d("InsertTerm", ex.getLocalizedMessage());
                     }
-                });
+                }
+            }
+        });
 
-    }
-
-    private String[] createValidationString() {
-
-        return new String[]{
-                termNameEditText.getText().toString(),
-                startText.getText().toString(),
-                endText.getText().toString()
-        };
     }
 
     private void setUpDates() {
@@ -179,8 +181,8 @@ public class TermEditActivity extends AppCompatActivity {
         Calendar tempCalendar = Calendar.getInstance();
 
         if (isEditing) {
-            startDate = DataProvider.Formatter.formatDate(db.termDao().getTerm(termId).getMStartDate());
-            endDate = DataProvider.Formatter.formatDate(db.termDao().getTerm(termId).getMEndDate());
+            startDate = DataProvider.Formatter.formatDate(db.courseDao().getCourse(courseId).getMStartDate());
+            endDate = DataProvider.Formatter.formatDate(db.courseDao().getCourse(courseId).getMEndDate());
         }
         else {
             startDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
@@ -206,7 +208,7 @@ public class TermEditActivity extends AppCompatActivity {
             return new DatePickerDialog(this,
                     startDateListener, year, month, day);
         } else
-            if (id == 998) {
+        if (id == 998) {
             return new DatePickerDialog(this,
                     endDateListener, year, month, day);
         }
@@ -256,8 +258,13 @@ public class TermEditActivity extends AppCompatActivity {
 
     }
 
-    private boolean inputIsValid(String[] things) {
+    private String[] createValidationString() {
+        return new String[]{
+                courseNameEditText.getText().toString()
+        };
+    }
 
+    private boolean inputIsValid(String[] things) {
         for (String item:things) {
             if (item.isEmpty()) {
                 return false;
@@ -270,8 +277,18 @@ public class TermEditActivity extends AppCompatActivity {
     private void populateScreenWithExistingData(boolean isEditing) {
         if (!isEditing) return;
 
-        term = db.termDao().getTerm(termId);
-        termNameEditText.setText(term.getMTitle());
+        course = db.courseDao().getCourse(courseId);
+        courseNameEditText.setText(course.getMTitle());
 
+    }
+
+
+    private void populateSpinner() {
+        String[] statuses = DataProvider.SpinnerPopulator.getCourseStatuses();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_item,
+                        statuses);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 }

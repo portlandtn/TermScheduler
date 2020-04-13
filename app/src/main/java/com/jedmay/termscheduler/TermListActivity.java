@@ -21,7 +21,7 @@ public class TermListActivity extends AppCompatActivity {
     WGUTermRoomDatabase db;
     ListView listView;
     String title = "Term List";
-    FloatingActionButton addTerm;
+    FloatingActionButton addTermFAB;
     List<Term> terms;
 
     @Override
@@ -38,7 +38,7 @@ public class TermListActivity extends AppCompatActivity {
 
         //General Setup
         setTitle(title);
-        addTerm = findViewById(R.id.addTermFAB);
+        addTermFAB = findViewById(R.id.addTermFAB);
 
         //Database
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
@@ -57,7 +57,7 @@ public class TermListActivity extends AppCompatActivity {
         });
         updateList();
 
-        addTerm.setOnClickListener(new View.OnClickListener() {
+        addTermFAB.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
                                        Intent intent = new Intent(getApplicationContext(), TermEditActivity.class);

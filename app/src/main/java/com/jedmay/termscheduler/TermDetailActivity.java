@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -53,11 +54,11 @@ public class TermDetailActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
+                Intent i = new Intent(getApplicationContext(), CourseDetailActivity.class);
                 courses = db.courseDao().getCoursesForTerm(termId);
                 long courseId = courses.get(position).getId();
-                intent.putExtra("courseId", courseId);
-                startActivity(intent);
+                i.putExtra("courseId", courseId);
+                startActivity(i);
             }
         });
 
@@ -65,10 +66,10 @@ public class TermDetailActivity extends AppCompatActivity {
         editTermFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), TermEditActivity.class);
-                intent.putExtra("termId", termId);
-                intent.putExtra("isEditing", true);
-                startActivity(intent);
+                Intent i = new Intent(getApplicationContext(), TermEditActivity.class);
+                i.putExtra("termId", termId);
+                i.putExtra("isEditing", true);
+                startActivity(i);
             }
         });
 
