@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Date;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
@@ -29,7 +30,9 @@ public class TermEditActivity extends AppCompatActivity {
     WGUTermRoomDatabase db;
     Term term;
     long termId;
-    Button cancelButton, saveButton, setStartButton, setEndButton;
+    protected java.util.Date startDate, endDate;
+    String termName;
+    Button cancelButton, deleteButton, saveButton, setStartButton, setEndButton;
 
     TextView startText, endText;
 
@@ -44,10 +47,7 @@ public class TermEditActivity extends AppCompatActivity {
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
 
         Intent intent = getIntent();
-        isEditing = intent.getBooleanExtra("isEditing", false);
-        if (isEditing) {
-            termId = intent.getLongExtra("termId", 0);
-        }
+
 
         //TextViews
         termNameEditText = findViewById(R.id.termNameEditText);
@@ -57,8 +57,22 @@ public class TermEditActivity extends AppCompatActivity {
         //Buttons
         saveButton = findViewById(R.id.saveTermButton);
         cancelButton = findViewById(R.id.cancelTermButton);
+        deleteButton = findViewById(R.id.deleteTermButton);
         setStartButton = findViewById(R.id.setStartDateButton);
         setEndButton = findViewById(R.id.setEndDateButton);
+
+        isEditing = intent.getBooleanExtra("isEditing", false);
+        if (isEditing) {
+            termId = intent.getLongExtra("termId", 0);
+            term = db.termDao().getTerm(termId);
+            startDate = term.getMStartDate();
+            endDate = term.getMEndDate();
+            termName = term.getMTitle();
+            deleteButton.setEnabled(true);
+        } else {
+            deleteButton.setEnabled(false);
+            term = new Term();
+        }
 
         //Populate Data
         calendar = Calendar.getInstance();
@@ -96,22 +110,57 @@ public class TermEditActivity extends AppCompatActivity {
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!inputIsValid(termNameEditText.getText().toString(), startText.getText().toString(), endText.getText().toString())) {
-                    Toast.makeText(getApplicationContext(), "At a minimum, a term must have a name, start date, and end date", Toast.LENGTH_LONG).show();
-                } else {
-                    try {
-                        db.termDao().insert(term);
-                        Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
-                        startActivity(intent);
-                    } catch (Exception ex) {
-                        Log.d("InsertTerm", ex.getLocalizedMessage());
-                    }
-                }
-            }
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TermEditActivity.this);
+                                                alertDialogBuilder.setMessage("Are you sure you want to delete this term?");
+                                                alertDialogBuilder.setPositiveButton("Yes",
+                                                        new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface arg0, int arg1) {
+                                                                db.termDao().delete(term);
+                                                                Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
+                                                                startActivity(intent);
+                                                            }
+                                                        });
+                                                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        //do nothing
+                                                    }
+                                                });
+                                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                                alertDialog.show();
+                                            }
         });
+
+
+
+                saveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!inputIsValid(termNameEditText.getText().toString(), startText.getText().toString(), endText.getText().toString())) {
+                            Toast.makeText(getApplicationContext(), "At a minimum, a term must have a name, start date, and end date", Toast.LENGTH_LONG).show();
+                        } else {
+                            try {
+                                termName = termNameEditText.getText().toString();
+                                term.setMTitle(termName);
+                                term.setMStartDate(startDate);
+                                term.setMEndDate(endDate);
+                                if (!isEditing) {
+                                    db.termDao().insert(term);
+                                } else {
+                                    db.termDao().update(term);
+                                }
+                                Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
+                                startActivity(intent);
+                            } catch (Exception ex) {
+                                Log.d("InsertTerm", ex.getLocalizedMessage());
+                            }
+                        }
+                    }
+                });
 
     }
 
@@ -160,26 +209,34 @@ public class TermEditActivity extends AppCompatActivity {
                 @Override
                 public void onDateSet(DatePicker view,
                                       int arg1, int arg2, int arg3) {
-                    // TODO Auto-generated method stub
-                     arg1 = year;
-                     arg2 = month;
-                     arg3 = day;
-                    showDate(arg1, arg2+1, arg3, startText);
+                    year = arg1;
+                    month = arg2;
+                    day = arg3;
+                    showDate(year, month+1, day, startText);
+                    createStartDate(year, month, day);
                 }
             };
+
+    private void createStartDate(int year, int month, int day) {
+        this.startDate = Date.valueOf(DataProvider.Formatter.formatDate(year, month, day));
+    }
 
     private DatePickerDialog.OnDateSetListener endDateListener = new
             DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker arg0,
                                       int arg1, int arg2, int arg3) {
-                    // TODO Auto-generated method stub
-                    arg1 = year;
-                    arg2 = month;
-                    arg3 = day;
-                    showDate(arg1, arg2+1, arg3, endText);
+                    year = arg1;
+                    month = arg2;
+                    day = arg3;
+                    showDate(year, month+1, day, endText);
+                    createEndDate(year, month, day);
                 }
             };
+
+    private void createEndDate(int year, int month, int day) {
+        this.endDate = Date.valueOf(DataProvider.Formatter.formatDate(year, month, day));
+    }
 
     private void showDate(int year, int month, int day, TextView textView) {
 
@@ -191,7 +248,7 @@ public class TermEditActivity extends AppCompatActivity {
     }
 
     private boolean inputIsValid(String termName, String startDate, String endDate) {
-        return !termName.isEmpty() && !startDate.isEmpty() && endDate.isEmpty();
+        return !termName.isEmpty() && !startDate.isEmpty() && !endDate.isEmpty();
     }
 
     private void populateScreenWithExistingData(boolean isEditing) {

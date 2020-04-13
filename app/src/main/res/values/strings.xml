@@ -29,5 +29,6 @@
     <string name="courses_included">Courses In This Term</string>
     <string name="set_end">Set End</string>
     <string name="set_start">Set Start</string>
+    <string name="delete">Delete</string>
 
 </resources>

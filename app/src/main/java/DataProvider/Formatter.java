@@ -9,4 +9,8 @@ public class Formatter {
         return DateFormat.getDateInstance(DateFormat.LONG).format(date);
     }
 
+    public static String formatDate(int year, int month, int day) {
+        return new StringBuilder().append(year).append("-").append(month+1).append("-").append(day).toString();
+    }
+
 }
