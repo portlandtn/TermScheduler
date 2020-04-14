@@ -2,9 +2,12 @@ package DataProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.jedmay.termscheduler.R;
 
 import java.util.Calendar;
 
@@ -17,6 +20,8 @@ import Model.Term;
 
 @SuppressLint("Registered")
 public class SampleData extends AppCompatActivity {
+
+
 
     Term term1 = new Term();
     Term term2 = new Term();
@@ -40,8 +45,16 @@ public class SampleData extends AppCompatActivity {
 
     WGUTermRoomDatabase db;
 
+    String[] courseStatuses;
+    String[] assessmentStatuses;
+
     public void populateDatabaseWithSampleData(Context context) {
+
+        Resources res = context.getResources();
+
         db = WGUTermRoomDatabase.getDatabase(context);
+        courseStatuses = res.getStringArray(R.array.course_statuses);
+        assessmentStatuses = res.getStringArray(R.array.assessment_statuses);
 
         try {
             populateTerms();
@@ -106,7 +119,7 @@ public class SampleData extends AppCompatActivity {
         course1.setMEndDate(end.getTime());
         course1.setMTermId(db.termDao().getAllTerms().get(0).getId());
         course1.setMMentorId(db.mentorDao().getAllMentors().get(2).getId());
-        course1.setMStatus(CourseStatus.PLAN_TO_TAKE);
+        course1.setMStatus(courseStatuses[0]);
 
         start.add(Calendar.MONTH, 2);
         end.add(Calendar.MONTH, 2);
@@ -115,7 +128,7 @@ public class SampleData extends AppCompatActivity {
         course2.setMEndDate(end.getTime());
         course2.setMTermId(db.termDao().getAllTerms().get(0).getId());
         course2.setMMentorId(db.mentorDao().getAllMentors().get(1).getId());
-        course2.setMStatus(CourseStatus.IN_PROGRESS);
+        course2.setMStatus(courseStatuses[1]);
 
         start.add(Calendar.MONTH, 2);
         end.add(Calendar.MONTH, 2);
@@ -124,7 +137,7 @@ public class SampleData extends AppCompatActivity {
         course3.setMEndDate(end.getTime());
         course3.setMTermId(db.termDao().getAllTerms().get(2).getId());
         course3.setMMentorId(db.mentorDao().getAllMentors().get(0).getId());
-        course3.setMStatus(CourseStatus.FAILED);
+        course3.setMStatus(courseStatuses[2]);
 
         db.courseDao().insertAllCourses(course1, course2, course3);
 
@@ -140,7 +153,7 @@ public class SampleData extends AppCompatActivity {
         assessment1.setMStartDate(start.getTime());
         assessment1.setMEndDate(end.getTime());
         assessment1.setMCourseId(db.courseDao().getAllCourses().get(2).getId());
-        assessment1.setMStatus(AssessmentStatus.PASSED);
+        assessment1.setMStatus(assessmentStatuses[2]);
 
         start.add(Calendar.DATE, 6);
         end.add(Calendar.DATE, 6);
@@ -148,7 +161,7 @@ public class SampleData extends AppCompatActivity {
         assessment2.setMStartDate(start.getTime());
         assessment2.setMEndDate(end.getTime());
         assessment2.setMCourseId(db.courseDao().getAllCourses().get(0).getId());
-        assessment2.setMStatus(AssessmentStatus.PLANNED);
+        assessment2.setMStatus(assessmentStatuses[0]);
 
         start.add(Calendar.DATE, 6);
         end.add(Calendar.DATE, 6);
@@ -156,7 +169,7 @@ public class SampleData extends AppCompatActivity {
         assessment3.setMStartDate(start.getTime());
         assessment3.setMEndDate(end.getTime());
         assessment3.setMCourseId(db.courseDao().getAllCourses().get(1).getId());
-        assessment3.setMStatus(AssessmentStatus.FAILED);
+        assessment3.setMStatus(assessmentStatuses[1]);
 
         db.assessmentDao().insertAllAssessments(assessment1, assessment2,assessment3);
 

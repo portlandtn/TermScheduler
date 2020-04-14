@@ -25,9 +25,9 @@ public interface AssessmentDao {
     @Query("SELECT * FROM assessment_table WHERE courseId = :courseId")
     List<Assessment> getAssessmentsForCourse(long courseId);
 
-    @TypeConverters(AssessmentStatusConverter.class)
+    //@TypeConverters(AssessmentStatusConverter.class)
     @Query("SELECT COUNT(*) from assessment_table WHERE assessment_status = :status")
-    int getCountOfAssessmentType(AssessmentStatus status);
+    int getCountOfAssessmentType(String status);
 
     @Insert
     long insert(Assessment assessment);

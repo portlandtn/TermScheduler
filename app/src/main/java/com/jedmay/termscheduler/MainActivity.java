@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -152,12 +153,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getTotalsForCourses() {
+
         try {
-            inProgressCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.IN_PROGRESS)));
-            completedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.COMPLETED)));
-            droppedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.DROPPED)));
-            failedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.FAILED)));
-            plannedToTakeTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType(CourseStatus.PLAN_TO_TAKE)));
+            inProgressCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType("In Progress")));
+            completedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType("Completed")));
+            droppedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType("Dropped")));
+            failedCourseTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType("Failed")));
+            plannedToTakeTextView.setText(String.valueOf(db.courseDao().getCountOfCourseType("Plan to take")));
 
         } catch (Exception ex) {
             Log.d("TotalsForCourse",ex.getLocalizedMessage());
@@ -167,9 +169,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void getTotalsForAssessments() {
         try {
-            inProgressAssessmentTextView.setText(String.valueOf(db.assessmentDao().getCountOfAssessmentType(AssessmentStatus.PLANNED)));
-            passedAssessmentTextView.setText(String.valueOf(db.assessmentDao().getCountOfAssessmentType(AssessmentStatus.PASSED)));
-            failedAssessmentTextView.setText(String.valueOf(db.assessmentDao().getCountOfAssessmentType(AssessmentStatus.FAILED)));
+            inProgressAssessmentTextView.setText(String.valueOf(db.assessmentDao().getCountOfAssessmentType("Planned")));
+            passedAssessmentTextView.setText(String.valueOf(db.assessmentDao().getCountOfAssessmentType("Passed")));
+            failedAssessmentTextView.setText(String.valueOf(db.assessmentDao().getCountOfAssessmentType("Failed")));
         } catch (Exception ex) {
             Log.d("TotalsForAssessments",ex.getLocalizedMessage());
         }

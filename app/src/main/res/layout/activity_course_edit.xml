@@ -74,7 +74,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="Course Name:"
+        android:text="@string/course_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/courseNameEditText" />
@@ -87,7 +87,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="@string/enter_term_name"
+        android:hint="@string/enter_course_name"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/courseNameTextView"
         app:layout_constraintTop_toTopOf="parent"

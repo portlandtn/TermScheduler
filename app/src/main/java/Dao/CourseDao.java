@@ -25,9 +25,9 @@ public interface CourseDao {
     @Query("SELECT * FROM course_table WHERE term_id = :termId")
     List<Course> getCoursesForTerm(long termId);
 
-    @TypeConverters(CourseStatusConverter.class)
+    //@TypeConverters(CourseStatusConverter.class)
     @Query("SELECT COUNT(*) from course_table WHERE course_status = :status")
-    int getCountOfCourseType(CourseStatus status);
+    int getCountOfCourseType(String status);
 
     @Delete
     void delete(Course course);

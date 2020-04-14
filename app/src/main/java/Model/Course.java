@@ -43,9 +43,9 @@ public class Course {
     @ColumnInfo(name = "end_date")
     private Date mEndDate;
 
-    @TypeConverters(CourseStatusConverter.class)
+    //@TypeConverters(CourseStatusConverter.class)
     @ColumnInfo(name = "course_status")
-    private CourseStatus mStatus;
+    private String mStatus;
 
     @ColumnInfo(name = "term_id")
     private long mTermId;
@@ -82,11 +82,11 @@ public class Course {
         this.mEndDate = mEndDate;
     }
 
-    public CourseStatus getMStatus() {
+    public String getMStatus() {
         return mStatus;
     }
 
-    public void setMStatus(CourseStatus mStatus) {
+    public void setMStatus(String mStatus) {
         this.mStatus = mStatus;
     }
 

@@ -40,9 +40,9 @@ public class Assessment {
     @ColumnInfo(name = "courseId")
     private long mCourseId;
 
-    @TypeConverters(AssessmentStatusConverter.class)
+    //@TypeConverters(AssessmentStatusConverter.class)
     @ColumnInfo(name = "assessment_status")
-    private AssessmentStatus mStatus;
+    private String mStatus;
 
     public long getId() {
         return id;
@@ -84,11 +84,11 @@ public class Assessment {
         this.mCourseId = mCourseId;
     }
 
-    public AssessmentStatus getMStatus() {
+    public String getMStatus() {
         return mStatus;
     }
 
-    public void setMStatus(AssessmentStatus mStatus) {
+    public void setMStatus(String mStatus) {
         this.mStatus = mStatus;
     }
 }

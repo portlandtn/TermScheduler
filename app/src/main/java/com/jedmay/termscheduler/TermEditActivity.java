@@ -67,9 +67,9 @@ public class TermEditActivity extends AppCompatActivity {
             startDate = term.getMStartDate();
             endDate = term.getMEndDate();
             termName = term.getMTitle();
-            deleteButton.setEnabled(true);
+            deleteButton.setVisibility(View.VISIBLE);
         } else {
-            deleteButton.setEnabled(false);
+            deleteButton.setVisibility(View.INVISIBLE);
             term = new Term();
         }
 

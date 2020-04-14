@@ -30,7 +30,23 @@
     <string name="set_end">Set End</string>
     <string name="set_start">Set Start</string>
     <string name="delete">Delete</string>
-    <string name="assements_included">Assessments In This Course</string>
+    <string name="assessments_included">Assessments In This Course</string>
     <string name="course_status">Course Status:</string>
+    <string name="enter_course_name">Enter Course Name</string>
+    <string name="course_name">Course Name:</string>
+
+    <string-array name="assessment_statuses">
+        <item>Passed</item>
+        <item>Planned</item>
+        <item>Failed</item>
+    </string-array>
+
+    <string-array name="course_statuses">
+        <item>In Progress</item>
+        <item>Completed</item>
+        <item>Dropped</item>
+        <item>Failed</item>
+        <item>Plan to take</item>
+    </string-array>
 
 </resources>

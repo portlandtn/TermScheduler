@@ -22,9 +22,9 @@ import java.sql.Date;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
+import DataProvider.CourseStatus;
 import Database.WGUTermRoomDatabase;
 import Model.Course;
-import Model.Term;
 
 public class CourseEditActivity extends AppCompatActivity {
 
@@ -49,8 +49,6 @@ public class CourseEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_edit);
-
-
 
         spinner = findViewById(R.id.courseStatusSpinner);
         populateSpinner();
@@ -78,9 +76,9 @@ public class CourseEditActivity extends AppCompatActivity {
             startDate = course.getMStartDate();
             endDate = course.getMEndDate();
             courseName = course.getMTitle();
-            deleteButton.setEnabled(true);
+            deleteButton.setVisibility(View.VISIBLE);
         } else {
-            deleteButton.setEnabled(false);
+            deleteButton.setVisibility(View.INVISIBLE);
             course = new Course();
         }
 
@@ -152,13 +150,15 @@ public class CourseEditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String[] validationString = createValidationString();
                 if (!inputIsValid(validationString)) {
-                    Toast.makeText(getApplicationContext(), "At a minimum, a term must have a name, start date, and end date", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "The course name cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
                         courseName = courseNameEditText.getText().toString();
                         course.setMTitle(courseName);
                         course.setMStartDate(startDate);
                         course.setMEndDate(endDate);
+                        String status = spinner.getSelectedItem().toString();
+                        course.setMStatus(status);
                         if (!isEditing) {
                             db.courseDao().insert(course);
                         } else {
@@ -282,13 +282,14 @@ public class CourseEditActivity extends AppCompatActivity {
 
     }
 
-
     private void populateSpinner() {
-        String[] statuses = DataProvider.SpinnerPopulator.getCourseStatuses();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item,
-                        statuses);
+        String[] statuses = getApplicationContext().getResources().getStringArray(R.array.course_statuses);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, statuses);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
+
 }
