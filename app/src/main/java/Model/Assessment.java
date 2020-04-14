@@ -9,8 +9,6 @@ import androidx.room.TypeConverters;
 
 import java.util.Date;
 
-import DataProvider.AssessmentStatus;
-import DataProvider.AssessmentStatusConverter;
 import DataProvider.DateTimeConverter;
 
 @Entity(tableName ="assessment_table",
@@ -43,6 +41,9 @@ public class Assessment {
     //@TypeConverters(AssessmentStatusConverter.class)
     @ColumnInfo(name = "assessment_status")
     private String mStatus;
+
+    @ColumnInfo(name = "assessment_type")
+    private String mType;
 
     public long getId() {
         return id;
@@ -90,5 +91,10 @@ public class Assessment {
 
     public void setMStatus(String mStatus) {
         this.mStatus = mStatus;
+    }
+
+    public void setMType(String mType) {this.mType = mType;}
+
+    public String getMType() {return this.mType;
     }
 }

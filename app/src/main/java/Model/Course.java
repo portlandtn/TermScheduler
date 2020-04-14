@@ -1,7 +1,6 @@
 package Model;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Delete;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
@@ -10,8 +9,6 @@ import androidx.room.TypeConverters;
 
 import java.util.Date;
 
-import DataProvider.CourseStatus;
-import DataProvider.CourseStatusConverter;
 import DataProvider.DateTimeConverter;
 
 @Entity(tableName = "course_table", foreignKeys = {

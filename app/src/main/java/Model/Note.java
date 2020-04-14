@@ -19,7 +19,7 @@ public class Note {
     @PrimaryKey(autoGenerate = true)
     private long id;
 
-    @ColumnInfo(name = "note")
+    @ColumnInfo(name = "note_contents")
     private String mNote;
 
     @ColumnInfo(name = "course_id")

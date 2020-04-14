@@ -4,13 +4,10 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.TypeConverters;
 import androidx.room.Update;
 
 import java.util.List;
 
-import DataProvider.CourseStatus;
-import DataProvider.CourseStatusConverter;
 import Model.Course;
 
 @Dao
@@ -25,7 +22,6 @@ public interface CourseDao {
     @Query("SELECT * FROM course_table WHERE term_id = :termId")
     List<Course> getCoursesForTerm(long termId);
 
-    //@TypeConverters(CourseStatusConverter.class)
     @Query("SELECT COUNT(*) from course_table WHERE course_status = :status")
     int getCountOfCourseType(String status);
 

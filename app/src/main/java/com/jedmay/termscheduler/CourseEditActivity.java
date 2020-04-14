@@ -22,7 +22,6 @@ import java.sql.Date;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
-import DataProvider.CourseStatus;
 import Database.WGUTermRoomDatabase;
 import Model.Course;
 
