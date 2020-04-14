@@ -7,7 +7,7 @@
     tools:context=".CourseEditActivity">
 
     <TextView
-        android:id="@+id/courseEditEndDateTextView2"
+        android:id="@+id/courseStatusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -16,7 +16,7 @@
         android:text="@string/course_status"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setEndDateButton" />
+        app:layout_constraintTop_toBottomOf="@+id/setCourseEndDateButton" />
 
     <Button
         android:id="@+id/deleteCourseButton"
@@ -33,39 +33,39 @@
         app:layout_constraintStart_toEndOf="@+id/cancelCourseButton" />
 
     <TextView
-        android:id="@+id/endDateValueTextView"
+        android:id="@+id/courseEndDateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="@string/dummy_end_date_value"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setEndDateButton"
+        app:layout_constraintBottom_toBottomOf="@+id/setCourseEndDateButton"
         app:layout_constraintStart_toEndOf="@+id/courseNameTextView"
-        app:layout_constraintTop_toTopOf="@+id/setEndDateButton" />
+        app:layout_constraintTop_toTopOf="@+id/setCourseEndDateButton" />
 
     <TextView
-        android:id="@+id/startDateValueTextView"
+        android:id="@+id/courseStartDateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="@string/dummy_start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setStartDateButton"
+        app:layout_constraintBottom_toBottomOf="@+id/setCourseStartDateButton"
         app:layout_constraintStart_toEndOf="@+id/courseNameTextView"
-        app:layout_constraintTop_toTopOf="@+id/setStartDateButton" />
+        app:layout_constraintTop_toTopOf="@+id/setCourseStartDateButton" />
 
     <Button
-        android:id="@+id/setEndDateButton"
+        android:id="@+id/setCourseEndDateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:onClick="setEndDate"
         android:text="@string/set_end"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/endDateValueTextView"
-        app:layout_constraintTop_toBottomOf="@+id/setStartDateButton" />
+        app:layout_constraintStart_toEndOf="@+id/courseEndDateValueTextView"
+        app:layout_constraintTop_toBottomOf="@+id/setCourseStartDateButton" />
 
     <TextView
         android:id="@+id/courseNameTextView"
@@ -94,16 +94,16 @@
         tools:ignore="Autofill" />
 
     <TextView
-        android:id="@+id/courseEditStartDateTextView"
+        android:id="@+id/courseStartDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:text="@string/start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setStartDateButton"
+        app:layout_constraintBottom_toBottomOf="@+id/setCourseStartDateButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/setStartDateButton" />
+        app:layout_constraintTop_toTopOf="@+id/setCourseStartDateButton" />
 
     <TextView
         android:id="@+id/courseEditEndDateTextView"
@@ -113,9 +113,9 @@
         android:layout_marginLeft="16dp"
         android:text="@string/end_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setEndDateButton"
+        app:layout_constraintBottom_toBottomOf="@+id/setCourseEndDateButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/setEndDateButton" />
+        app:layout_constraintTop_toTopOf="@+id/setCourseEndDateButton" />
 
     <Button
         android:id="@+id/saveCourseButton"
@@ -140,14 +140,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/setStartDateButton"
+        android:id="@+id/setCourseStartDateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:onClick="setStartDate"
         android:text="@string/set_start"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/startDateValueTextView"
+        app:layout_constraintStart_toEndOf="@+id/courseStartDateValueTextView"
         app:layout_constraintTop_toBottomOf="@+id/courseNameEditText" />
 
     <Spinner
@@ -159,7 +159,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/courseEditEndDateTextView2"
-        app:layout_constraintTop_toTopOf="@+id/courseEditEndDateTextView2" />
+        app:layout_constraintStart_toEndOf="@+id/courseStatusTextView"
+        app:layout_constraintTop_toTopOf="@+id/courseStatusTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

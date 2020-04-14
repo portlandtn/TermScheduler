@@ -31,7 +31,7 @@ public class TermEditActivity extends AppCompatActivity {
     Term term;
     long termId;
     java.util.Date startDate, endDate;
-    String termName;
+    String termName, title;
     Button cancelButton, deleteButton, saveButton, setStartButton, setEndButton;
 
     TextView startText, endText;
@@ -50,15 +50,15 @@ public class TermEditActivity extends AppCompatActivity {
 
         //TextViews
         termNameEditText = findViewById(R.id.termNameEditText);
-        startText = findViewById(R.id.startDateValueTextView);
-        endText = findViewById(R.id.endDateValueTextView);
+        startText = findViewById(R.id.termStartDateValueTextView);
+        endText = findViewById(R.id.courseEndDateValueTextView);
 
         //Buttons
         saveButton = findViewById(R.id.saveTermButton);
         cancelButton = findViewById(R.id.cancelTermButton);
         deleteButton = findViewById(R.id.deleteTermButton);
-        setStartButton = findViewById(R.id.setStartDateButton);
-        setEndButton = findViewById(R.id.setEndDateButton);
+        setStartButton = findViewById(R.id.setTermStartDateButton);
+        setEndButton = findViewById(R.id.setTermEndDateButton);
 
         isEditing = intent.getBooleanExtra("isEditing", false);
         if (isEditing) {
@@ -269,10 +269,14 @@ public class TermEditActivity extends AppCompatActivity {
     }
 
     private void populateScreenWithExistingData(boolean isEditing) {
-        if (!isEditing) return;
-
+        if (!isEditing) {
+            title = "New Term";
+            setTitle(title);
+            return;
+        }
         term = db.termDao().getTerm(termId);
         termNameEditText.setText(term.getMTitle());
-
+        title = term.getMTitle() + " Detail";
+        setTitle(title);
     }
 }

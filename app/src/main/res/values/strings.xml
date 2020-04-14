@@ -34,6 +34,13 @@
     <string name="course_status">Course Status:</string>
     <string name="enter_course_name">Enter Course Name</string>
     <string name="course_name">Course Name:</string>
+    <string name="notes_for_course">Notes For Course:</string>
+    <string name="view_notes">View Notes</string>
+    <string name="name">Name:</string>
+    <string name="mentor_name">Mentor Name</string>
+    <string name="email">Email:</string>
+    <string name="mentor_email_address">Mentor Email Address</string>
+    <string name="phone">Phone:</string>
 
     <string-array name="assessment_statuses">
         <item>Passed</item>

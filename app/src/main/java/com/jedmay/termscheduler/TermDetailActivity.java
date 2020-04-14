@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -42,8 +41,8 @@ public class TermDetailActivity extends AppCompatActivity {
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
 
         // Setup resources
-        startDateValueTextView = findViewById(R.id.startDateValueTextView);
-        endDateValueTextView = findViewById(R.id.endDateValueTextView);
+        startDateValueTextView = findViewById(R.id.courseStartDateValueTextView);
+        endDateValueTextView = findViewById(R.id.courseEndDateValueTextView);
         addCourseToTerm = findViewById(R.id.addCourseToTermFAB);
         editTermFAB = findViewById(R.id.editTermFAB);
         listView = findViewById(R.id.courseListView);

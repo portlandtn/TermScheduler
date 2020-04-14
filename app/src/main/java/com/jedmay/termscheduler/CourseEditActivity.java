@@ -33,7 +33,7 @@ public class CourseEditActivity extends AppCompatActivity {
     Course course;
     long courseId;
     java.util.Date startDate, endDate;
-    String courseName;
+    String courseName, title;
     Button cancelButton, deleteButton, saveButton, setStartButton, setEndButton;
 
     TextView startText, endText;
@@ -58,15 +58,15 @@ public class CourseEditActivity extends AppCompatActivity {
 
         //TextViews
         courseNameEditText = findViewById(R.id.courseNameEditText);
-        startText = findViewById(R.id.startDateValueTextView);
-        endText = findViewById(R.id.endDateValueTextView);
+        startText = findViewById(R.id.courseStartDateTextView);
+        endText = findViewById(R.id.courseEndDateValueTextView);
 
         //Buttons
         saveButton = findViewById(R.id.saveCourseButton);
         cancelButton = findViewById(R.id.cancelCourseButton);
         deleteButton = findViewById(R.id.deleteCourseButton);
-        setStartButton = findViewById(R.id.setStartDateButton);
-        setEndButton = findViewById(R.id.setEndDateButton);
+        setStartButton = findViewById(R.id.setCourseStartDateButton);
+        setEndButton = findViewById(R.id.setCourseEndDateButton);
 
         isEditing = intent.getBooleanExtra("isEditing", false);
         if (isEditing) {
@@ -274,11 +274,15 @@ public class CourseEditActivity extends AppCompatActivity {
     }
 
     private void populateScreenWithExistingData(boolean isEditing) {
-        if (!isEditing) return;
-
+        if (!isEditing) {
+            title = "New Course";
+            setTitle(title);
+            return;
+        }
         course = db.courseDao().getCourse(courseId);
         courseNameEditText.setText(course.getMTitle());
-
+        title = course.getMTitle();
+        setTitle(title);
     }
 
     private void populateSpinner() {

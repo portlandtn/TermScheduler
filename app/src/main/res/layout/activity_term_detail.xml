@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/ic_edit_black_24dp" />
 
     <TextView
-        android:id="@+id/startDateTextView"
+        android:id="@+id/courseStartDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -33,18 +33,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/startDateValueTextView"
+        android:id="@+id/termStartDateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="@string/dummy_start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/startDateTextView"
-        app:layout_constraintTop_toTopOf="@+id/startDateTextView" />
+        app:layout_constraintStart_toEndOf="@+id/courseStartDateTextView"
+        app:layout_constraintTop_toTopOf="@+id/courseStartDateTextView" />
 
     <TextView
-        android:id="@+id/endDateTextView"
+        android:id="@+id/courseEndDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -53,10 +53,10 @@
         android:text="@string/end_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startDateTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/courseStartDateTextView" />
 
     <TextView
-        android:id="@+id/endDateValueTextView"
+        android:id="@+id/courseEndDateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -64,8 +64,8 @@
         android:layout_marginTop="16dp"
         android:text="@string/dummy_end_date_value"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/startDateTextView"
-        app:layout_constraintTop_toBottomOf="@+id/startDateValueTextView" />
+        app:layout_constraintStart_toEndOf="@+id/courseStartDateTextView"
+        app:layout_constraintTop_toBottomOf="@+id/courseStartDateValueTextView" />
 
     <ListView
         android:id="@+id/courseListView"
@@ -101,7 +101,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endDateTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/courseEndDateTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

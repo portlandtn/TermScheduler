@@ -21,39 +21,39 @@
         app:layout_constraintStart_toEndOf="@+id/cancelTermButton" />
 
     <TextView
-        android:id="@+id/endDateValueTextView"
+        android:id="@+id/termEndDateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="@string/dummy_end_date_value"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setEndDateButton"
+        app:layout_constraintBottom_toBottomOf="@+id/setTermEndDateButton"
         app:layout_constraintStart_toEndOf="@+id/termNameTextView"
-        app:layout_constraintTop_toTopOf="@+id/setEndDateButton" />
+        app:layout_constraintTop_toTopOf="@+id/setTermEndDateButton" />
 
     <TextView
-        android:id="@+id/startDateValueTextView"
+        android:id="@+id/termStartDateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="@string/dummy_start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setStartDateButton"
+        app:layout_constraintBottom_toBottomOf="@+id/setTermStartDateButton"
         app:layout_constraintStart_toEndOf="@+id/termNameTextView"
-        app:layout_constraintTop_toTopOf="@+id/setStartDateButton" />
+        app:layout_constraintTop_toTopOf="@+id/setTermStartDateButton" />
 
     <Button
-        android:id="@+id/setEndDateButton"
+        android:id="@+id/setTermEndDateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:onClick="setEndDate"
         android:text="@string/set_end"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/endDateValueTextView"
-        app:layout_constraintTop_toBottomOf="@+id/setStartDateButton" />
+        app:layout_constraintStart_toEndOf="@+id/termEndDateValueTextView"
+        app:layout_constraintTop_toBottomOf="@+id/setTermStartDateButton" />
 
     <TextView
         android:id="@+id/termNameTextView"
@@ -90,8 +90,8 @@
         android:text="@string/start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/setStartDateButton"
-        app:layout_constraintBottom_toBottomOf="@id/setStartDateButton"
+        app:layout_constraintTop_toTopOf="@id/setTermStartDateButton"
+        app:layout_constraintBottom_toBottomOf="@id/setTermStartDateButton"
         tools:layout_editor_absoluteY="69dp" />
 
     <TextView
@@ -102,9 +102,9 @@
         android:layout_marginLeft="16dp"
         android:text="@string/end_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setEndDateButton"
+        app:layout_constraintBottom_toBottomOf="@+id/setTermEndDateButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/setEndDateButton" />
+        app:layout_constraintTop_toTopOf="@+id/setTermEndDateButton" />
 
     <Button
         android:id="@+id/saveTermButton"
@@ -129,14 +129,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/setStartDateButton"
+        android:id="@+id/setTermStartDateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:onClick="setStartDate"
         android:text="@string/set_start"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/startDateValueTextView"
+        app:layout_constraintStart_toEndOf="@+id/termStartDateValueTextView"
         app:layout_constraintTop_toBottomOf="@+id/termNameEditText" />
 
 

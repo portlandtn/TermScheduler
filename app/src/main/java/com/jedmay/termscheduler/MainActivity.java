@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         //Buttons
         clearDatabase = findViewById(R.id.clearDatabaseButton);
         createSampleDataButton = findViewById(R.id.createSampleDataButton);
-        goToTermsActivity = findViewById(R.id.termsButton);
+        goToTermsActivity = findViewById(R.id.goToTermsButton);
 
         //Listeners for Buttons
         createClearDatabaseOnClickListener(clearDatabase);
@@ -59,15 +59,15 @@ public class MainActivity extends AppCompatActivity {
         createGoToTermsActivityListener(goToTermsActivity);
 
         //TextViews
-        inProgressCourseTextView = findViewById(R.id.inProgressCountTextView);
-        completedCourseTextView = findViewById(R.id.completedCountTextView);
-        droppedCourseTextView = findViewById(R.id.droppedCountTextView);
-        failedCourseTextView = findViewById(R.id.failedCoursesCountTextView);
-        plannedToTakeTextView = findViewById(R.id.plannedToTakeCountTextView);
+        inProgressCourseTextView = findViewById(R.id.coursesInProgressCountTextView);
+        completedCourseTextView = findViewById(R.id.coursesCompletedCountTextView);
+        droppedCourseTextView = findViewById(R.id.coursesDroppedCountTextView);
+        failedCourseTextView = findViewById(R.id.coursesFailedCountTextView);
+        plannedToTakeTextView = findViewById(R.id.coursesPlannedToTakeCountTextView);
 
-        inProgressAssessmentTextView = findViewById(R.id.inProgressAssessmentCountTextView);
-        passedAssessmentTextView = findViewById(R.id.passedCountTextView);
-        failedAssessmentTextView = findViewById(R.id.failedAssessmentsCountTextView);
+        inProgressAssessmentTextView = findViewById(R.id.assessmentsPlannedCountTextView);
+        passedAssessmentTextView = findViewById(R.id.assessmentsPassedCountTextView);
+        failedAssessmentTextView = findViewById(R.id.assessmentsFailedCountTextView);
 
         updateList();
 

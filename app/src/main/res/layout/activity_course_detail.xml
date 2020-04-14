@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/ic_edit_black_24dp" />
 
     <TextView
-        android:id="@+id/startCourseDateLabelTextView"
+        android:id="@+id/startCourseDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -40,8 +40,8 @@
         android:layout_marginLeft="8dp"
         android:text="@string/dummy_start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/startCourseDateLabelTextView"
-        app:layout_constraintTop_toTopOf="@+id/startCourseDateLabelTextView" />
+        app:layout_constraintStart_toEndOf="@+id/startCourseDateTextView"
+        app:layout_constraintTop_toTopOf="@+id/startCourseDateTextView" />
 
     <TextView
         android:id="@+id/endCourseDateTextView"
@@ -53,7 +53,7 @@
         android:text="@string/end_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startCourseDateLabelTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/startCourseDateTextView" />
 
     <TextView
         android:id="@+id/endCourseDateValueTextView"
@@ -64,7 +64,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/dummy_end_date_value"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/startCourseDateLabelTextView"
+        app:layout_constraintStart_toEndOf="@+id/startCourseDateTextView"
         app:layout_constraintTop_toBottomOf="@+id/startCourseDateValueTextView" />
 
     <ListView
@@ -76,7 +76,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AssessmentsIncluded" />
+        app:layout_constraintTop_toBottomOf="@+id/assessmentsIncludedTextView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addAssessmentToCourseFAB"
@@ -93,7 +93,7 @@
         app:srcCompat="@drawable/ic_add_black_24dp" />
 
     <TextView
-        android:id="@+id/AssessmentsIncluded"
+        android:id="@+id/assessmentsIncludedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -102,6 +102,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/endCourseDateTextView" />
+
+    <Button
+        android:id="@+id/notesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/view_notes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
