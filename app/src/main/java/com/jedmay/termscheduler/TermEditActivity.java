@@ -136,31 +136,32 @@ public class TermEditActivity extends AppCompatActivity {
 
 
 
-                saveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String[] validationString = createValidationString();
-                        if (!inputIsValid(validationString)) {
-                            Toast.makeText(getApplicationContext(), "At a minimum, a term must have a name, start date, and end date", Toast.LENGTH_LONG).show();
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] validationString = createValidationString();
+                if (!inputIsValid(validationString)) {
+                    Toast.makeText(getApplicationContext(), "The term name cannot be blank.", Toast.LENGTH_SHORT).show();
+                } else {
+                    try {
+                        termName = termNameEditText.getText().toString();
+                        term.setMTitle(termName);
+                        term.setMStartDate(startDate);
+                        term.setMEndDate(endDate);
+                        if (!isEditing) {
+                            termId = db.termDao().insert(term);
                         } else {
-                            try {
-                                termName = termNameEditText.getText().toString();
-                                term.setMTitle(termName);
-                                term.setMStartDate(startDate);
-                                term.setMEndDate(endDate);
-                                if (!isEditing) {
-                                    db.termDao().insert(term);
-                                } else {
-                                    db.termDao().update(term);
-                                }
-                                Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
-                                startActivity(intent);
-                            } catch (Exception ex) {
-                                Log.d("InsertTerm", ex.getLocalizedMessage());
-                            }
+                            db.termDao().update(term);
                         }
+                        Intent intent = new Intent(getApplicationContext(), TermDetailActivity.class);
+                        intent.putExtra("termId", termId);
+                        startActivity(intent);
+                    } catch (Exception ex) {
+                        Log.d("InsertTerm", ex.getLocalizedMessage());
                     }
-                });
+                }
+            }
+        });
 
     }
 

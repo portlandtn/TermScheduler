@@ -77,10 +77,9 @@ public class TermDetailActivity extends AppCompatActivity {
         addCourseToTerm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO - this will have to be created after
-//                Intent intent = new Intent(getApplicationContext(), CourseEditActivity.class);
-//                intent.putExtra("termId", termId);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), CourseEditActivity.class);
+                intent.putExtra("termId", termId);
+                startActivity(intent);
             }
         });
 

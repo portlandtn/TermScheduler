@@ -54,12 +54,11 @@ public class CourseDetailActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO have to be create Assessment Detail Activity first
-//                Intent intent = new Intent(getApplicationContext(), AssessmentDetailActivity.class);
-//                assessments = db.assessmentDao().getAssessmentsForCourse(courseId);
-//                long assessmentId = assessments.get(position).getId();
-//                intent.putExtra("assessmentId", assessmentId);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), AssessmentDetailActivity.class);
+                assessments = db.assessmentDao().getAssessmentsForCourse(courseId);
+                long assessmentId = assessments.get(position).getId();
+                intent.putExtra("assessmentId", assessmentId);
+                startActivity(intent);
             }
         });
 
@@ -67,7 +66,6 @@ public class CourseDetailActivity extends AppCompatActivity {
         editCourseFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO have to create CourseEditActivity first
                 Intent intent = new Intent(getApplicationContext(), CourseEditActivity.class);
                 intent.putExtra("courseId", courseId);
                 intent.putExtra("isEditing", true);
@@ -79,10 +77,9 @@ public class CourseDetailActivity extends AppCompatActivity {
         addAssessmentToCourseFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO - this will have to be created after Assessment Edit Detail
-//                Intent intent = new Intent(getApplicationContext(), AssessmentEditActivity.class);
-//                intent.putExtra("courseId", courseId);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), AssessmentEditActivity.class);
+                intent.putExtra("courseId", courseId);
+                startActivity(intent);
             }
         });
 
