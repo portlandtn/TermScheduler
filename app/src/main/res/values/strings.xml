@@ -41,6 +41,9 @@
     <string name="email">Email:</string>
     <string name="mentor_email_address">Mentor Email Address</string>
     <string name="phone">Phone:</string>
+    <string name="enter_note_text_here">Enter note text here</string>
+    <string name="note_for">Note For:</string>
+    <string name="assessments_for_course">Assessments For Course</string>
 
     <string-array name="assessment_statuses">
         <item>Passed</item>

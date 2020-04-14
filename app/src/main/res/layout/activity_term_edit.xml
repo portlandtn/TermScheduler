@@ -6,77 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".TermEditActivity">
 
-    <Button
-        android:id="@+id/deleteTermButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/delete"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/saveTermButton"
-        app:layout_constraintStart_toEndOf="@+id/cancelTermButton" />
-
-    <TextView
-        android:id="@+id/termEndDateValueTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="@string/dummy_end_date_value"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setTermEndDateButton"
-        app:layout_constraintStart_toEndOf="@+id/termNameTextView"
-        app:layout_constraintTop_toTopOf="@+id/setTermEndDateButton" />
-
-    <TextView
-        android:id="@+id/termStartDateValueTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="@string/dummy_start_date"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setTermStartDateButton"
-        app:layout_constraintStart_toEndOf="@+id/termNameTextView"
-        app:layout_constraintTop_toTopOf="@+id/setTermStartDateButton" />
-
-    <Button
-        android:id="@+id/setTermEndDateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:onClick="setEndDate"
-        android:text="@string/set_end"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/termEndDateValueTextView"
-        app:layout_constraintTop_toBottomOf="@+id/setTermStartDateButton" />
-
     <TextView
         android:id="@+id/termNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
         android:text="@string/term_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/termNameEditText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/termNameEditText" />
 
     <EditText
         android:id="@+id/termNameEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="@string/enter_term_name"
         android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/termNameTextView"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="Autofill" />
@@ -95,38 +49,16 @@
         tools:layout_editor_absoluteY="69dp" />
 
     <TextView
-        android:id="@+id/termEndDateTextView"
+        android:id="@+id/termStartDateValueTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:text="@string/end_date"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setTermEndDateButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/setTermEndDateButton" />
-
-    <Button
-        android:id="@+id/saveTermButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/cancelTermButton"
-        android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@android:string/cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="@string/dummy_start_date"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/setTermStartDateButton"
+        app:layout_constraintStart_toEndOf="@+id/termNameTextView"
+        app:layout_constraintTop_toTopOf="@+id/setTermStartDateButton" />
 
     <Button
         android:id="@+id/setTermStartDateButton"
@@ -138,6 +70,79 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/termStartDateValueTextView"
         app:layout_constraintTop_toBottomOf="@+id/termNameEditText" />
+    <TextView
+        android:id="@+id/termEndDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="@string/end_date"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/setTermEndDateButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/setTermEndDateButton" />
+
+    <TextView
+        android:id="@+id/termEndDateValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/dummy_end_date_value"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/setTermEndDateButton"
+        app:layout_constraintStart_toEndOf="@+id/termNameTextView"
+        app:layout_constraintTop_toTopOf="@+id/setTermEndDateButton" />
+
+
+    <Button
+        android:id="@+id/setTermEndDateButton"
+        android:layout_width="97dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:onClick="setEndDate"
+        android:text="@string/set_end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/termEndDateValueTextView"
+        app:layout_constraintTop_toBottomOf="@+id/setTermStartDateButton" />
+
+
+    <Button
+        android:id="@+id/cancelTermButton"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@android:string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/deleteTermButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/saveTermButton"
+        app:layout_constraintStart_toEndOf="@+id/cancelTermButton" />
+
+    <Button
+        android:id="@+id/saveTermButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

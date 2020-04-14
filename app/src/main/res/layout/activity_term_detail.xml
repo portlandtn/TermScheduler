@@ -6,22 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".TermDetailActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/editTermFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_edit_black_24dp" />
-
     <TextView
-        android:id="@+id/courseStartDateTextView"
+        android:id="@+id/termStartDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -40,11 +26,11 @@
         android:layout_marginLeft="8dp"
         android:text="@string/dummy_start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/courseStartDateTextView"
-        app:layout_constraintTop_toTopOf="@+id/courseStartDateTextView" />
+        app:layout_constraintStart_toEndOf="@+id/termStartDateTextView"
+        app:layout_constraintTop_toTopOf="@+id/termStartDateTextView" />
 
     <TextView
-        android:id="@+id/courseEndDateTextView"
+        android:id="@+id/termEndDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -53,10 +39,10 @@
         android:text="@string/end_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseStartDateTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/termStartDateTextView" />
 
     <TextView
-        android:id="@+id/courseEndDateValueTextView"
+        android:id="@+id/termEndDateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -64,8 +50,19 @@
         android:layout_marginTop="16dp"
         android:text="@string/dummy_end_date_value"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/courseStartDateTextView"
-        app:layout_constraintTop_toBottomOf="@+id/courseStartDateValueTextView" />
+        app:layout_constraintStart_toEndOf="@+id/termStartDateTextView"
+        app:layout_constraintTop_toBottomOf="@+id/termStartDateValueTextView" />
+
+    <TextView
+        android:id="@+id/coursesIncludedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/courses_included"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/termEndDateTextView" />
 
     <ListView
         android:id="@+id/courseListView"
@@ -77,6 +74,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coursesIncludedTextView" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editTermFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_edit_black_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addCourseToTermFAB"
@@ -91,17 +102,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add_black_24dp" />
-
-    <TextView
-        android:id="@+id/coursesIncludedTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/courses_included"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseEndDateTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
