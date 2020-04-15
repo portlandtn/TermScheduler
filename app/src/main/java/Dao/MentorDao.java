@@ -19,6 +19,9 @@ public interface MentorDao {
     @Query("SELECT * FROM mentor_table WHERE id = :courseId ORDER BY id")
     Mentor getMentorForCourse(long courseId);
 
+    @Query("SELECT name FROM mentor_table ORDER BY name")
+    List<String> getAllMentorNames();
+
     @Insert
     long insert(Mentor mentor);
 

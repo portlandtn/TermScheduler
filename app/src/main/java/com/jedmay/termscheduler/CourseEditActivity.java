@@ -21,9 +21,11 @@ import android.widget.Toast;
 import java.sql.Date;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
+import java.util.List;
 
 import Database.WGUTermRoomDatabase;
 import Model.Course;
+import Model.Mentor;
 
 public class CourseEditActivity extends AppCompatActivity {
 
@@ -42,17 +44,19 @@ public class CourseEditActivity extends AppCompatActivity {
     Calendar calendar;
 
 
-    Spinner spinner;
+    Spinner mentorSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_edit);
 
-        spinner = findViewById(R.id.courseStatusSpinner);
-        populateSpinner();
-
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
+
+        mentorSpinner = findViewById(R.id.mentorSpinner);
+        populateMentorSpinner();
+
+
 
         Intent intent = getIntent();
 
@@ -106,7 +110,7 @@ public class CourseEditActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         });
-                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //do nothing
@@ -131,7 +135,7 @@ public class CourseEditActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         });
-                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //do nothing
@@ -141,7 +145,6 @@ public class CourseEditActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-
 
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +159,7 @@ public class CourseEditActivity extends AppCompatActivity {
                         course.setMTitle(courseName);
                         course.setMStartDate(startDate);
                         course.setMEndDate(endDate);
-                        String status = spinner.getSelectedItem().toString();
+                        String status = mentorSpinner.getSelectedItem().toString();
                         course.setMStatus(status);
                         if (!isEditing) {
                             db.courseDao().insert(course);
@@ -182,10 +185,9 @@ public class CourseEditActivity extends AppCompatActivity {
         if (isEditing) {
             startDate = DataProvider.Formatter.formatDate(db.courseDao().getCourse(courseId).getMStartDate());
             endDate = DataProvider.Formatter.formatDate(db.courseDao().getCourse(courseId).getMEndDate());
-        }
-        else {
+        } else {
             startDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
-            tempCalendar.add(Calendar.MONTH , 6);
+            tempCalendar.add(Calendar.MONTH, 6);
             endDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
         }
         startText.setText(startDate);
@@ -206,8 +208,7 @@ public class CourseEditActivity extends AppCompatActivity {
         if (id == 999) {
             return new DatePickerDialog(this,
                     startDateListener, year, month, day);
-        } else
-        if (id == 998) {
+        } else if (id == 998) {
             return new DatePickerDialog(this,
                     endDateListener, year, month, day);
         }
@@ -222,7 +223,7 @@ public class CourseEditActivity extends AppCompatActivity {
                     year = arg1;
                     month = arg2;
                     day = arg3;
-                    showDate(year, month+1, day, startText);
+                    showDate(year, month + 1, day, startText);
                     createStartDate(year, month, day);
                 }
             };
@@ -239,7 +240,7 @@ public class CourseEditActivity extends AppCompatActivity {
                     year = arg1;
                     month = arg2;
                     day = arg3;
-                    showDate(year, month+1, day, endText);
+                    showDate(year, month + 1, day, endText);
                     createEndDate(year, month, day);
                 }
             };
@@ -250,7 +251,7 @@ public class CourseEditActivity extends AppCompatActivity {
 
     private void showDate(int year, int month, int day, TextView textView) {
 
-        String monthString = new DateFormatSymbols().getMonths()[month-1];
+        String monthString = new DateFormatSymbols().getMonths()[month - 1];
 
         textView.setText(new StringBuilder().append(monthString).append(" ")
                 .append(day).append(", ").append(year));
@@ -264,7 +265,7 @@ public class CourseEditActivity extends AppCompatActivity {
     }
 
     private boolean inputIsValid(String[] things) {
-        for (String item:things) {
+        for (String item : things) {
             if (item.isEmpty()) {
                 return false;
             }
@@ -285,14 +286,25 @@ public class CourseEditActivity extends AppCompatActivity {
         setTitle(title);
     }
 
-    private void populateSpinner() {
-        String[] statuses = getApplicationContext().getResources().getStringArray(R.array.course_statuses);
+    private void populateMentorSpinner() {
+        try {
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, statuses);
+            List<Mentor> mentors = db.mentorDao().getAllMentors();
+            String[] mentorArray = new String[mentors.size()];
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+            for(int i = 0; i < mentors.size(); i++) {
+                mentorArray[i] = mentors.get(i).getMName();
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    this, android.R.layout.simple_spinner_item, mentorArray);
+
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mentorSpinner.setAdapter(adapter);
+        } catch (Exception ex) {
+            Log.d("MentorSpinner", ex.getLocalizedMessage());
+        }
+
     }
 
 }

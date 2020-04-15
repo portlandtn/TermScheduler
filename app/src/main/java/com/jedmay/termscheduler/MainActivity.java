@@ -17,23 +17,16 @@ import Database.WGUTermRoomDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button clearDatabase;
-    Button createSampleDataButton;
-    Button goToTermsActivity;
+    Button clearDatabase, createSampleDataButton, goToTermsActivity;
+
     SampleData sampleData;
     WGUTermRoomDatabase db;
 
     String title = "WGU Scheduler";
 
-    TextView inProgressCourseTextView;
-    TextView completedCourseTextView;
-    TextView droppedCourseTextView;
-    TextView failedCourseTextView;
-    TextView plannedToTakeTextView;
+    TextView inProgressCourseTextView, completedCourseTextView, droppedCourseTextView, failedCourseTextView, plannedToTakeTextView;
 
-    TextView inProgressAssessmentTextView;
-    TextView passedAssessmentTextView;
-    TextView failedAssessmentTextView;
+    TextView inProgressAssessmentTextView, passedAssessmentTextView, failedAssessmentTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         updateList();
 
     }
-
 
     @Override
     protected void onResume() {

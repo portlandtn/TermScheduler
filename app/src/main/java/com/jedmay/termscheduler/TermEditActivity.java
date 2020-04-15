@@ -51,7 +51,7 @@ public class TermEditActivity extends AppCompatActivity {
         //TextViews
         termNameEditText = findViewById(R.id.termNameEditText);
         startText = findViewById(R.id.termStartDateValueTextView);
-        endText = findViewById(R.id.courseEndDateValueTextView);
+        endText = findViewById(R.id.termEndDateValueTextView);
 
         //Buttons
         saveButton = findViewById(R.id.saveTermButton);

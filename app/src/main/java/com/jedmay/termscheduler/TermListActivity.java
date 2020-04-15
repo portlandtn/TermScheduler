@@ -44,7 +44,7 @@ public class TermListActivity extends AppCompatActivity {
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
 
         //Update ListView
-        listView = findViewById(R.id.listView);
+        listView = findViewById(R.id.termListView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

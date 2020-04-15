@@ -18,7 +18,6 @@ import java.util.List;
 import Database.WGUTermRoomDatabase;
 import Model.Assessment;
 import Model.Course;
-import Model.Term;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
@@ -32,7 +31,7 @@ public class CourseDetailActivity extends AppCompatActivity {
     FloatingActionButton addAssessmentToCourseFAB;
     FloatingActionButton editCourseFAB;
     List<Assessment> assessments;
-    ListView listView;
+    ListView assessmentListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +43,14 @@ public class CourseDetailActivity extends AppCompatActivity {
         // Setup resources
         startDateValueTextView = findViewById(R.id.startCourseDateValueTextView);
         endDateValueTextView = findViewById(R.id.endCourseDateValueTextView);
-        addAssessmentToCourseFAB = findViewById(R.id.addCourseToTermFAB);
+        addAssessmentToCourseFAB = findViewById(R.id.addAssessmentToCourseFAB);
         editCourseFAB = findViewById(R.id.editCourseFAB);
-        listView = findViewById(R.id.assessmentListView);
+        assessmentListView = findViewById(R.id.assessmentListView);
         intent = getIntent();
         courseId = intent.getLongExtra("courseId", 0);
 
         //Courses list ListView on click listener
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        assessmentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), AssessmentDetailActivity.class);
@@ -115,7 +114,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, assessmentString);
-        listView.setAdapter(adapter);
+        assessmentListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
     }

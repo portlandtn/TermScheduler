@@ -31,7 +31,7 @@ public class TermDetailActivity extends AppCompatActivity {
     FloatingActionButton addCourseToTerm;
     FloatingActionButton editTermFAB;
     List<Course> courses;
-    ListView listView;
+    ListView courseListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +41,15 @@ public class TermDetailActivity extends AppCompatActivity {
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
 
         // Setup resources
-        startDateValueTextView = findViewById(R.id.courseStartDateValueTextView);
-        endDateValueTextView = findViewById(R.id.courseEndDateValueTextView);
+        startDateValueTextView = findViewById(R.id.termStartDateValueTextView);
+        endDateValueTextView = findViewById(R.id.termEndDateValueTextView);
         addCourseToTerm = findViewById(R.id.addCourseToTermFAB);
         editTermFAB = findViewById(R.id.editTermFAB);
-        listView = findViewById(R.id.courseListView);
+        courseListView = findViewById(R.id.courseListView);
         intent = getIntent();
         termId = intent.getLongExtra("termId", 0);
 
-        //Courses list ListView on click listener
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getApplicationContext(), CourseDetailActivity.class);
@@ -114,7 +113,7 @@ public class TermDetailActivity extends AppCompatActivity {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, courseString);
-        listView.setAdapter(adapter);
+        courseListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
     }
