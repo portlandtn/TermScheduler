@@ -1,7 +1,11 @@
 package DataProvider;
 
+import android.app.DatePickerDialog;
+import android.widget.DatePicker;
+
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Map;
 
 public class Formatter {
 
@@ -10,7 +14,11 @@ public class Formatter {
     }
 
     public static String formatDate(int year, int month, int day) {
-        return new StringBuilder().append(year).append("-").append(month+1).append("-").append(day).toString();
+        return year + "-" + (month + 1) + "-" + day;
+    }
+
+    public static Date convertDateToJavaSQL(int year, int month, int day) {
+        return java.sql.Date.valueOf(formatDate(year, month, day));
     }
 
 }

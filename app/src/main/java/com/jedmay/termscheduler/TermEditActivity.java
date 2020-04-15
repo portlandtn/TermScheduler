@@ -16,11 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Date;
+
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import DataProvider.Formatter;
 import DataProvider.Validator;
 import Database.WGUTermRoomDatabase;
 import Model.Course;
@@ -33,10 +35,9 @@ public class TermEditActivity extends AppCompatActivity {
     WGUTermRoomDatabase db;
     Term term;
     long termId;
-    java.util.Date startDate, endDate;
+    Date startDate, endDate;
     String termName, title;
     Button cancelButton, deleteButton, saveButton, setStartButton, setEndButton;
-
     TextView startText, endText;
 
     int month, day, year;
@@ -51,7 +52,7 @@ public class TermEditActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        //TextViews
+        //Text and Edit Views
         termNameEditText = findViewById(R.id.termNameEditText);
         startText = findViewById(R.id.termStartDateValueTextView);
         endText = findViewById(R.id.termEndDateValueTextView);
@@ -64,6 +65,7 @@ public class TermEditActivity extends AppCompatActivity {
         setEndButton = findViewById(R.id.setTermEndDateButton);
 
         isEditing = intent.getBooleanExtra("isEditing", false);
+
         if (isEditing) {
             termId = intent.getLongExtra("termId", 0);
             term = db.termDao().getTerm(termId);
@@ -87,7 +89,7 @@ public class TermEditActivity extends AppCompatActivity {
 
         populateScreenWithExistingData(isEditing);
 
-        //Listeners
+        //On-click listeners
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +103,7 @@ public class TermEditActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         });
-                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //do nothing
@@ -113,49 +115,47 @@ public class TermEditActivity extends AppCompatActivity {
         });
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TermEditActivity.this);
-                                                alertDialogBuilder.setMessage("Are you sure you want to delete this term?");
-                                                alertDialogBuilder.setPositiveButton("Yes",
-                                                        new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface arg0, int arg1) {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TermEditActivity.this);
+                alertDialogBuilder.setMessage("Are you sure you want to delete this term?");
+                alertDialogBuilder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
 
-                                                                List<Course> courses = db.courseDao().getAllCourses();
-                                                                long[] courseIds = new long[courses.size()];
-                                                                for (int i = 0; i < courses.size(); i++) {
-                                                                    courseIds[i] = courses.get(i).getMTermId();
-                                                                }
+                                List<Course> courses = db.courseDao().getAllCourses();
+                                long[] courseIds = new long[courses.size()];
+                                for (int i = 0; i < courses.size(); i++) {
+                                    courseIds[i] = courses.get(i).getMTermId();
+                                }
 
-                                                                if (Validator.objectHasDependencies(courseIds, termId)) {
-                                                                    Toast.makeText(getApplicationContext(), "This term cannot be deleted. It has courses in it that must be deleted first.", Toast.LENGTH_LONG).show();
-                                                                }
-                                                                else {
-                                                                    db.termDao().delete(term);
-                                                                    Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
-                                                                    startActivity(intent);
-                                                                }
-                                                            }
-                                                        });
-                                                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        //do nothing
-                                                    }
-                                                });
-                                                AlertDialog alertDialog = alertDialogBuilder.create();
-                                                alertDialog.show();
-                                            }
+                                if (Validator.objectHasDependencies(courseIds, termId)) {
+                                    Toast.makeText(getApplicationContext(), "This term cannot be deleted. It has courses in it that must be deleted first.", Toast.LENGTH_LONG).show();
+                                } else {
+                                    db.termDao().delete(term);
+                                    Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do nothing
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
         });
-
-
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String[] validationString = createValidationString();
-                if (!inputIsValid(validationString)) {
+
+                if (!Validator.stringsAreNotEmpty(validationString)) {
                     Toast.makeText(getApplicationContext(), "The term name cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
@@ -178,6 +178,20 @@ public class TermEditActivity extends AppCompatActivity {
             }
         });
 
+        setStartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(999);
+            }
+        });
+
+        setEndButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(998);
+            }
+        });
+
     }
 
     private String[] createValidationString() {
@@ -197,10 +211,9 @@ public class TermEditActivity extends AppCompatActivity {
         if (isEditing) {
             startDate = DataProvider.Formatter.formatDate(db.termDao().getTerm(termId).getMStartDate());
             endDate = DataProvider.Formatter.formatDate(db.termDao().getTerm(termId).getMEndDate());
-        }
-        else {
+        } else {
             startDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
-            tempCalendar.add(Calendar.MONTH , 6);
+            tempCalendar.add(Calendar.MONTH, 6);
             endDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
         }
         startText.setText(startDate);
@@ -208,21 +221,12 @@ public class TermEditActivity extends AppCompatActivity {
 
     }
 
-    public void setStartDate(View view) {
-        showDialog(999);
-    }
-
-    public void setEndDate(View view) {
-        showDialog(998);
-    }
-
     @Override
     protected Dialog onCreateDialog(int id) {
         if (id == 999) {
             return new DatePickerDialog(this,
                     startDateListener, year, month, day);
-        } else
-            if (id == 998) {
+        } else if (id == 998) {
             return new DatePickerDialog(this,
                     endDateListener, year, month, day);
         }
@@ -237,14 +241,10 @@ public class TermEditActivity extends AppCompatActivity {
                     year = arg1;
                     month = arg2;
                     day = arg3;
-                    showDate(year, month+1, day, startText);
-                    createStartDate(year, month, day);
+                    showDate(year, month + 1, day, startText);
+                    startDate = Formatter.convertDateToJavaSQL(year, month, day);
                 }
             };
-
-    private void createStartDate(int year, int month, int day) {
-        this.startDate = Date.valueOf(DataProvider.Formatter.formatDate(year, month, day));
-    }
 
     private DatePickerDialog.OnDateSetListener endDateListener = new
             DatePickerDialog.OnDateSetListener() {
@@ -254,33 +254,19 @@ public class TermEditActivity extends AppCompatActivity {
                     year = arg1;
                     month = arg2;
                     day = arg3;
-                    showDate(year, month+1, day, endText);
-                    createEndDate(year, month, day);
+                    showDate(year, month + 1, day, endText);
+                    endDate = Formatter.convertDateToJavaSQL(year, month, day);
                 }
             };
 
-    private void createEndDate(int year, int month, int day) {
-        this.endDate = Date.valueOf(DataProvider.Formatter.formatDate(year, month, day));
-    }
 
     private void showDate(int year, int month, int day, TextView textView) {
 
-        String monthString = new DateFormatSymbols().getMonths()[month-1];
+        String monthString = new DateFormatSymbols().getMonths()[month - 1];
 
         textView.setText(new StringBuilder().append(monthString).append(" ")
                 .append(day).append(", ").append(year));
 
-    }
-
-    private boolean inputIsValid(String[] things) {
-
-        for (String item:things) {
-            if (item.isEmpty()) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     private void populateScreenWithExistingData(boolean isEditing) {

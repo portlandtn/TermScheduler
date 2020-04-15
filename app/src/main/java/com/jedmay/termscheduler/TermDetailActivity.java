@@ -26,10 +26,8 @@ public class TermDetailActivity extends AppCompatActivity {
     String title;
     WGUTermRoomDatabase db;
     Intent intent;
-    TextView startDateValueTextView;
-    TextView endDateValueTextView;
-    FloatingActionButton addCourseToTerm;
-    FloatingActionButton editTermFAB;
+    TextView startDateValueTextView, endDateValueTextView;
+    FloatingActionButton addCourseToTerm, editTermFAB;
     List<Course> courses;
     ListView courseListView;
 
@@ -49,6 +47,7 @@ public class TermDetailActivity extends AppCompatActivity {
         intent = getIntent();
         termId = intent.getLongExtra("termId", 0);
 
+        //On-click Listeners
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -60,7 +59,7 @@ public class TermDetailActivity extends AppCompatActivity {
             }
         });
 
-        //edit Term on click Listener
+        //Edit Term on click Listener
         editTermFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +80,7 @@ public class TermDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Setup the screen
+        //Setup the screen
         updateTextViews();
         updateList();
 

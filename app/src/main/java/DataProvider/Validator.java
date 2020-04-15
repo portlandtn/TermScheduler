@@ -14,4 +14,14 @@ public class Validator {
         return false;
     }
 
+    public static boolean stringsAreNotEmpty(String[] things) {
+
+        for (String item:things) {
+            if (item.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

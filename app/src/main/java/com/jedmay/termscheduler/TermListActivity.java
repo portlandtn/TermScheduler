@@ -62,7 +62,6 @@ public class TermListActivity extends AppCompatActivity {
                                    public void onClick(View v) {
                                        Intent intent = new Intent(getApplicationContext(), TermEditActivity.class);
                                        startActivity(intent);
-                                       // no need to set isEditing to false as Extra, since default is False
                                    }
                                }
         );
