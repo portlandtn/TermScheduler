@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MentorEditActivity"></activity>
-        <activity android:name=".mentorDetailActivity" />
+        <activity android:name=".MentorListActivity" />
         <activity android:name=".NoteEditActivity" />
         <activity android:name=".NoteDetailActivity" />
         <activity android:name=".AssessmentEditActivity" />

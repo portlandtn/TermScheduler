@@ -7,13 +7,39 @@
     tools:context=".CourseEditActivity">
 
     <TextView
+        android:id="@+id/courseStatusTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Mentor:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseStatusTextView" />
+
+    <Spinner
+        android:id="@+id/courseStatusSpinner2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:dropDownWidth="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/courseStatusTextView"
+        app:layout_constraintTop_toTopOf="@+id/courseStatusTextView2" />
+
+    <TextView
         android:id="@+id/courseStatusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:text="@string/course_status"
+        android:text="@string/status"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setCourseEndDateButton" />
@@ -41,7 +67,7 @@
         android:text="@string/dummy_end_date_value"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/setCourseEndDateButton"
-        app:layout_constraintStart_toEndOf="@+id/courseNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/courseEditEndDateTextView"
         app:layout_constraintTop_toTopOf="@+id/setCourseEndDateButton" />
 
     <TextView
@@ -53,7 +79,7 @@
         android:text="@string/dummy_start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/setCourseStartDateButton"
-        app:layout_constraintStart_toEndOf="@+id/courseNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/courseStartDateTextView"
         app:layout_constraintTop_toTopOf="@+id/setCourseStartDateButton" />
 
     <Button
@@ -74,7 +100,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="@string/course_name"
+        android:text="@string/name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/courseNameEditText" />
@@ -158,6 +184,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:dropDownWidth="match_parent"
+        android:entries="@array/course_statuses"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/courseStatusTextView"
         app:layout_constraintTop_toTopOf="@+id/courseStatusTextView" />

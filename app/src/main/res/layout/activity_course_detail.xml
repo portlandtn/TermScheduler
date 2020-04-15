@@ -7,30 +7,6 @@
     tools:context=".CourseDetailActivity">
 
     <TextView
-        android:id="@+id/courseStatusValueTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/in_progress"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/courseStatusTextView"
-        app:layout_constraintTop_toBottomOf="@+id/endCourseDateValueTextView" />
-
-    <TextView
-        android:id="@+id/courseStatusTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/course_status"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endCourseDateTextView" />
-
-    <TextView
         android:id="@+id/startCourseDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,6 +50,31 @@
         app:layout_constraintStart_toEndOf="@+id/startCourseDateTextView"
         app:layout_constraintStart_toStartOf="@+id/courseStatusValueTextView"
         app:layout_constraintTop_toBottomOf="@+id/startCourseDateValueTextView" />
+
+
+    <TextView
+        android:id="@+id/courseStatusValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/in_progress"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toEndOf="@+id/courseStatusTextView"
+        app:layout_constraintTop_toBottomOf="@+id/endCourseDateValueTextView" />
+
+    <TextView
+        android:id="@+id/courseStatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/course_status"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endCourseDateTextView" />
 
     <Button
         android:id="@+id/notesButton"

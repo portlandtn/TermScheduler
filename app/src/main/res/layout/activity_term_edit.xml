@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="@string/term_name"
+        android:text="@string/name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/termNameEditText"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
         android:text="@string/dummy_start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/setTermStartDateButton"
-        app:layout_constraintStart_toEndOf="@+id/termNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/termStartDateTextView"
         app:layout_constraintTop_toTopOf="@+id/setTermStartDateButton" />
 
     <Button
@@ -91,7 +91,7 @@
         android:text="@string/dummy_end_date_value"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/setTermEndDateButton"
-        app:layout_constraintStart_toEndOf="@+id/termNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/termEndDateTextView"
         app:layout_constraintTop_toTopOf="@+id/setTermEndDateButton" />
 
 
