@@ -19,8 +19,11 @@ import android.widget.Toast;
 import java.sql.Date;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
+import java.util.List;
 
+import DataProvider.Validator;
 import Database.WGUTermRoomDatabase;
+import Model.Course;
 import Model.Term;
 
 public class TermEditActivity extends AppCompatActivity {
@@ -118,9 +121,21 @@ public class TermEditActivity extends AppCompatActivity {
                                                         new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface arg0, int arg1) {
-                                                                db.termDao().delete(term);
-                                                                Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
-                                                                startActivity(intent);
+
+                                                                List<Course> courses = db.courseDao().getAllCourses();
+                                                                long[] courseIds = new long[courses.size()];
+                                                                for (int i = 0; i < courses.size(); i++) {
+                                                                    courseIds[i] = courses.get(i).getMTermId();
+                                                                }
+
+                                                                if (Validator.objectHasDependencies(courseIds, termId)) {
+                                                                    Toast.makeText(getApplicationContext(), "This term cannot be deleted. It has courses in it that must be deleted first.", Toast.LENGTH_LONG).show();
+                                                                }
+                                                                else {
+                                                                    db.termDao().delete(term);
+                                                                    Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
+                                                                    startActivity(intent);
+                                                                }
                                                             }
                                                         });
                                                 alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
