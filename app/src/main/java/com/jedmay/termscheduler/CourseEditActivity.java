@@ -23,7 +23,10 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.List;
 
+import DataProvider.Formatter;
+import DataProvider.Validator;
 import Database.WGUTermRoomDatabase;
+import Model.Assessment;
 import Model.Course;
 import Model.Mentor;
 
@@ -34,6 +37,7 @@ public class CourseEditActivity extends AppCompatActivity {
     WGUTermRoomDatabase db;
     Course course;
     long courseId;
+    long termId;
     java.util.Date startDate, endDate;
     String courseName, title;
     Button cancelButton, deleteButton, saveButton, setStartButton, setEndButton;
@@ -44,7 +48,7 @@ public class CourseEditActivity extends AppCompatActivity {
     Calendar calendar;
 
 
-    Spinner mentorSpinner;
+    Spinner mentorSpinner, statusSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +57,15 @@ public class CourseEditActivity extends AppCompatActivity {
 
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
 
+        statusSpinner = findViewById(R.id.courseStatusSpinner);
         mentorSpinner = findViewById(R.id.mentorSpinner);
         populateMentorSpinner();
 
-
-
         Intent intent = getIntent();
 
-        //TextViews
+        //Text and Edit Views
         courseNameEditText = findViewById(R.id.courseNameEditText);
-        startText = findViewById(R.id.courseStartDateTextView);
+        startText = findViewById(R.id.courseStartDateValueTextView);
         endText = findViewById(R.id.courseEndDateValueTextView);
 
         //Buttons
@@ -73,6 +76,7 @@ public class CourseEditActivity extends AppCompatActivity {
         setEndButton = findViewById(R.id.setCourseEndDateButton);
 
         isEditing = intent.getBooleanExtra("isEditing", false);
+        termId = intent.getLongExtra("termId", 0);
         if (isEditing) {
             courseId = intent.getLongExtra("courseId", 0);
             course = db.courseDao().getCourse(courseId);
@@ -83,6 +87,7 @@ public class CourseEditActivity extends AppCompatActivity {
         } else {
             deleteButton.setVisibility(View.INVISIBLE);
             course = new Course();
+            course.setMTermId(termId);
         }
 
         //Populate Data
@@ -130,9 +135,20 @@ public class CourseEditActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                                db.courseDao().delete(course);
-                                Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
-                                startActivity(intent);
+
+                                List<Assessment> assessments = db.assessmentDao().getAllAssessments();
+                                long[] assessmentIds = new long[assessments.size()];
+                                for (int i = 0; i < assessments.size(); i++) {
+                                    assessmentIds[i] = assessments.get(i).getMCourseId();
+                                }
+
+                                if (Validator.objectHasDependencies(assessmentIds, courseId)) {
+                                    Toast.makeText(getApplicationContext(), "This course cannot be deleted. It has assessments assigned to it that must be deleted first.", Toast.LENGTH_LONG).show();
+                                } else {
+                                    db.courseDao().delete(course);
+                                    Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
+                                    startActivity(intent);
+                                }
                             }
                         });
                 alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -151,7 +167,7 @@ public class CourseEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String[] validationString = createValidationString();
-                if (!inputIsValid(validationString)) {
+                if (!DataProvider.Validator.stringsAreNotEmpty(validationString)) {
                     Toast.makeText(getApplicationContext(), "The course name cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
@@ -159,14 +175,19 @@ public class CourseEditActivity extends AppCompatActivity {
                         course.setMTitle(courseName);
                         course.setMStartDate(startDate);
                         course.setMEndDate(endDate);
-                        String status = mentorSpinner.getSelectedItem().toString();
+                        course.setMTermId(termId);
+                        String status = statusSpinner.getSelectedItem().toString();
                         course.setMStatus(status);
+                        String mentorName = mentorSpinner.getSelectedItem().toString();
+                        long mentorId = db.mentorDao().getMentorIdFromName(mentorName);
+                        course.setMMentorId(mentorId);
                         if (!isEditing) {
-                            db.courseDao().insert(course);
+                            courseId = db.courseDao().insert(course);
                         } else {
                             db.courseDao().update(course);
                         }
                         Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
+                        intent.putExtra("courseId", courseId);
                         startActivity(intent);
                     } catch (Exception ex) {
                         Log.d("InsertTerm", ex.getLocalizedMessage());
@@ -175,6 +196,18 @@ public class CourseEditActivity extends AppCompatActivity {
             }
         });
 
+        setStartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(999);
+            }
+        });
+        setEndButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(998);
+            }
+        });
     }
 
     private void setUpDates() {
@@ -193,14 +226,6 @@ public class CourseEditActivity extends AppCompatActivity {
         startText.setText(startDate);
         endText.setText(endDate);
 
-    }
-
-    public void setStartDate(View view) {
-        showDialog(999);
-    }
-
-    public void setEndDate(View view) {
-        showDialog(998);
     }
 
     @Override
@@ -224,13 +249,9 @@ public class CourseEditActivity extends AppCompatActivity {
                     month = arg2;
                     day = arg3;
                     showDate(year, month + 1, day, startText);
-                    createStartDate(year, month, day);
+                    startDate = Formatter.convertDateToJavaSQL(year, month, day);
                 }
             };
-
-    private void createStartDate(int year, int month, int day) {
-        this.startDate = Date.valueOf(DataProvider.Formatter.formatDate(year, month, day));
-    }
 
     private DatePickerDialog.OnDateSetListener endDateListener = new
             DatePickerDialog.OnDateSetListener() {
@@ -241,13 +262,9 @@ public class CourseEditActivity extends AppCompatActivity {
                     month = arg2;
                     day = arg3;
                     showDate(year, month + 1, day, endText);
-                    createEndDate(year, month, day);
+                    endDate = Formatter.convertDateToJavaSQL(year, month, day);
                 }
             };
-
-    private void createEndDate(int year, int month, int day) {
-        this.endDate = Date.valueOf(DataProvider.Formatter.formatDate(year, month, day));
-    }
 
     private void showDate(int year, int month, int day, TextView textView) {
 
@@ -262,16 +279,6 @@ public class CourseEditActivity extends AppCompatActivity {
         return new String[]{
                 courseNameEditText.getText().toString()
         };
-    }
-
-    private boolean inputIsValid(String[] things) {
-        for (String item : things) {
-            if (item.isEmpty()) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     private void populateScreenWithExistingData(boolean isEditing) {

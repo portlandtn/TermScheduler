@@ -26,12 +26,16 @@ public class CourseDetailActivity extends AppCompatActivity {
     String title;
     WGUTermRoomDatabase db;
     Intent intent;
-    TextView startDateValueTextView;
-    TextView endDateValueTextView;
-    FloatingActionButton addAssessmentToCourseFAB;
-    FloatingActionButton editCourseFAB;
+    TextView startDateValueTextView, endDateValueTextView, courseStatusValueTextView, mentorValueTextView;
+    FloatingActionButton addAssessmentToCourseFAB, editCourseFAB;
     List<Assessment> assessments;
     ListView assessmentListView;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateTextViews();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,8 @@ public class CourseDetailActivity extends AppCompatActivity {
         // Setup resources
         startDateValueTextView = findViewById(R.id.startCourseDateValueTextView);
         endDateValueTextView = findViewById(R.id.endCourseDateValueTextView);
+        courseStatusValueTextView = findViewById(R.id.courseStatusValueTextView);
+        mentorValueTextView = findViewById(R.id.mentorValueTextView);
         addAssessmentToCourseFAB = findViewById(R.id.addAssessmentToCourseFAB);
         editCourseFAB = findViewById(R.id.editCourseFAB);
         assessmentListView = findViewById(R.id.assessmentListView);
@@ -98,6 +104,8 @@ public class CourseDetailActivity extends AppCompatActivity {
             String end = DataProvider.Formatter.formatDate(course.getMEndDate());
             startDateValueTextView.setText(start);
             endDateValueTextView.setText(end);
+            courseStatusValueTextView.setText(db.courseDao().getCourse(courseId).getMStatus());
+            mentorValueTextView.setText(db.mentorDao().getMentorForCourse(courseId).getMName());
         } catch (Exception ex) {
             Log.d("GetTerm", ex.getLocalizedMessage());
         }
@@ -110,7 +118,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         String[] assessmentString = new String[assessments.size()];
 
         for (int i = 0; i < assessments.size(); i++) {
-            assessmentString[i] = assessments.get(i).getMTitle();
+            assessmentString[i] = "Title: " + assessments.get(i).getMTitle() + " | Status: " + assessments.get(i).getMStatus();
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, assessmentString);

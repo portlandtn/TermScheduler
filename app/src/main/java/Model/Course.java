@@ -71,9 +71,7 @@ public class Course {
         this.mStartDate = mStartDate;
     }
 
-    public Date getMEndDate() {
-        return mEndDate;
-    }
+    public Date getMEndDate() { return mEndDate; }
 
     public void setMEndDate(Date mEndDate) {
         this.mEndDate = mEndDate;
