@@ -242,7 +242,7 @@ public class TermEditActivity extends AppCompatActivity {
                     month = arg2;
                     day = arg3;
                     showDate(year, month + 1, day, startText);
-                    startDate = Formatter.convertDateToJavaSQL(year, month, day);
+                    startDate = Formatter.convertIntegersToDate(year, month, day);
                 }
             };
 
@@ -255,7 +255,7 @@ public class TermEditActivity extends AppCompatActivity {
                     month = arg2;
                     day = arg3;
                     showDate(year, month + 1, day, endText);
-                    endDate = Formatter.convertDateToJavaSQL(year, month, day);
+                    endDate = Formatter.convertIntegersToDate(year, month, day);
                 }
             };
 

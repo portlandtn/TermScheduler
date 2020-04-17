@@ -16,11 +16,8 @@ public interface MentorDao {
     @Query("SELECT * FROM mentor_table ORDER BY id")
     List<Mentor> getAllMentors();
 
-    @Query("SELECT * FROM mentor_table WHERE id = :courseId ORDER BY id")
-    Mentor getMentorForCourse(long courseId);
-
-    @Query("SELECT name FROM mentor_table ORDER BY name")
-    List<String> getAllMentorNames();
+    @Query("SELECT * FROM mentor_table WHERE id = :id ORDER BY id")
+    Mentor getMentor(long id);
 
     @Query("SELECT id FROM mentor_table WHERE name = :name")
     long getMentorIdFromName(String name);

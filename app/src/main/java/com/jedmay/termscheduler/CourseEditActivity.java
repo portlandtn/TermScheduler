@@ -18,9 +18,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Date;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import DataProvider.Formatter;
@@ -38,7 +38,7 @@ public class CourseEditActivity extends AppCompatActivity {
     Course course;
     long courseId;
     long termId;
-    java.util.Date startDate, endDate;
+    Date startDate, endDate;
     String courseName, title;
     Button cancelButton, deleteButton, saveButton, setStartButton, setEndButton;
 
@@ -76,17 +76,44 @@ public class CourseEditActivity extends AppCompatActivity {
         setEndButton = findViewById(R.id.setCourseEndDateButton);
 
         isEditing = intent.getBooleanExtra("isEditing", false);
-        termId = intent.getLongExtra("termId", 0);
         if (isEditing) {
             courseId = intent.getLongExtra("courseId", 0);
             course = db.courseDao().getCourse(courseId);
+            //setup the variables
             startDate = course.getMStartDate();
             endDate = course.getMEndDate();
             courseName = course.getMTitle();
+            termId = db.courseDao().getCourse(courseId).getMTermId();
+
+            //setup controls
             deleteButton.setVisibility(View.VISIBLE);
+            for(int i = 0; i < statusSpinner.getAdapter().getCount(); i++) {
+                if(statusSpinner.getAdapter().getItem(i).toString().contains(course.getMStatus())) {
+                    statusSpinner.setSelection(i);
+                }
+            }
+
+            for(int i = 0; i < mentorSpinner.getAdapter().getCount(); i++) {
+                if(mentorSpinner.getAdapter().getItem(i).toString().contains(db.mentorDao().getMentor(course.getMMentorId()).getMName())) {
+                    mentorSpinner.setSelection(i);
+                }
+            }
+
+//            public void setSpinText(Spinner spin, String text)
+//            {
+//                for(int i= 0; i < spin.getAdapter().getCount(); i++)
+//                {
+//                    if(spin.getAdapter().getItem(i).toString().contains(text))
+//                    {
+//                        spin.setSelection(i);
+//                    }
+//                }
+//
+//            }
         } else {
             deleteButton.setVisibility(View.INVISIBLE);
             course = new Course();
+            termId = intent.getLongExtra("termId", 0);
             course.setMTermId(termId);
         }
 
@@ -179,6 +206,7 @@ public class CourseEditActivity extends AppCompatActivity {
                         String status = statusSpinner.getSelectedItem().toString();
                         course.setMStatus(status);
                         String mentorName = mentorSpinner.getSelectedItem().toString();
+                        List<Mentor> mentors = db.mentorDao().getAllMentors();
                         long mentorId = db.mentorDao().getMentorIdFromName(mentorName);
                         course.setMMentorId(mentorId);
                         if (!isEditing) {
@@ -249,7 +277,7 @@ public class CourseEditActivity extends AppCompatActivity {
                     month = arg2;
                     day = arg3;
                     showDate(year, month + 1, day, startText);
-                    startDate = Formatter.convertDateToJavaSQL(year, month, day);
+                    startDate = Formatter.convertIntegersToDate(year, month, day);
                 }
             };
 
@@ -262,7 +290,7 @@ public class CourseEditActivity extends AppCompatActivity {
                     month = arg2;
                     day = arg3;
                     showDate(year, month + 1, day, endText);
-                    endDate = Formatter.convertDateToJavaSQL(year, month, day);
+                    endDate = Formatter.convertIntegersToDate(year, month, day);
                 }
             };
 

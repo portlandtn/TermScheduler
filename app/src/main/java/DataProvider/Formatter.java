@@ -4,21 +4,26 @@ import android.app.DatePickerDialog;
 import android.widget.DatePicker;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
 public class Formatter {
 
     public static String formatDate(Date date) {
-        return DateFormat.getDateInstance(DateFormat.LONG).format(date);
+        return date != null ? DateFormat.getDateInstance(DateFormat.LONG).format(date) : "";
     }
 
-    public static String formatDate(int year, int month, int day) {
-        return year + "-" + (month + 1) + "-" + day;
-    }
+    public static Date convertIntegersToDate(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.DAY_OF_MONTH, day);
 
-    public static Date convertDateToJavaSQL(int year, int month, int day) {
-        return java.sql.Date.valueOf(formatDate(year, month, day));
+        return cal.getTime();
+
+        //return java.sql.Date.valueOf(formatDate(year, month, day));
     }
 
 }

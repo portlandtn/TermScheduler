@@ -18,6 +18,7 @@ import java.util.List;
 import Database.WGUTermRoomDatabase;
 import Model.Assessment;
 import Model.Course;
+import Model.Mentor;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
@@ -54,6 +55,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         assessmentListView = findViewById(R.id.assessmentListView);
         intent = getIntent();
         courseId = intent.getLongExtra("courseId", 0);
+
 
         //Courses list ListView on click listener
         assessmentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,7 +107,8 @@ public class CourseDetailActivity extends AppCompatActivity {
             startDateValueTextView.setText(start);
             endDateValueTextView.setText(end);
             courseStatusValueTextView.setText(db.courseDao().getCourse(courseId).getMStatus());
-            mentorValueTextView.setText(db.mentorDao().getMentorForCourse(courseId).getMName());
+            long mentorId = db.courseDao().getCourse(courseId).getMMentorId();
+            mentorValueTextView.setText(db.mentorDao().getMentor(mentorId).getMName());
         } catch (Exception ex) {
             Log.d("GetTerm", ex.getLocalizedMessage());
         }
