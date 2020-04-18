@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -99,17 +100,6 @@ public class CourseEditActivity extends AppCompatActivity {
                 }
             }
 
-//            public void setSpinText(Spinner spin, String text)
-//            {
-//                for(int i= 0; i < spin.getAdapter().getCount(); i++)
-//                {
-//                    if(spin.getAdapter().getItem(i).toString().contains(text))
-//                    {
-//                        spin.setSelection(i);
-//                    }
-//                }
-//
-//            }
         } else {
             deleteButton.setVisibility(View.INVISIBLE);
             course = new Course();
@@ -129,6 +119,18 @@ public class CourseEditActivity extends AppCompatActivity {
         populateScreenWithExistingData(isEditing);
 
         //Listeners
+
+        mentorSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (mentorSpinner.getSelectedItem().toString() == "<Add Mentor>") {
+                    Intent intent = new Intent(getApplicationContext(), MentorEditActivity.class);
+                    intent.putExtra("previousActivity", CourseEditActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -325,11 +327,14 @@ public class CourseEditActivity extends AppCompatActivity {
         try {
 
             List<Mentor> mentors = db.mentorDao().getAllMentors();
-            String[] mentorArray = new String[mentors.size()];
+            String[] mentorArray = new String[mentors.size() + 1];
 
             for(int i = 0; i < mentors.size(); i++) {
                 mentorArray[i] = mentors.get(i).getMName();
             }
+
+            String addMentor = "<Add Mentor>";
+            mentorArray[mentors.size()] = addMentor;
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(
                     this, android.R.layout.simple_spinner_item, mentorArray);
