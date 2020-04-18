@@ -7,13 +7,13 @@
     tools:context=".CourseEditActivity">
 
     <Button
-        android:id="@+id/setCourseEndDateButton2"
+        android:id="@+id/editMentorButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="Add Mentor"
+        android:text="@string/edit_mentor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseStatusSpinner" />
 
@@ -33,15 +33,16 @@
         android:id="@+id/mentorSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:dropDownWidth="match_parent"
-        app:layout_constraintBottom_toBottomOf="@+id/setCourseEndDateButton2"
-        app:layout_constraintEnd_toStartOf="@+id/setCourseEndDateButton2"
-        app:layout_constraintStart_toEndOf="@+id/courseStatusTextView"
-        app:layout_constraintTop_toTopOf="@+id/setCourseEndDateButton2" />
+        app:layout_constraintBottom_toBottomOf="@+id/editMentorButton"
+        app:layout_constraintEnd_toStartOf="@+id/editMentorButton"
+        app:layout_constraintStart_toEndOf="@+id/courseStatusTextView2"
+        app:layout_constraintStart_toStartOf="@+id/courseStatusSpinner"
+        app:layout_constraintTop_toTopOf="@+id/editMentorButton" />
 
     <TextView
         android:id="@+id/courseStatusTextView"

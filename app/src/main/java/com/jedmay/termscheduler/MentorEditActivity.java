@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +22,7 @@ import Model.Mentor;
 public class MentorEditActivity extends AppCompatActivity {
 
     boolean isEditing;
-    long mentorId;
+    long mentorId, courseId;
     Mentor mentor;
 
     EditText mentorName, mentorEmailAddress, mentorPhoneNumber;
@@ -44,12 +45,13 @@ public class MentorEditActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancelEditMentorButton);
         deleteButton = findViewById(R.id.deleteMentorButton);
         saveButton = findViewById(R.id.saveMentorButton);
-        Intent intent = getIntent();
 
+        Intent intent = getIntent();
+        isEditing = intent.getBooleanExtra("isEditing", false);
 
         if (isEditing) {
-            isEditing = intent.getBooleanExtra("isEditing", false);
             mentorId = intent.getLongExtra("mentorId", 0);
+            courseId = intent.getLongExtra("courseId", 0);
             mentor = db.mentorDao().getMentor(mentorId);
 
             mentorName.setText(mentor.getMName());
@@ -69,9 +71,7 @@ public class MentorEditActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                                Intent intent;
-                                intent = isEditing ? new Intent(getApplicationContext(), MentorListActivity.class) : new Intent(getApplicationContext(), CourseEditActivity.class);
-                                startActivity(intent);
+                                createAndStartIntent();
                             }
                         });
                 alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -95,9 +95,8 @@ public class MentorEditActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
 
-                                    db.mentorDao().delete(mentor);
-                                    Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
-                                    startActivity(intent);
+                                db.mentorDao().delete(mentor);
+                                createAndStartIntent();
                                 }
 
                         });
@@ -112,5 +111,43 @@ public class MentorEditActivity extends AppCompatActivity {
             }
         });
 
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] validationString = createValidationString();
+                if (!DataProvider.Validator.stringsAreNotEmpty(validationString)) {
+                    Toast.makeText(getApplicationContext(), "The mentor name cannot be blank.", Toast.LENGTH_SHORT).show();
+                } else {
+                    try {
+                        mentor.setMName(mentorName.getText().toString());
+                        mentor.setMEmail(mentorEmailAddress.getText().toString());
+                        mentor.setMPhone(mentorPhoneNumber.getText().toString());
+
+                        if (!isEditing) {
+                            mentorId = db.mentorDao().insert(mentor);
+                        } else {
+                            db.mentorDao().update(mentor);
+                        }
+
+                        //The only way to get to this screen is from the CourseEditActivity, while editing a course.
+                        createAndStartIntent();
+                    } catch (Exception ex) {
+                        Log.d("InsertMentor", ex.getLocalizedMessage());
+                    }
+                }
+            }
+        });
+
+    }
+
+    private String[] createValidationString() {
+        return new String[] {mentorName.getText().toString()};
+    }
+
+    private void createAndStartIntent() {
+        Intent intent= new Intent(getApplicationContext(), CourseEditActivity.class);;
+        intent.putExtra("isEditing", true);
+        intent.putExtra("courseId", courseId);
+        startActivity(intent);
     }
 }

@@ -41,7 +41,7 @@ public class CourseEditActivity extends AppCompatActivity {
     long termId;
     Date startDate, endDate;
     String courseName, title;
-    Button cancelButton, deleteButton, saveButton, setStartButton, setEndButton;
+    Button cancelButton, deleteButton, saveButton, editMentorButton, setStartButton, setEndButton;
 
     TextView startText, endText;
 
@@ -70,6 +70,7 @@ public class CourseEditActivity extends AppCompatActivity {
         endText = findViewById(R.id.courseEndDateValueTextView);
 
         //Buttons
+        editMentorButton = findViewById(R.id.editMentorButton);
         saveButton = findViewById(R.id.saveCourseButton);
         cancelButton = findViewById(R.id.cancelCourseButton);
         deleteButton = findViewById(R.id.deleteCourseButton);
@@ -120,14 +121,19 @@ public class CourseEditActivity extends AppCompatActivity {
 
         //Listeners
 
-        mentorSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mentorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mentorSpinner.getSelectedItem().toString() == "<Add Mentor>") {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (mentorSpinner.getSelectedItem().toString().equals("<Add Mentor>")) {
                     Intent intent = new Intent(getApplicationContext(), MentorEditActivity.class);
                     intent.putExtra("previousActivity", CourseEditActivity.class);
                     startActivity(intent);
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //do nothing
             }
         });
 
@@ -208,7 +214,6 @@ public class CourseEditActivity extends AppCompatActivity {
                         String status = statusSpinner.getSelectedItem().toString();
                         course.setMStatus(status);
                         String mentorName = mentorSpinner.getSelectedItem().toString();
-                        List<Mentor> mentors = db.mentorDao().getAllMentors();
                         long mentorId = db.mentorDao().getMentorIdFromName(mentorName);
                         course.setMMentorId(mentorId);
                         if (!isEditing) {
@@ -223,6 +228,18 @@ public class CourseEditActivity extends AppCompatActivity {
                         Log.d("InsertTerm", ex.getLocalizedMessage());
                     }
                 }
+            }
+        });
+
+        editMentorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MentorEditActivity.class);
+                String mentorName = mentorSpinner.getSelectedItem().toString();
+                long mentorId = db.mentorDao().getMentorIdFromName(mentorName);
+                intent.putExtra("mentorId", mentorId);
+                intent.putExtra("isEditing", true);
+                startActivity(intent);
             }
         });
 

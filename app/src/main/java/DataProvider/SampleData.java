@@ -149,7 +149,7 @@ public class SampleData extends AppCompatActivity {
         Calendar end = Calendar.getInstance();
 
         end.add(Calendar.DATE, 6);
-        assessment1.setMTitle("First Attempt");
+        assessment1.setMTitle("ABM1 - Mobile App");
         assessment1.setMStartDate(start.getTime());
         assessment1.setMEndDate(end.getTime());
         assessment1.setMCourseId(db.courseDao().getAllCourses().get(2).getId());
@@ -157,7 +157,7 @@ public class SampleData extends AppCompatActivity {
 
         start.add(Calendar.DATE, 6);
         end.add(Calendar.DATE, 6);
-        assessment2.setMTitle("Second Attempt");
+        assessment2.setMTitle("ABM2 - Mobile App 2");
         assessment2.setMStartDate(start.getTime());
         assessment2.setMEndDate(end.getTime());
         assessment2.setMCourseId(db.courseDao().getAllCourses().get(0).getId());
@@ -165,7 +165,7 @@ public class SampleData extends AppCompatActivity {
 
         start.add(Calendar.DATE, 6);
         end.add(Calendar.DATE, 6);
-        assessment3.setMTitle("Another Attempt");
+        assessment3.setMTitle("ENG1 - English");
         assessment3.setMStartDate(start.getTime());
         assessment3.setMEndDate(end.getTime());
         assessment3.setMCourseId(db.courseDao().getAllCourses().get(1).getId());
