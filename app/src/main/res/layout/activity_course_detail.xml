@@ -101,7 +101,7 @@
         app:layout_constraintTop_toBottomOf="@+id/endCourseDateTextView" />
 
     <Button
-        android:id="@+id/notesButton"
+        android:id="@+id/viewNotesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

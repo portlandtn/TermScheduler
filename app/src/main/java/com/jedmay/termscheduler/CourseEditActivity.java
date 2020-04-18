@@ -48,7 +48,6 @@ public class CourseEditActivity extends AppCompatActivity {
     int month, day, year;
     Calendar calendar;
 
-
     Spinner mentorSpinner, statusSpinner;
 
     @Override

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class CourseDetailActivity extends AppCompatActivity {
     WGUTermRoomDatabase db;
     Intent intent;
     TextView startDateValueTextView, endDateValueTextView, courseStatusValueTextView, mentorValueTextView;
+    Button viewNotesButton;
     FloatingActionButton addAssessmentToCourseFAB, editCourseFAB;
     List<Assessment> assessments;
     ListView assessmentListView;
@@ -50,6 +52,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         endDateValueTextView = findViewById(R.id.endCourseDateValueTextView);
         courseStatusValueTextView = findViewById(R.id.courseStatusValueTextView);
         mentorValueTextView = findViewById(R.id.mentorValueTextView);
+        viewNotesButton = findViewById(R.id.viewNotesButton);
         addAssessmentToCourseFAB = findViewById(R.id.addAssessmentToCourseFAB);
         editCourseFAB = findViewById(R.id.editCourseFAB);
         assessmentListView = findViewById(R.id.assessmentListView);
@@ -85,6 +88,15 @@ public class CourseDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AssessmentEditActivity.class);
+                intent.putExtra("courseId", courseId);
+                startActivity(intent);
+            }
+        });
+
+        viewNotesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), NoteDetailActivity.class);
                 intent.putExtra("courseId", courseId);
                 startActivity(intent);
             }

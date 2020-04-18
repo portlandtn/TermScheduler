@@ -186,7 +186,7 @@ public class SampleData extends AppCompatActivity {
 
         mentor3.setMName("Mein Utzich");
         mentor3.setMPhone("978-493-4958");
-        mentor3.setMEmail("butnotreally@fakeNews.com");
+        mentor3.setMEmail("couldbearash@fakeNews.com");
 
         db.mentorDao().insertAllMentors(mentor1, mentor2, mentor3);
 
@@ -200,7 +200,7 @@ public class SampleData extends AppCompatActivity {
         note2.setMCourseId(db.courseDao().getAllCourses().get(0).getId());
 
         note3.setMNote("Yet one more note test for the assessments.");
-        note3.setMCourseId(db.courseDao().getAllCourses().get(1).getId());
+        note3.setMCourseId(db.courseDao().getAllCourses().get(2).getId());
 
         db.noteDao().insertAllNotes(note1, note2, note3);
 
