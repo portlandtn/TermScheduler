@@ -154,6 +154,7 @@ public class SampleData extends AppCompatActivity {
         assessment1.setMEndDate(end.getTime());
         assessment1.setMCourseId(db.courseDao().getAllCourses().get(2).getId());
         assessment1.setMStatus(assessmentStatuses[2]);
+        assessment1.setMType("Performance");
 
         start.add(Calendar.DATE, 6);
         end.add(Calendar.DATE, 6);
@@ -162,6 +163,8 @@ public class SampleData extends AppCompatActivity {
         assessment2.setMEndDate(end.getTime());
         assessment2.setMCourseId(db.courseDao().getAllCourses().get(0).getId());
         assessment2.setMStatus(assessmentStatuses[0]);
+        assessment2.setMType("Performance");
+
 
         start.add(Calendar.DATE, 6);
         end.add(Calendar.DATE, 6);
@@ -170,6 +173,8 @@ public class SampleData extends AppCompatActivity {
         assessment3.setMEndDate(end.getTime());
         assessment3.setMCourseId(db.courseDao().getAllCourses().get(1).getId());
         assessment3.setMStatus(assessmentStatuses[1]);
+        assessment3.setMType("Objective");
+
 
         db.assessmentDao().insertAllAssessments(assessment1, assessment2,assessment3);
 

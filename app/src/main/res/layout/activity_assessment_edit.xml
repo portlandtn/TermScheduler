@@ -19,7 +19,7 @@
         app:layout_constraintTop_toBottomOf="@+id/assessmentEditStatusTextView" />
 
     <Spinner
-        android:id="@+id/assessmentStatusSpinner2"
+        android:id="@+id/assessmentTypeSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -87,7 +87,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:onClick="setEndDate"
         android:text="@string/set_end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/assessmentEndDateValueTextView"
@@ -171,7 +170,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:onClick="setStartDate"
         android:text="@string/set_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/assessmentStartDateValueTextView"
