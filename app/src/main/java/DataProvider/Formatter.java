@@ -1,13 +1,8 @@
 package DataProvider;
 
-import android.app.DatePickerDialog;
-import android.widget.DatePicker;
-
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 public class Formatter {
 
@@ -22,8 +17,6 @@ public class Formatter {
         cal.set(Calendar.DAY_OF_MONTH, day);
 
         return cal.getTime();
-
-        //return java.sql.Date.valueOf(formatDate(year, month, day));
     }
 
 }

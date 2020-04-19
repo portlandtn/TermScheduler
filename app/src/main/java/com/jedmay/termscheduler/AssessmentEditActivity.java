@@ -1,14 +1,28 @@
 package com.jedmay.termscheduler;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.DateFormatSymbols;
+import java.util.Calendar;
+import java.util.Date;
+
+import DataProvider.Formatter;
+import DataProvider.Validator;
 import Database.WGUTermRoomDatabase;
 import Model.Assessment;
 
@@ -20,20 +34,23 @@ public class AssessmentEditActivity extends AppCompatActivity {
     long courseId;
     String title;
     boolean isEditing;
+    Date startDate, endDate;
 
     Intent intent;
     Button cancelButton, deleteButton, saveButton, setStartDateButton, setEndDateButton;
-    TextView startDate, endDate;
+    TextView startDateTextView, endDateTextView;
+    EditText assessmentNameEditView;
 
     Spinner statusSpinner, typeSpinner;
 
+    int month, day, year;
+    Calendar calendar;
 
     @Override
     protected void onResume() {
         super.onResume();
 
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +63,11 @@ public class AssessmentEditActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancelAssessmentButton);
         deleteButton = findViewById(R.id.deleteAssessmentButton);
         saveButton = findViewById(R.id.saveAssessmentButton);
+        assessmentNameEditView = findViewById(R.id.assessmentNameEditText);
         setStartDateButton = findViewById(R.id.setAssessmentStartDateButton);
         setEndDateButton = findViewById(R.id.setAssessmentEndDateButton);
-        startDate = findViewById(R.id.startAssessmentDateValueTextView);
-        endDate = findViewById(R.id.endAssessmentDateValueTextView);
+        startDateTextView = findViewById(R.id.assessmentStartDateValueTextView);
+        endDateTextView = findViewById(R.id.assessmentEndDateValueTextView);
         statusSpinner = findViewById(R.id.assessmentStatusSpinner);
         typeSpinner = findViewById(R.id.assessmentTypeSpinner);
 
@@ -57,10 +75,18 @@ public class AssessmentEditActivity extends AppCompatActivity {
         isEditing = intent.getBooleanExtra("isEditing", false);
 
         if (isEditing) {
-            assessmentId = intent.getLongExtra("assessmentId", 0);
-            title = "Edit " + assessment.getMTitle();
-            startDate.setText(DataProvider.Formatter.formatDate(assessment.getMStartDate()));
-            endDate.setText(DataProvider.Formatter.formatDate(assessment.getMEndDate()));
+            try {
+                assessmentId = intent.getLongExtra("assessmentId", 0);
+                assessment = db.assessmentDao().getAssessment(assessmentId);
+                title = "Edit " + assessment.getMTitle();
+                assessmentNameEditView.setText(assessment.getMTitle());
+                startDate = assessment.getMStartDate();
+                endDate = assessment.getMEndDate();
+                startDateTextView.setText(DataProvider.Formatter.formatDate(startDate));
+                endDateTextView.setText(DataProvider.Formatter.formatDate(endDate));
+            } catch (Exception ex) {
+                Log.d("editingAssessment", ex.getLocalizedMessage());
+            }
 
             for(int i = 0; i < statusSpinner.getAdapter().getCount(); i++) {
                 if(statusSpinner.getAdapter().getItem(i).toString().contains(assessment.getMStatus())) {
@@ -85,6 +111,180 @@ public class AssessmentEditActivity extends AppCompatActivity {
         }
         setTitle(title);
 
+        //Populate Data
+        calendar = Calendar.getInstance();
+
+        setUpDates();
+
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        //On-click listeners
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AssessmentEditActivity.this);
+                alertDialogBuilder.setMessage("Are you sure you want to quit editing?");
+                alertDialogBuilder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                Intent intent = new Intent(getApplicationContext(), AssessmentDetailActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do nothing
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AssessmentEditActivity.this);
+                alertDialogBuilder.setMessage("Are you sure you want to delete this Assessment?");
+                alertDialogBuilder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+
+                                    db.assessmentDao().delete(assessment);
+                                    Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
+                                    intent.putExtra("courseid", courseId);
+                                    startActivity(intent);
+                            }
+                        });
+                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do nothing
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] validationString = createValidationString();
+
+                if (!Validator.stringsAreNotEmpty(validationString)) {
+                    Toast.makeText(getApplicationContext(), "The assessment name cannot be blank.", Toast.LENGTH_SHORT).show();
+                } else {
+                    try {
+                        assessment.setMTitle(assessmentNameEditView.getText().toString());
+                        assessment.setMStartDate(startDate);
+                        assessment.setMEndDate(endDate);
+                        assessment.setMCourseId(courseId);
+                        if (!isEditing) {
+                            assessmentId = db.assessmentDao().insert(assessment);
+                        } else {
+                            db.assessmentDao().update(assessment);
+                        }
+                        Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
+                        intent.putExtra("courseId", courseId);
+                        startActivity(intent);
+                    } catch (Exception ex) {
+                        Log.d("InsertAssessment", ex.getLocalizedMessage());
+                    }
+                }
+            }
+        });
+
+        setStartDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(999);
+            }
+        });
+
+        setEndDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(998);
+            }
+        });
+
+
+    }
+
+    private void setUpDates() {
+        String startDate;
+        String endDate;
+        Calendar tempCalendar = Calendar.getInstance();
+
+        if (isEditing) {
+            startDate = DataProvider.Formatter.formatDate(db.assessmentDao().getAssessment(assessmentId).getMStartDate());
+            endDate = DataProvider.Formatter.formatDate(db.assessmentDao().getAssessment(assessmentId).getMEndDate());
+        } else {
+            startDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
+            tempCalendar.add(Calendar.MONTH, 6);
+            endDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
+        }
+        startDateTextView.setText(startDate);
+        endDateTextView.setText(endDate);
+
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if (id == 999) {
+            return new DatePickerDialog(this,
+                    startDateListener, year, month, day);
+        } else if (id == 998) {
+            return new DatePickerDialog(this,
+                    endDateListener, year, month, day);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener startDateListener = new
+            DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view,
+                                      int arg1, int arg2, int arg3) {
+                    year = arg1;
+                    month = arg2;
+                    day = arg3;
+                    showDate(year, month + 1, day, startDateTextView);
+                    startDate = Formatter.convertIntegersToDate(year, month, day);
+                }
+            };
+
+    private DatePickerDialog.OnDateSetListener endDateListener = new
+            DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker arg0,
+                                      int arg1, int arg2, int arg3) {
+                    year = arg1;
+                    month = arg2;
+                    day = arg3;
+                    showDate(year, month + 1, day, endDateTextView);
+                    endDate = Formatter.convertIntegersToDate(year, month, day);
+                }
+            };
+
+
+    private void showDate(int year, int month, int day, TextView textView) {
+
+        String monthString = new DateFormatSymbols().getMonths()[month - 1];
+
+        textView.setText(new StringBuilder().append(monthString).append(" ")
+                .append(day).append(", ").append(year));
+
+    }
+
+    private String[] createValidationString() {
+        return new String[] {assessmentNameEditView.getText().toString()};
     }
 
 
