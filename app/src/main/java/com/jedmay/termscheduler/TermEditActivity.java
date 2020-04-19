@@ -1,8 +1,5 @@
 package com.jedmay.termscheduler;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -16,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
@@ -78,8 +77,9 @@ public class TermEditActivity extends AppCompatActivity {
             term = new Term();
         }
 
-        //Populate Data
         calendar = Calendar.getInstance();
+        startDate = calendar.getTime();
+        endDate = calendar.getTime();
 
         setUpDates();
 
@@ -213,7 +213,6 @@ public class TermEditActivity extends AppCompatActivity {
             endDate = DataProvider.Formatter.formatDate(db.termDao().getTerm(termId).getMEndDate());
         } else {
             startDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
-            tempCalendar.add(Calendar.MONTH, 6);
             endDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
         }
         startText.setText(startDate);

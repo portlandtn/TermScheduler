@@ -34,11 +34,11 @@ public class AssessmentEditActivity extends AppCompatActivity {
     long courseId;
     String title;
     boolean isEditing;
-    Date startDate, endDate;
+    Date plannedDate;
 
     Intent intent;
-    Button cancelButton, deleteButton, saveButton, setStartDateButton, setEndDateButton;
-    TextView startDateTextView, endDateTextView;
+    Button cancelButton, deleteButton, saveButton, setDateButton;
+    TextView plannedDateTextView;
     EditText assessmentNameEditView;
 
     Spinner statusSpinner, typeSpinner;
@@ -64,10 +64,8 @@ public class AssessmentEditActivity extends AppCompatActivity {
         deleteButton = findViewById(R.id.deleteAssessmentButton);
         saveButton = findViewById(R.id.saveAssessmentButton);
         assessmentNameEditView = findViewById(R.id.assessmentNameEditText);
-        setStartDateButton = findViewById(R.id.setAssessmentStartDateButton);
-        setEndDateButton = findViewById(R.id.setAssessmentEndDateButton);
-        startDateTextView = findViewById(R.id.assessmentStartDateValueTextView);
-        endDateTextView = findViewById(R.id.assessmentEndDateValueTextView);
+        setDateButton = findViewById(R.id.setAssessmentPlannedDateButton);
+        plannedDateTextView = findViewById(R.id.assessmentPlannedDateValueTextView);
         statusSpinner = findViewById(R.id.assessmentStatusSpinner);
         typeSpinner = findViewById(R.id.assessmentTypeSpinner);
 
@@ -80,10 +78,8 @@ public class AssessmentEditActivity extends AppCompatActivity {
                 assessment = db.assessmentDao().getAssessment(assessmentId);
                 title = "Edit " + assessment.getMTitle();
                 assessmentNameEditView.setText(assessment.getMTitle());
-                startDate = assessment.getMStartDate();
-                endDate = assessment.getMEndDate();
-                startDateTextView.setText(DataProvider.Formatter.formatDate(startDate));
-                endDateTextView.setText(DataProvider.Formatter.formatDate(endDate));
+                plannedDate = assessment.getMPlannedDate();
+                plannedDateTextView.setText(DataProvider.Formatter.formatDate(plannedDate));
             } catch (Exception ex) {
                 Log.d("editingAssessment", ex.getLocalizedMessage());
             }
@@ -132,6 +128,7 @@ public class AssessmentEditActivity extends AppCompatActivity {
                             public void onClick(DialogInterface arg0, int arg1) {
                                 Intent intent = new Intent(getApplicationContext(), AssessmentDetailActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         });
                 alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -159,6 +156,7 @@ public class AssessmentEditActivity extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
                                     intent.putExtra("courseid", courseId);
                                     startActivity(intent);
+                                    finish();
                             }
                         });
                 alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -182,9 +180,10 @@ public class AssessmentEditActivity extends AppCompatActivity {
                 } else {
                     try {
                         assessment.setMTitle(assessmentNameEditView.getText().toString());
-                        assessment.setMStartDate(startDate);
-                        assessment.setMEndDate(endDate);
+                        assessment.setMPlannedDate(plannedDate);
                         assessment.setMCourseId(courseId);
+                        assessment.setMStatus(statusSpinner.getSelectedItem().toString());
+                        assessment.setMType(typeSpinner.getSelectedItem().toString());
                         if (!isEditing) {
                             assessmentId = db.assessmentDao().insert(assessment);
                         } else {
@@ -193,6 +192,7 @@ public class AssessmentEditActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
                         intent.putExtra("courseId", courseId);
                         startActivity(intent);
+                        finish();
                     } catch (Exception ex) {
                         Log.d("InsertAssessment", ex.getLocalizedMessage());
                     }
@@ -200,38 +200,25 @@ public class AssessmentEditActivity extends AppCompatActivity {
             }
         });
 
-        setStartDateButton.setOnClickListener(new View.OnClickListener() {
+        setDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(999);
             }
         });
 
-        setEndDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(998);
-            }
-        });
-
-
     }
 
     private void setUpDates() {
-        String startDate;
-        String endDate;
+        String plannedDate;
         Calendar tempCalendar = Calendar.getInstance();
 
         if (isEditing) {
-            startDate = DataProvider.Formatter.formatDate(db.assessmentDao().getAssessment(assessmentId).getMStartDate());
-            endDate = DataProvider.Formatter.formatDate(db.assessmentDao().getAssessment(assessmentId).getMEndDate());
+            plannedDate = DataProvider.Formatter.formatDate(db.assessmentDao().getAssessment(assessmentId).getMPlannedDate());
         } else {
-            startDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
-            tempCalendar.add(Calendar.MONTH, 6);
-            endDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
+            plannedDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
         }
-        startDateTextView.setText(startDate);
-        endDateTextView.setText(endDate);
+        plannedDateTextView.setText(plannedDate);
 
     }
 
@@ -239,15 +226,12 @@ public class AssessmentEditActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         if (id == 999) {
             return new DatePickerDialog(this,
-                    startDateListener, year, month, day);
-        } else if (id == 998) {
-            return new DatePickerDialog(this,
-                    endDateListener, year, month, day);
+                    plannedDateListener, year, month, day);
         }
         return null;
     }
 
-    private DatePickerDialog.OnDateSetListener startDateListener = new
+    private DatePickerDialog.OnDateSetListener plannedDateListener = new
             DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view,
@@ -255,23 +239,11 @@ public class AssessmentEditActivity extends AppCompatActivity {
                     year = arg1;
                     month = arg2;
                     day = arg3;
-                    showDate(year, month + 1, day, startDateTextView);
-                    startDate = Formatter.convertIntegersToDate(year, month, day);
+                    showDate(year, month + 1, day, plannedDateTextView);
+                    plannedDate = Formatter.convertIntegersToDate(year, month, day);
                 }
             };
 
-    private DatePickerDialog.OnDateSetListener endDateListener = new
-            DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker arg0,
-                                      int arg1, int arg2, int arg3) {
-                    year = arg1;
-                    month = arg2;
-                    day = arg3;
-                    showDate(year, month + 1, day, endDateTextView);
-                    endDate = Formatter.convertIntegersToDate(year, month, day);
-                }
-            };
 
 
     private void showDate(int year, int month, int day, TextView textView) {

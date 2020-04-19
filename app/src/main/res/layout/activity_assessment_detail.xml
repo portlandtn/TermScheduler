@@ -47,13 +47,13 @@
 
 
     <TextView
-        android:id="@+id/startAssessmentDateTextView"
+        android:id="@+id/plannedAssessmentDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/start_date"
+        android:text="@string/planned_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/assessmentsForCourseTextView" />
@@ -65,28 +65,7 @@
         android:text="@string/dummy_start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="@+id/assessmentStatusValueTextView"
-        app:layout_constraintTop_toTopOf="@+id/startAssessmentDateTextView" />
-
-    <TextView
-        android:id="@+id/endAssessmentDateTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/end_date"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startAssessmentDateTextView" />
-
-    <TextView
-        android:id="@+id/endAssessmentDateValueTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dummy_end_date_value"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toStartOf="@+id/assessmentStatusValueTextView"
-        app:layout_constraintTop_toTopOf="@+id/endAssessmentDateTextView" />
+        app:layout_constraintTop_toTopOf="@+id/plannedAssessmentDateTextView" />
 
 
     <TextView
@@ -99,7 +78,7 @@
         android:text="@string/assessment_status"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endAssessmentDateTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/plannedAssessmentDateTextView" />
 
     <TextView
         android:id="@+id/assessmentStatusValueTextView"
@@ -107,11 +86,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
         android:text="@string/in_progress"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toEndOf="@+id/assessmentStatusTextView"
-        app:layout_constraintTop_toBottomOf="@+id/endAssessmentDateValueTextView" />
+        app:layout_constraintTop_toTopOf="@+id/assessmentStatusTextView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/editAssessmentFAB"

@@ -1,21 +1,19 @@
 package com.jedmay.termscheduler;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.List;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
-import DataProvider.Validator;
 import Database.WGUTermRoomDatabase;
-import Model.Assessment;
+import Model.Course;
 import Model.Note;
 
 public class NoteEditActivity extends AppCompatActivity {
@@ -78,6 +76,7 @@ public class NoteEditActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), NoteDetailActivity.class);
                                 intent.putExtra("courseId", courseId);
                                 startActivity(intent);
+                                finish();
                             }
                         });
                 alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -95,7 +94,7 @@ public class NoteEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(NoteEditActivity.this);
-                alertDialogBuilder.setMessage("Are you sure you want to delete this course?");
+                alertDialogBuilder.setMessage("Are you sure you want to delete this note?");
                 alertDialogBuilder.setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -104,6 +103,7 @@ public class NoteEditActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), NoteDetailActivity.class);
                                 intent.putExtra("courseId", courseId);
                                 startActivity(intent);
+                                finish();
                             }
                         });
                 alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -123,16 +123,22 @@ public class NoteEditActivity extends AppCompatActivity {
                 if (noteEditText.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "The note cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
+                    String textString = noteEditText.getText().toString();
                     note.setMNote(noteEditText.getText().toString());
-                    if (!isEditing) {
-                        db.noteDao().insert(note);
-                    }
-                    else {
-                        db.noteDao().update(note);
+                    Course course = db.courseDao().getCourse(courseId);
+                    try {
+                        if (!isEditing) {
+                            db.noteDao().insert(note);
+                        } else {
+                            db.noteDao().update(note);
+                        }
+                    } catch (Exception ex) {
+                        Log.d("SaveNote", ex.getLocalizedMessage());
                     }
                     Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
                     intent.putExtra("courseId", courseId);
                     startActivity(intent);
+                    finish();
                 }
             }
         });

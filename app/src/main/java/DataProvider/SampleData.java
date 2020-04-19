@@ -145,36 +145,28 @@ public class SampleData extends AppCompatActivity {
 
     private void populateAssessments() {
 
-        Calendar start = Calendar.getInstance();
-        Calendar end = Calendar.getInstance();
+        Calendar plannedDate = Calendar.getInstance();
 
-        end.add(Calendar.DATE, 6);
         assessment1.setMTitle("ABM1 - Mobile App");
-        assessment1.setMStartDate(start.getTime());
-        assessment1.setMEndDate(end.getTime());
+        assessment1.setMPlannedDate(plannedDate.getTime());
         assessment1.setMCourseId(db.courseDao().getAllCourses().get(2).getId());
         assessment1.setMStatus(assessmentStatuses[2]);
         assessment1.setMType("Performance");
 
-        start.add(Calendar.DATE, 6);
-        end.add(Calendar.DATE, 6);
+        plannedDate.add(Calendar.DATE, 6);
         assessment2.setMTitle("ABM2 - Mobile App 2");
-        assessment2.setMStartDate(start.getTime());
-        assessment2.setMEndDate(end.getTime());
+        assessment2.setMPlannedDate(plannedDate.getTime());
         assessment2.setMCourseId(db.courseDao().getAllCourses().get(0).getId());
         assessment2.setMStatus(assessmentStatuses[0]);
         assessment2.setMType("Performance");
 
 
-        start.add(Calendar.DATE, 6);
-        end.add(Calendar.DATE, 6);
+        plannedDate.add(Calendar.DATE, 6);
         assessment3.setMTitle("ENG1 - English");
-        assessment3.setMStartDate(start.getTime());
-        assessment3.setMEndDate(end.getTime());
+        assessment3.setMPlannedDate(plannedDate.getTime());
         assessment3.setMCourseId(db.courseDao().getAllCourses().get(1).getId());
         assessment3.setMStatus(assessmentStatuses[1]);
         assessment3.setMType("Objective");
-
 
         db.assessmentDao().insertAllAssessments(assessment1, assessment2,assessment3);
 

@@ -38,11 +38,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="@string/status"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setAssessmentEndDateButton" />
+        app:layout_constraintTop_toBottomOf="@+id/setAssessmentPlannedDateButton" />
 
     <Button
         android:id="@+id/deleteAssessmentButton"
@@ -59,38 +59,16 @@
         app:layout_constraintStart_toEndOf="@+id/cancelAssessmentButton" />
 
     <TextView
-        android:id="@+id/assessmentEndDateValueTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="@string/dummy_end_date_value"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setAssessmentEndDateButton"
-        app:layout_constraintStart_toEndOf="@+id/assessmentEditEndDateTextView"
-        app:layout_constraintTop_toTopOf="@+id/setAssessmentEndDateButton" />
-
-    <TextView
-        android:id="@+id/assessmentStartDateValueTextView"
+        android:id="@+id/assessmentPlannedDateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="@string/dummy_start_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setAssessmentStartDateButton"
+        app:layout_constraintBottom_toBottomOf="@+id/setAssessmentPlannedDateButton"
         app:layout_constraintStart_toEndOf="@+id/assessmentStartDateTextView"
-        app:layout_constraintTop_toTopOf="@+id/setAssessmentStartDateButton" />
-
-    <Button
-        android:id="@+id/setAssessmentEndDateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/set_end"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/assessmentEndDateValueTextView"
-        app:layout_constraintTop_toBottomOf="@+id/setAssessmentStartDateButton" />
+        app:layout_constraintTop_toTopOf="@+id/setAssessmentPlannedDateButton" />
 
     <TextView
         android:id="@+id/assessmentEditNameTextView"
@@ -125,23 +103,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="@string/start_date"
+        android:text="@string/planned_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setAssessmentStartDateButton"
+        app:layout_constraintBottom_toBottomOf="@+id/setAssessmentPlannedDateButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/setAssessmentStartDateButton" />
-
-    <TextView
-        android:id="@+id/assessmentEditEndDateTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:text="@string/end_date"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/setAssessmentEndDateButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/setAssessmentEndDateButton" />
+        app:layout_constraintTop_toTopOf="@+id/setAssessmentPlannedDateButton" />
 
     <Button
         android:id="@+id/saveAssessmentButton"
@@ -166,13 +132,13 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/setAssessmentStartDateButton"
+        android:id="@+id/setAssessmentPlannedDateButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:text="@string/set_start"
+        android:text="@string/set_date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/assessmentStartDateValueTextView"
+        app:layout_constraintStart_toEndOf="@+id/assessmentPlannedDateValueTextView"
         app:layout_constraintTop_toBottomOf="@+id/assessmentNameEditText" />
 
     <Spinner

@@ -44,6 +44,8 @@
     <string name="status">Status:</string>
     <string name="mentor">Mentor:</string>
     <string name="edit_mentor">Edit Mentor</string>
+    <string name="planned_date">Planned Date:</string>
+    <string name="set_date">Set Date</string>
 
     <string-array name="assessment_statuses">
         <item>Planned</item>

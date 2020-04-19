@@ -1,8 +1,5 @@
 package com.jedmay.termscheduler;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -18,6 +15,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
@@ -116,6 +116,9 @@ public class CourseEditActivity extends AppCompatActivity {
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
+        startDate = calendar.getTime();
+        endDate = calendar.getTime();
+
         populateScreenWithExistingData(isEditing);
 
         //Listeners
@@ -147,6 +150,7 @@ public class CourseEditActivity extends AppCompatActivity {
                             public void onClick(DialogInterface arg0, int arg1) {
                                 Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         });
                 alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -182,6 +186,7 @@ public class CourseEditActivity extends AppCompatActivity {
                                     db.courseDao().delete(course);
                                     Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
                                     startActivity(intent);
+                                    finish();
                                 }
                             }
                         });
@@ -223,6 +228,7 @@ public class CourseEditActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
                         intent.putExtra("courseId", courseId);
                         startActivity(intent);
+                        finish();
                     } catch (Exception ex) {
                         Log.d("InsertTerm", ex.getLocalizedMessage());
                     }
@@ -266,7 +272,6 @@ public class CourseEditActivity extends AppCompatActivity {
             endDate = DataProvider.Formatter.formatDate(db.courseDao().getCourse(courseId).getMEndDate());
         } else {
             startDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
-            tempCalendar.add(Calendar.MONTH, 6);
             endDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
         }
         startText.setText(startDate);

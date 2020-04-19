@@ -23,7 +23,7 @@ public class AssessmentDetailActivity extends AppCompatActivity {
 
     Intent intent;
 
-    TextView startDate, endDate, assessmentStatus, assessmentType;
+    TextView plannedDate, assessmentStatus, assessmentType;
     FloatingActionButton editAssessment;
 
     @Override
@@ -39,8 +39,7 @@ public class AssessmentDetailActivity extends AppCompatActivity {
 
         db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
 
-        startDate = findViewById(R.id.startAssessmentDateValueTextView);
-        endDate = findViewById(R.id.endAssessmentDateValueTextView);
+        plannedDate = findViewById(R.id.startAssessmentDateValueTextView);
         assessmentStatus = findViewById(R.id.assessmentStatusValueTextView);
         assessmentType = findViewById(R.id.assessmentTypeValueTextView);
 
@@ -71,8 +70,7 @@ public class AssessmentDetailActivity extends AppCompatActivity {
 
     private void updateTextViews() {
         try {
-            startDate.setText(DataProvider.Formatter.formatDate(assessment.getMStartDate()));
-            endDate.setText(DataProvider.Formatter.formatDate(assessment.getMEndDate()));
+            plannedDate.setText(DataProvider.Formatter.formatDate(assessment.getMPlannedDate()));
             assessmentStatus.setText(assessment.getMStatus());
             assessmentType.setText(assessment.getMType());
         } catch (Exception ex) {

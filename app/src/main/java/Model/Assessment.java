@@ -28,12 +28,8 @@ public class Assessment {
     private String mTitle;
 
     @TypeConverters(DateTimeConverter.class)
-    @ColumnInfo(name = "start_date")
-    private Date mStartDate;
-
-    @TypeConverters(DateTimeConverter.class)
-    @ColumnInfo(name = "end_date")
-    private Date mEndDate;
+    @ColumnInfo(name = "planned_date")
+    private Date mPlannedDate;
 
     @ColumnInfo(name = "courseId")
     private long mCourseId;
@@ -61,20 +57,10 @@ public class Assessment {
         this.mTitle = mTitle;
     }
 
-    public Date getMStartDate() {
-        return mStartDate;
-    }
+    public Date getMPlannedDate() {return mPlannedDate; }
 
-    public void setMStartDate(Date mStartDate) {
-        this.mStartDate = mStartDate;
-    }
-
-    public Date getMEndDate() {
-        return mEndDate;
-    }
-
-    public void setMEndDate(Date mEndDate) {
-        this.mEndDate = mEndDate;
+    public void setMPlannedDate(Date mPlannedDate) {
+        this.mPlannedDate = mPlannedDate;
     }
 
     public long getMCourseId() {

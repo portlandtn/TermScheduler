@@ -1,8 +1,5 @@
 package com.jedmay.termscheduler;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.List;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
-import DataProvider.Validator;
 import Database.WGUTermRoomDatabase;
-import Model.Course;
 import Model.Mentor;
 
 public class MentorEditActivity extends AppCompatActivity {
@@ -149,5 +145,6 @@ public class MentorEditActivity extends AppCompatActivity {
         intent.putExtra("isEditing", true);
         intent.putExtra("courseId", courseId);
         startActivity(intent);
+        finish();
     }
 }

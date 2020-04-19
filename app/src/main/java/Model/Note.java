@@ -7,7 +7,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "note_table",
-        foreignKeys = @ForeignKey(entity = Assessment.class,
+        foreignKeys = @ForeignKey(entity = Course.class,
         parentColumns = "id",
         childColumns = "course_id",
         onUpdate = ForeignKey.CASCADE,
