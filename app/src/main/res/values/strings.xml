@@ -81,5 +81,6 @@
     <string name="terms">Terms</string>
     <string name="mentors">Mentors</string>
     <string name="tracker">Tracker</string>
+    <string name="milestone_notifications_for">Milestone Notifications For</string>
 
 </resources>

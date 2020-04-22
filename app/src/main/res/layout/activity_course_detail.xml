@@ -76,6 +76,18 @@
         app:layout_constraintTop_toBottomOf="@+id/startCourseDateValueTextView" />
 
 
+    <Button
+        android:id="@+id/endDateNotificationButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/ic_volume_off_black_24dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@+id/endCourseDateValueTextView"
+        app:layout_constraintStart_toEndOf="@+id/endCourseDateValueTextView"
+        app:layout_constraintTop_toTopOf="@+id/endCourseDateValueTextView" />
+
     <TextView
         android:id="@+id/courseStatusValueTextView"
         android:layout_width="wrap_content"
@@ -104,13 +116,12 @@
         android:id="@+id/viewNotesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/view_notes"
         app:layout_constraintBottom_toTopOf="@+id/assessmentsIncludedTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/assessmentsIncludedTextView"
@@ -161,6 +172,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add_black_24dp" />
+
+    <Button
+        android:id="@+id/startDateNotificationButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/ic_volume_off_black_24dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@+id/startCourseDateValueTextView"
+        app:layout_constraintStart_toEndOf="@+id/startCourseDateValueTextView"
+        app:layout_constraintTop_toTopOf="@+id/startCourseDateValueTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

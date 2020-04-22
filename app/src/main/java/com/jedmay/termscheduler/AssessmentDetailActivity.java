@@ -24,7 +24,7 @@ public class AssessmentDetailActivity extends AppCompatActivity {
     Intent intent;
 
     TextView plannedDate, assessmentStatus, assessmentType;
-    FloatingActionButton editAssessment;
+    FloatingActionButton editAssessment, addNotification;
 
     @Override
     protected void onResume() {
@@ -60,6 +60,16 @@ public class AssessmentDetailActivity extends AppCompatActivity {
                 intent.putExtra("assessmentId", assessmentId);
                 intent.putExtra("courseId", courseId);
                 intent.putExtra("isEditing", true);
+                startActivity(intent);
+            }
+        });
+
+        addNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MilestoneNotificationActivity.class);
+                intent.putExtra("assessmentId", assessmentId);
+                intent.putExtra("courseId", courseId);
                 startActivity(intent);
             }
         });

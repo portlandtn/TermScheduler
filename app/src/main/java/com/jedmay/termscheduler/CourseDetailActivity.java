@@ -1,7 +1,5 @@
 package com.jedmay.termscheduler;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,14 +10,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+import NotificationProvider.NotificationReceiver;
 import Database.WGUTermRoomDatabase;
 import Model.Assessment;
 import Model.Course;
-import Model.Mentor;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
@@ -29,10 +29,12 @@ public class CourseDetailActivity extends AppCompatActivity {
     WGUTermRoomDatabase db;
     Intent intent;
     TextView startDateValueTextView, endDateValueTextView, courseStatusValueTextView, mentorValueTextView;
-    Button viewNotesButton;
+    Button viewNotesButton, startNotificationButton, endNotificationButton;
     FloatingActionButton addAssessmentToCourseFAB, editCourseFAB;
     List<Assessment> assessments;
     ListView assessmentListView;
+
+    NotificationReceiver notificationReceiver;
 
     @Override
     protected void onResume() {
@@ -53,9 +55,13 @@ public class CourseDetailActivity extends AppCompatActivity {
         courseStatusValueTextView = findViewById(R.id.courseStatusValueTextView);
         mentorValueTextView = findViewById(R.id.mentorValueTextView);
         viewNotesButton = findViewById(R.id.viewNotesButton);
+        startNotificationButton = findViewById(R.id.startDateNotificationButton);
+        endNotificationButton = findViewById(R.id.endDateNotificationButton);
         addAssessmentToCourseFAB = findViewById(R.id.addAssessmentToCourseFAB);
         editCourseFAB = findViewById(R.id.editCourseFAB);
         assessmentListView = findViewById(R.id.assessmentListView);
+        notificationReceiver = new NotificationReceiver();
+
         intent = getIntent();
         courseId = intent.getLongExtra("courseId", 0);
 
@@ -99,6 +105,20 @@ public class CourseDetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), NoteDetailActivity.class);
                 intent.putExtra("courseId", courseId);
                 startActivity(intent);
+            }
+        });
+
+        startNotificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        endNotificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
