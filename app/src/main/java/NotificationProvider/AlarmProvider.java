@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 public class AlarmProvider {
 
-    public static AlarmManager setAlarmManager(Context context, Calendar cal) {
+    public static void setAlarmManager(Context context, Calendar cal) {
 
         Calendar calendar = updateCalendarForAlerts(cal);
 
@@ -19,13 +19,13 @@ public class AlarmProvider {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         assert alarmManager != null;
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        return alarmManager;
     }
 
     // Sets the calendar time to 07:00, regardless of what it was
     private static Calendar updateCalendarForAlerts(Calendar cal) {
         cal.set(Calendar.HOUR, 7);
         cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
         return cal;
     }
 

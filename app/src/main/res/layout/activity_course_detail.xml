@@ -175,8 +175,8 @@
 
     <Button
         android:id="@+id/startDateNotificationButton"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="20dp"
+        android:layout_height="17dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/ic_volume_off_black_24dp"

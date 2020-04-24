@@ -82,5 +82,11 @@
     <string name="mentors">Mentors</string>
     <string name="tracker">Tracker</string>
     <string name="milestone_notifications_for">Milestone Notifications For</string>
+    <string name="title">Title</string>
+    <string name="time">Time:</string>
+    <string name="date">Date:</string>
+    <string name="milestone_title">Milestone Title</string>
+    <string name="dummy_time">13:00</string>
+    <string name="set">Set</string>
 
 </resources>
