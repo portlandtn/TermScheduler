@@ -88,5 +88,6 @@
     <string name="milestone_title">Milestone Title</string>
     <string name="dummy_time">13:00</string>
     <string name="set">Set</string>
+    <string name="milestones">Milestones</string>
 
 </resources>

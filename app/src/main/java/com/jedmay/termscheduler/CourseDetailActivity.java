@@ -36,7 +36,7 @@ public class CourseDetailActivity extends AppCompatActivity {
     WGUTermRoomDatabase db;
     Intent intent;
     TextView startDateValueTextView, endDateValueTextView, courseStatusValueTextView, mentorValueTextView;
-    Button viewNotesButton, startNotificationButton, endNotificationButton;
+    Button viewNotesButton, startNotificationButton, endNotificationButton, milestonesButton;
     FloatingActionButton addAssessmentToCourseFAB, editCourseFAB;
     List<Assessment> assessments;
     ListView assessmentListView;
@@ -63,6 +63,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         courseStatusValueTextView = findViewById(R.id.courseStatusValueTextView);
         mentorValueTextView = findViewById(R.id.mentorValueTextView);
         viewNotesButton = findViewById(R.id.viewNotesButton);
+        milestonesButton = findViewById(R.id.milestonesButton);
         startNotificationButton = findViewById(R.id.startDateNotificationButton);
         endNotificationButton = findViewById(R.id.endDateNotificationButton);
         addAssessmentToCourseFAB = findViewById(R.id.addAssessmentToCourseFAB);
@@ -116,6 +117,15 @@ public class CourseDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), NoteDetailActivity.class);
+                intent.putExtra("courseId", courseId);
+                startActivity(intent);
+            }
+        });
+
+        milestonesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MilestoneNotificationActivity.class);
                 intent.putExtra("courseId", courseId);
                 startActivity(intent);
             }

@@ -1,14 +1,13 @@
 package com.jedmay.termscheduler;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -61,6 +60,20 @@ public class NoteDetailActivity extends AppCompatActivity {
                 intent.putExtra("courseId", courseId);
                 intent.putExtra("isEditing", true);
                 startActivity(intent);
+            }
+        });
+
+        noteListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String body = notes.get(position).getMNote();
+                String subject = "Note for " + db.courseDao().getCourse(courseId).getMTitle();
+                intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                intent.putExtra(Intent.EXTRA_TEXT, body);
+                startActivity(Intent.createChooser(intent, "Share using:"));
+                return true;
             }
         });
 
