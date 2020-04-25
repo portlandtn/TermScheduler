@@ -1,7 +1,6 @@
 package com.jedmay.termscheduler;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,17 +15,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.text.DateFormatSymbols;
-import java.util.Calendar;
-import java.util.Date;
+import androidx.fragment.app.DialogFragment;
 
 import com.jedmay.termscheduler.dataProvider.Formatter;
 import com.jedmay.termscheduler.dataProvider.Validator;
 import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
 import com.jedmay.termscheduler.model.Assessment;
+import com.jedmay.termscheduler.notificationProvider.DatePickerFragment;
 
-public class AssessmentEditActivity extends AppCompatActivity {
+import java.util.Calendar;
+import java.util.Date;
+
+public class AssessmentEditActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     WGUTermRoomDatabase db;
     Assessment assessment;
@@ -43,8 +43,7 @@ public class AssessmentEditActivity extends AppCompatActivity {
 
     Spinner statusSpinner, typeSpinner;
 
-    int month, day, year;
-    Calendar calendar;
+
 
     @Override
     protected void onResume() {
@@ -76,6 +75,7 @@ public class AssessmentEditActivity extends AppCompatActivity {
             try {
                 assessmentId = intent.getLongExtra("assessmentId", 0);
                 assessment = db.assessmentDao().getAssessment(assessmentId);
+                courseId = assessment.getMCourseId();
                 title = "Edit " + assessment.getMTitle();
                 assessmentNameEditView.setText(assessment.getMTitle());
                 plannedDate = assessment.getMPlannedDate();
@@ -108,13 +108,13 @@ public class AssessmentEditActivity extends AppCompatActivity {
         setTitle(title);
 
         //Populate Data
-        calendar = Calendar.getInstance();
+//        calendar = Calendar.getInstance();
 
         setUpDates();
-
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
+//
+//        year = calendar.get(Calendar.YEAR);
+//        month = calendar.get(Calendar.MONTH);
+//        day = calendar.get(Calendar.DAY_OF_MONTH);
 
         //On-click listeners
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -203,7 +203,9 @@ public class AssessmentEditActivity extends AppCompatActivity {
         setDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(999);
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "Date Picker Fragment");
+                //showDialog(999);
             }
         });
 
@@ -211,53 +213,65 @@ public class AssessmentEditActivity extends AppCompatActivity {
 
     private void setUpDates() {
         String plannedDate;
-        Calendar tempCalendar = Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
 
         if (isEditing) {
             plannedDate = Formatter.formatDate(db.assessmentDao().getAssessment(assessmentId).getMPlannedDate());
         } else {
-            plannedDate = Formatter.formatDate(tempCalendar.getTime());
+            plannedDate = Formatter.formatDate(c.getTime());
         }
         plannedDateTextView.setText(plannedDate);
 
     }
+//
+//    @Override
+//    protected Dialog onCreateDialog(int id) {
+//        if (id == 999) {
+//            return new DatePickerDialog(this,
+//                    plannedDateListener, year, month, day);
+//        }
+//        return null;
+//    }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        if (id == 999) {
-            return new DatePickerDialog(this,
-                    plannedDateListener, year, month, day);
-        }
-        return null;
-    }
-
-    private DatePickerDialog.OnDateSetListener plannedDateListener = new
-            DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view,
-                                      int arg1, int arg2, int arg3) {
-                    year = arg1;
-                    month = arg2;
-                    day = arg3;
-                    showDate(year, month + 1, day, plannedDateTextView);
-                    plannedDate = Formatter.convertIntegersToDate(year, month, day);
-                }
-            };
+//    private DatePickerDialog.OnDateSetListener plannedDateListener = new
+//            DatePickerDialog.OnDateSetListener() {
+//                @Override
+//                public void onDateSet(DatePicker view,
+//                                      int arg1, int arg2, int arg3) {
+//                    year = arg1;
+//                    month = arg2;
+//                    day = arg3;
+//                    showDate(year, month + 1, day, plannedDateTextView);
+//                    plannedDate = Formatter.convertIntegersToDate(year, month, day);
+//                }
+//            };
 
 
 
-    private void showDate(int year, int month, int day, TextView textView) {
-
-        String monthString = new DateFormatSymbols().getMonths()[month - 1];
-
-        textView.setText(new StringBuilder().append(monthString).append(" ")
-                .append(day).append(", ").append(year));
-
-    }
+//    private void showDate(int year, int month, int day, TextView textView) {
+//
+//        String monthString = new DateFormatSymbols().getMonths()[month - 1];
+//
+//        textView.setText(new StringBuilder().append(monthString).append(" ")
+//                .append(day).append(", ").append(year));
+//
+//    }
 
     private String[] createValidationString() {
         return new String[] {assessmentNameEditView.getText().toString()};
     }
 
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        this.plannedDate = c.getTime();
+        plannedDateTextView.setText(Formatter.formatDate(plannedDate));
+
+    }
 }

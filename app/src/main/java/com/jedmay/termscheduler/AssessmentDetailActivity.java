@@ -44,7 +44,9 @@ public class AssessmentDetailActivity extends AppCompatActivity {
         assessmentStatus = findViewById(R.id.assessmentStatusValueTextView);
         assessmentType = findViewById(R.id.assessmentTypeValueTextView);
 
+
         editAssessment = findViewById(R.id.editAssessmentFAB);
+        addNotification = findViewById(R.id.addNotificationToAssessmentFAB);
 
         intent = getIntent();
         assessmentId = intent.getLongExtra("assessmentId", 0);
@@ -59,7 +61,6 @@ public class AssessmentDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AssessmentEditActivity.class);
                 intent.putExtra("assessmentId", assessmentId);
-                intent.putExtra("courseId", courseId);
                 intent.putExtra("isEditing", true);
                 startActivity(intent);
             }
@@ -68,10 +69,7 @@ public class AssessmentDetailActivity extends AppCompatActivity {
         addNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MilestoneNotificationActivity.class);
-                intent.putExtra("assessmentId", assessmentId);
-                intent.putExtra("courseId", courseId);
-                startActivity(intent);
+
             }
         });
 

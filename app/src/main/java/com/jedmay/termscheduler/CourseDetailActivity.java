@@ -1,6 +1,10 @@
 package com.jedmay.termscheduler;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,7 +23,10 @@ import com.jedmay.termscheduler.dataProvider.Formatter;
 import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
 import com.jedmay.termscheduler.model.Assessment;
 import com.jedmay.termscheduler.model.Course;
+import com.jedmay.termscheduler.notificationProvider.Constants;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CourseDetailActivity extends AppCompatActivity {
@@ -25,7 +34,7 @@ public class CourseDetailActivity extends AppCompatActivity {
     Course course;
     long courseId;
     String title;
-    boolean startAlarmIsSet, endAlarmIsSet;
+    Calendar cal;
     WGUTermRoomDatabase db;
     Intent intent;
     TextView startDateValueTextView, endDateValueTextView, courseStatusValueTextView, mentorValueTextView;
@@ -59,6 +68,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         addAssessmentToCourseFAB = findViewById(R.id.addAssessmentToCourseFAB);
         editCourseFAB = findViewById(R.id.editCourseFAB);
         assessmentListView = findViewById(R.id.assessmentListView);
+        cal = Calendar.getInstance();
 
         intent = getIntent();
         courseId = intent.getLongExtra("courseId", 0);
@@ -116,22 +126,51 @@ public class CourseDetailActivity extends AppCompatActivity {
         });
 
         startNotificationButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
 
+                Calendar c = Calendar.getInstance();
+
+                Date date = course.getMStartDate();
+                c.setTime(date);
+                c.set(Calendar.HOUR_OF_DAY,10);
+                c.set(Calendar.MINUTE, 2);
+                c.set(Calendar.SECOND, 0);
+                startAlarm(c);
             }
         });
 
         endNotificationButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
 
+                Calendar c = Calendar.getInstance();
+
+                Date date = course.getMEndDate();
+                c.setTime(date);
+                c.set(Calendar.HOUR_OF_DAY,10);
+                c.set(Calendar.MINUTE, 4);
+                c.set(Calendar.SECOND, 0);
+                startAlarm(c);
             }
         });
 
         // Setup the screen
         updateTextViews();
         updateList();
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void startAlarm(Calendar c) {
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Constants.notificationTitle = "Alarm for " + db.courseDao().getCourse(courseId).getMTitle();
+        Intent intent = new Intent(this, CourseDetailActivity.class);
+        PendingIntent pi = PendingIntent.getBroadcast(this, 2, intent, 0);
+        am.setExact(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);
+        Toast.makeText(getApplicationContext(),"Your alarm is set for " + c.getTime(),Toast.LENGTH_LONG).show();
 
     }
 

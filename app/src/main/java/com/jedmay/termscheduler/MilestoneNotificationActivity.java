@@ -54,6 +54,8 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
         setDateButton = findViewById(R.id.setMilestoneDateButton);
         setTimeButton = findViewById(R.id.setMilestoneTimeButton);
         newAlarmButton = findViewById(R.id.newAlarmButton);
+        saveButton = findViewById(R.id.saveMilestoneButton);
+        cancelButton = findViewById(R.id.cancelMilestoneButton);
         milestoneTitleEditText = findViewById(R.id.milestoneTitleEditText);
         milestoneDateTextView = findViewById(R.id.milestoneDateValueTextView);
         milestoneTimeTextView = findViewById(R.id.milestoneTimeValueTextView);
@@ -138,7 +140,7 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
         milestoneDateTextView.setText(java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG).format(cal.getTime()));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void startAlarm() {
         String title = milestoneTitleEditText.getText().toString();
         if (title.isEmpty()) {
@@ -148,7 +150,8 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
             Constants.notificationTitle = milestoneTitleEditText.getText().toString();
             Intent intent = new Intent(this, NotificationReceiver.class);
             PendingIntent pi = PendingIntent.getBroadcast(this, 1, intent, 0);
-            am.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+            //am.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+            am.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pi);
         }
     }
 
