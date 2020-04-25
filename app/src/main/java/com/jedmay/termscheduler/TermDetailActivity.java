@@ -15,9 +15,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import Database.WGUTermRoomDatabase;
-import Model.Course;
-import Model.Term;
+import com.jedmay.termscheduler.dataProvider.Formatter;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Course;
+import com.jedmay.termscheduler.model.Term;
 
 public class TermDetailActivity extends AppCompatActivity {
 
@@ -92,8 +93,8 @@ public class TermDetailActivity extends AppCompatActivity {
             term = db.termDao().getTerm(termId);
             title = term.getMTitle();
             setTitle(title + " Detail");
-            String start = DataProvider.Formatter.formatDate(term.getMStartDate());
-            String end = DataProvider.Formatter.formatDate(term.getMEndDate());
+            String start = Formatter.formatDate(term.getMStartDate());
+            String end = Formatter.formatDate(term.getMEndDate());
             startDateValueTextView.setText(start);
             endDateValueTextView.setText(end);
         } catch (Exception ex) {

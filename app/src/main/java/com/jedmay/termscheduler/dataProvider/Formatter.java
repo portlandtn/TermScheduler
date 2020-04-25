@@ -1,4 +1,4 @@
-package DataProvider;
+package com.jedmay.termscheduler.dataProvider;
 
 import java.text.DateFormat;
 import java.util.Calendar;

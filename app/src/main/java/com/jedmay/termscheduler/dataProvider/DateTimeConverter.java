@@ -1,4 +1,4 @@
-package DataProvider;
+package com.jedmay.termscheduler.dataProvider;
 
 import androidx.room.TypeConverter;
 

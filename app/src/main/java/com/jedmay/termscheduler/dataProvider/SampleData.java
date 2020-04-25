@@ -1,4 +1,4 @@
-package DataProvider;
+package com.jedmay.termscheduler.dataProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,12 +11,12 @@ import com.jedmay.termscheduler.R;
 
 import java.util.Calendar;
 
-import Database.WGUTermRoomDatabase;
-import Model.Assessment;
-import Model.Course;
-import Model.Mentor;
-import Model.Note;
-import Model.Term;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Assessment;
+import com.jedmay.termscheduler.model.Course;
+import com.jedmay.termscheduler.model.Mentor;
+import com.jedmay.termscheduler.model.Note;
+import com.jedmay.termscheduler.model.Term;
 
 @SuppressLint("Registered")
 public class SampleData extends AppCompatActivity {

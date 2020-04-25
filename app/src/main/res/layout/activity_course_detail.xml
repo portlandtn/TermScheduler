@@ -10,12 +10,12 @@
         android:id="@+id/milestonesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/milestones"
-        app:layout_constraintBottom_toTopOf="@+id/viewNotesButton"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mentorValueTextView" />
 
     <TextView
         android:id="@+id/mentorValueTextView"
@@ -129,21 +129,19 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/view_notes"
-        app:layout_constraintBottom_toTopOf="@+id/assessmentsIncludedTextView"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/milestonesButton" />
 
     <TextView
         android:id="@+id/assessmentsIncludedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="@string/assessments_included"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mentorTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/milestonesButton" />
 
     <ListView
         android:id="@+id/assessmentListView"
@@ -186,8 +184,8 @@
 
     <Button
         android:id="@+id/startDateNotificationButton"
-        android:layout_width="20dp"
-        android:layout_height="17dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/ic_volume_off_black_24dp"

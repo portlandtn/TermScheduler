@@ -24,12 +24,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import DataProvider.Formatter;
-import DataProvider.Validator;
-import Database.WGUTermRoomDatabase;
-import Model.Assessment;
-import Model.Course;
-import Model.Mentor;
+import com.jedmay.termscheduler.dataProvider.Formatter;
+import com.jedmay.termscheduler.dataProvider.Validator;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Assessment;
+import com.jedmay.termscheduler.model.Course;
+import com.jedmay.termscheduler.model.Mentor;
 
 public class CourseEditActivity extends AppCompatActivity {
 
@@ -206,7 +206,7 @@ public class CourseEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String[] validationString = createValidationString();
-                if (!DataProvider.Validator.stringsAreNotEmpty(validationString)) {
+                if (!Validator.stringsAreNotEmpty(validationString)) {
                     Toast.makeText(getApplicationContext(), "The course name cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
@@ -268,11 +268,11 @@ public class CourseEditActivity extends AppCompatActivity {
         Calendar tempCalendar = Calendar.getInstance();
 
         if (isEditing) {
-            startDate = DataProvider.Formatter.formatDate(db.courseDao().getCourse(courseId).getMStartDate());
-            endDate = DataProvider.Formatter.formatDate(db.courseDao().getCourse(courseId).getMEndDate());
+            startDate = Formatter.formatDate(db.courseDao().getCourse(courseId).getMStartDate());
+            endDate = Formatter.formatDate(db.courseDao().getCourse(courseId).getMEndDate());
         } else {
-            startDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
-            endDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
+            startDate = Formatter.formatDate(tempCalendar.getTime());
+            endDate = Formatter.formatDate(tempCalendar.getTime());
         }
         startText.setText(startDate);
         endText.setText(endDate);

@@ -12,9 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import Database.WGUTermRoomDatabase;
-import Model.Course;
-import Model.Note;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Course;
+import com.jedmay.termscheduler.model.Note;
 
 public class NoteEditActivity extends AppCompatActivity {
 

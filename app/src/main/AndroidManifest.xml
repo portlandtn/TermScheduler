@@ -3,7 +3,6 @@
     package="com.jedmay.termscheduler">
 
     <application
-        android:name="NotificationProvider.AppStartup"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -29,14 +28,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".notificationProvider.NotificationHelper" />
 
         <receiver
-            android:name="NotificationProvider.NotificationReceiver"
+            android:name=".notificationProvider.NotificationReceiver"
             android:enabled="true"
             android:exported="false" >
         </receiver>
-
-        <service android:name="NotificationProvider.NotificationIntentService" />
     </application>
 
 </manifest>

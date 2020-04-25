@@ -2,32 +2,33 @@ package com.jedmay.termscheduler;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.DialogFragment;
 
-import java.util.Calendar;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Course;
+import com.jedmay.termscheduler.notificationProvider.Constants;
+import com.jedmay.termscheduler.notificationProvider.DatePickerFragment;
+import com.jedmay.termscheduler.notificationProvider.NotificationReceiver;
+import com.jedmay.termscheduler.notificationProvider.TimePickerFragment;
 
-import Database.WGUTermRoomDatabase;
-import Model.Course;
-import NotificationProvider.DatePickerFragment;
-import NotificationProvider.TimePicker;
+import java.util.Calendar;
 
 public class MilestoneNotificationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
@@ -38,11 +39,11 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
     PendingIntent pi;
 
     TextView milestoneDateTextView, milestoneTimeTextView;
-    Button setDateButton, setTimeButton;
+    EditText milestoneTitleEditText;
+    Button setDateButton, setTimeButton, newAlarmButton, cancelButton, saveButton;
+    ListView notificationsListView;
 
     Calendar cal;
-
-    AlarmManager am;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -52,8 +53,11 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
 
         setDateButton = findViewById(R.id.setMilestoneDateButton);
         setTimeButton = findViewById(R.id.setMilestoneTimeButton);
+        newAlarmButton = findViewById(R.id.newAlarmButton);
+        milestoneTitleEditText = findViewById(R.id.milestoneTitleEditText);
         milestoneDateTextView = findViewById(R.id.milestoneDateValueTextView);
         milestoneTimeTextView = findViewById(R.id.milestoneTimeValueTextView);
+        notificationsListView = findViewById(R.id.notificationsListView);
 
         Intent i = getIntent();
         cal = Calendar.getInstance();
@@ -62,15 +66,10 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
         courseId = i.getLongExtra("courseId", 0);
         course = db.courseDao().getCourse(courseId);
 
-        Intent intent = new Intent(getApplicationContext(), AssessmentDetailActivity.class);
-        intent.putExtra("courseId", courseId);
-
-        pi = PendingIntent.getActivity(this,0, intent, 0);
-
         setTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment timePicker = new TimePicker();
+                DialogFragment timePicker = new TimePickerFragment();
                 timePicker.show(getSupportFragmentManager(),"DialogTimeFragment");
             }
         });
@@ -82,34 +81,42 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
                 datePicker.show(getSupportFragmentManager(), "Date Picker Fragment");
             }
         });
-    }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    void showNotification(String title, String message) {
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        newAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                milestoneTitleEditText.setText("");
+            }
+        });
 
-        String channelId = "notif_channel";
-        CharSequence channelName = "notificationChannel";
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
-        notificationChannel.enableLights(true);
-        notificationChannel.setLightColor(Color.BLUE);
-        notificationChannel.enableVibration(true);
-        notificationChannel.setVibrationPattern(new long[]{100, 200, 100});
-        assert notificationManager != null;
-        notificationManager.createNotificationChannel(notificationChannel);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAlarm();
+                Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
+                intent.putExtra("courseId", courseId);
+                startActivity(intent);
+                finish();
+            }
+        });
 
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
+                intent.putExtra("courseId", courseId);
+                startActivity(intent);
+                finish();
+            }
+        });
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.ic_add_alert_black_24dp)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pi)
-                .setAutoCancel(true);
+        notificationsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        notificationManager.notify(1, builder.build());
+            }
+        });
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -117,8 +124,9 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
     public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
         cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
         cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.SECOND, 0);
 
-        milestoneTimeTextView.setText(DateFormat.format("h:mm aa",cal.getTime()));
+        milestoneTimeTextView.setText(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT).format(cal.getTime()));
     }
 
     @Override
@@ -127,6 +135,21 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
         cal.set(Calendar.MONTH, month);
         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        milestoneDateTextView.setText(DateFormat.format("MMMM dd, yyyy", cal.getTime()));
+        milestoneDateTextView.setText(java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG).format(cal.getTime()));
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void startAlarm() {
+        String title = milestoneTitleEditText.getText().toString();
+        if (title.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "You must enter an alarm before creating an alarm.",Toast.LENGTH_SHORT).show();
+        } else {
+            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Constants.notificationTitle = milestoneTitleEditText.getText().toString();
+            Intent intent = new Intent(this, NotificationReceiver.class);
+            PendingIntent pi = PendingIntent.getBroadcast(this, 1, intent, 0);
+            am.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+        }
+    }
+
 }

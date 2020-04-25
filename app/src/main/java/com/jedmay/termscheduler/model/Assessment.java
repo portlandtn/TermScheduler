@@ -1,4 +1,4 @@
-package Model;
+package com.jedmay.termscheduler.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -9,7 +9,7 @@ import androidx.room.TypeConverters;
 
 import java.util.Date;
 
-import DataProvider.DateTimeConverter;
+import com.jedmay.termscheduler.dataProvider.DateTimeConverter;
 
 @Entity(tableName ="assessment_table",
         foreignKeys = @ForeignKey(entity = Course.class,

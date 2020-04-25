@@ -1,4 +1,4 @@
-package Database;
+package com.jedmay.termscheduler.database;
 
 import android.content.Context;
 
@@ -6,16 +6,16 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import Dao.AssessmentDao;
-import Dao.CourseDao;
-import Dao.MentorDao;
-import Dao.NoteDao;
-import Dao.TermDao;
-import Model.Assessment;
-import Model.Course;
-import Model.Mentor;
-import Model.Note;
-import Model.Term;
+import com.jedmay.termscheduler.dao.AssessmentDao;
+import com.jedmay.termscheduler.dao.CourseDao;
+import com.jedmay.termscheduler.dao.MentorDao;
+import com.jedmay.termscheduler.dao.NoteDao;
+import com.jedmay.termscheduler.dao.TermDao;
+import com.jedmay.termscheduler.model.Assessment;
+import com.jedmay.termscheduler.model.Course;
+import com.jedmay.termscheduler.model.Mentor;
+import com.jedmay.termscheduler.model.Note;
+import com.jedmay.termscheduler.model.Term;
 
 @Database(entities = {Assessment.class, Course.class, Mentor.class, Note.class, Term.class}, version = 3, exportSchema = false)
 public abstract class WGUTermRoomDatabase extends RoomDatabase {

@@ -1,4 +1,4 @@
-package Model;
+package com.jedmay.termscheduler.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -7,7 +7,7 @@ import androidx.room.TypeConverters;
 
 import java.util.Date;
 
-import DataProvider.DateTimeConverter;
+import com.jedmay.termscheduler.dataProvider.DateTimeConverter;
 
 @Entity(tableName = "term_table")
 public class Term {

@@ -12,8 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import Database.WGUTermRoomDatabase;
-import Model.Mentor;
+import com.jedmay.termscheduler.dataProvider.Validator;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Mentor;
 
 public class MentorEditActivity extends AppCompatActivity {
 
@@ -111,7 +112,7 @@ public class MentorEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String[] validationString = createValidationString();
-                if (!DataProvider.Validator.stringsAreNotEmpty(validationString)) {
+                if (!Validator.stringsAreNotEmpty(validationString)) {
                     Toast.makeText(getApplicationContext(), "The mentor name cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
                     try {

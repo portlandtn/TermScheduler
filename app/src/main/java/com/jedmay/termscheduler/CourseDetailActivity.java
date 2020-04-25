@@ -1,8 +1,6 @@
 package com.jedmay.termscheduler;
 
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,21 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jedmay.termscheduler.dataProvider.Formatter;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Assessment;
+import com.jedmay.termscheduler.model.Course;
 
-import java.util.Calendar;
 import java.util.List;
-
-import Database.WGUTermRoomDatabase;
-import Model.Assessment;
-import Model.Course;
-import NotificationProvider.NotificationReceiver;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
@@ -40,9 +33,6 @@ public class CourseDetailActivity extends AppCompatActivity {
     FloatingActionButton addAssessmentToCourseFAB, editCourseFAB;
     List<Assessment> assessments;
     ListView assessmentListView;
-
-    NotificationManagerCompat notificationManager;
-    NotificationReceiver notificationReceiver;
 
     @Override
     protected void onResume() {
@@ -69,12 +59,6 @@ public class CourseDetailActivity extends AppCompatActivity {
         addAssessmentToCourseFAB = findViewById(R.id.addAssessmentToCourseFAB);
         editCourseFAB = findViewById(R.id.editCourseFAB);
         assessmentListView = findViewById(R.id.assessmentListView);
-
-        //Notifications
-        notificationManager = NotificationManagerCompat.from(this);
-        notificationReceiver = new NotificationReceiver();
-
-        startAlarmIsSet = (PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(getApplicationContext(), CourseDetailActivity.class), PendingIntent.FLAG_NO_CREATE) != null);
 
         intent = getIntent();
         courseId = intent.getLongExtra("courseId", 0);
@@ -132,16 +116,9 @@ public class CourseDetailActivity extends AppCompatActivity {
         });
 
         startNotificationButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
-                NotificationProvider.AlarmProvider.setAlarmManager(getApplicationContext(), Calendar.getInstance());
-                startAlarmIsSet = (PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(getApplicationContext(), CourseDetailActivity.class), PendingIntent.FLAG_NO_CREATE) != null);
-                if (startAlarmIsSet) {
-                    startNotificationButton.setBackgroundResource(R.drawable.ic_add_alert_black_24dp);
-                } else {
-                    Toast.makeText(getApplicationContext(),"It's False", Toast.LENGTH_LONG).show();
-                }
+
             }
         });
 
@@ -164,8 +141,8 @@ public class CourseDetailActivity extends AppCompatActivity {
             course = db.courseDao().getCourse(courseId);
             title = course.getMTitle();
             setTitle(title + " Detail");
-            String start = DataProvider.Formatter.formatDate(course.getMStartDate());
-            String end = DataProvider.Formatter.formatDate(course.getMEndDate());
+            String start = Formatter.formatDate(course.getMStartDate());
+            String end = Formatter.formatDate(course.getMEndDate());
             startDateValueTextView.setText(start);
             endDateValueTextView.setText(end);
             courseStatusValueTextView.setText(db.courseDao().getCourse(courseId).getMStatus());

@@ -1,4 +1,4 @@
-package DataProvider;
+package com.jedmay.termscheduler.dataProvider;
 
 public class Validator {
 

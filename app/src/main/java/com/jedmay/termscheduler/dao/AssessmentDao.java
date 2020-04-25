@@ -1,4 +1,4 @@
-package Dao;
+package com.jedmay.termscheduler.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -6,9 +6,9 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import java.util.List;
+import com.jedmay.termscheduler.model.Assessment;
 
-import Model.Assessment;
+import java.util.List;
 
 @Dao
 public interface AssessmentDao {

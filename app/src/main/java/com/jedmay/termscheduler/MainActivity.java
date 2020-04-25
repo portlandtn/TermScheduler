@@ -12,8 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import DataProvider.SampleData;
-import Database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.dataProvider.SampleData;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
 
 public class MainActivity extends AppCompatActivity {
 

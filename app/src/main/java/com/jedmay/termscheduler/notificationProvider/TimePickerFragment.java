@@ -1,4 +1,4 @@
-package NotificationProvider;
+package com.jedmay.termscheduler.notificationProvider;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
-public class TimePicker extends DialogFragment {
+public class TimePickerFragment extends DialogFragment {
 
     @NonNull
     @Override

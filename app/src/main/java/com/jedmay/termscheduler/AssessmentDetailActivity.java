@@ -10,8 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import Database.WGUTermRoomDatabase;
-import Model.Assessment;
+import com.jedmay.termscheduler.dataProvider.Formatter;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Assessment;
 
 public class AssessmentDetailActivity extends AppCompatActivity {
 
@@ -80,7 +81,7 @@ public class AssessmentDetailActivity extends AppCompatActivity {
 
     private void updateTextViews() {
         try {
-            plannedDate.setText(DataProvider.Formatter.formatDate(assessment.getMPlannedDate()));
+            plannedDate.setText(Formatter.formatDate(assessment.getMPlannedDate()));
             assessmentStatus.setText(assessment.getMStatus());
             assessmentType.setText(assessment.getMType());
         } catch (Exception ex) {

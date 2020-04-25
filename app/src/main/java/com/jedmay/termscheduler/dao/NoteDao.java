@@ -1,4 +1,4 @@
-package Dao;
+package com.jedmay.termscheduler.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -8,7 +8,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import Model.Note;
+import com.jedmay.termscheduler.model.Note;
 
 @Dao
 public interface NoteDao {

@@ -1,4 +1,4 @@
-package Model;
+package com.jedmay.termscheduler.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

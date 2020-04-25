@@ -1,4 +1,4 @@
-package NotificationProvider;
+package com.jedmay.termscheduler.notificationProvider;
 
 import android.app.DatePickerDialog;
 import android.os.Build;

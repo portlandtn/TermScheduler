@@ -21,11 +21,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import DataProvider.Formatter;
-import DataProvider.Validator;
-import Database.WGUTermRoomDatabase;
-import Model.Course;
-import Model.Term;
+import com.jedmay.termscheduler.dataProvider.Formatter;
+import com.jedmay.termscheduler.dataProvider.Validator;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Course;
+import com.jedmay.termscheduler.model.Term;
 
 public class TermEditActivity extends AppCompatActivity {
 
@@ -209,11 +209,11 @@ public class TermEditActivity extends AppCompatActivity {
         Calendar tempCalendar = Calendar.getInstance();
 
         if (isEditing) {
-            startDate = DataProvider.Formatter.formatDate(db.termDao().getTerm(termId).getMStartDate());
-            endDate = DataProvider.Formatter.formatDate(db.termDao().getTerm(termId).getMEndDate());
+            startDate = Formatter.formatDate(db.termDao().getTerm(termId).getMStartDate());
+            endDate = Formatter.formatDate(db.termDao().getTerm(termId).getMEndDate());
         } else {
-            startDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
-            endDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
+            startDate = Formatter.formatDate(tempCalendar.getTime());
+            endDate = Formatter.formatDate(tempCalendar.getTime());
         }
         startText.setText(startDate);
         endText.setText(endDate);

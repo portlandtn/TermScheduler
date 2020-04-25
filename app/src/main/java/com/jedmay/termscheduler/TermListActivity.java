@@ -13,8 +13,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import Database.WGUTermRoomDatabase;
-import Model.Term;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Term;
 
 public class TermListActivity extends AppCompatActivity {
 

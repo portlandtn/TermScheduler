@@ -21,10 +21,10 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
 
-import DataProvider.Formatter;
-import DataProvider.Validator;
-import Database.WGUTermRoomDatabase;
-import Model.Assessment;
+import com.jedmay.termscheduler.dataProvider.Formatter;
+import com.jedmay.termscheduler.dataProvider.Validator;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Assessment;
 
 public class AssessmentEditActivity extends AppCompatActivity {
 
@@ -79,7 +79,7 @@ public class AssessmentEditActivity extends AppCompatActivity {
                 title = "Edit " + assessment.getMTitle();
                 assessmentNameEditView.setText(assessment.getMTitle());
                 plannedDate = assessment.getMPlannedDate();
-                plannedDateTextView.setText(DataProvider.Formatter.formatDate(plannedDate));
+                plannedDateTextView.setText(Formatter.formatDate(plannedDate));
             } catch (Exception ex) {
                 Log.d("editingAssessment", ex.getLocalizedMessage());
             }
@@ -214,9 +214,9 @@ public class AssessmentEditActivity extends AppCompatActivity {
         Calendar tempCalendar = Calendar.getInstance();
 
         if (isEditing) {
-            plannedDate = DataProvider.Formatter.formatDate(db.assessmentDao().getAssessment(assessmentId).getMPlannedDate());
+            plannedDate = Formatter.formatDate(db.assessmentDao().getAssessment(assessmentId).getMPlannedDate());
         } else {
-            plannedDate = DataProvider.Formatter.formatDate(tempCalendar.getTime());
+            plannedDate = Formatter.formatDate(tempCalendar.getTime());
         }
         plannedDateTextView.setText(plannedDate);
 
