@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:text="@string/dummy_start_date"
+        android:text="@string/no_date_set"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/setTermStartDateButton"
         app:layout_constraintStart_toEndOf="@+id/termStartDateTextView"
@@ -85,12 +85,10 @@
         android:id="@+id/termEndDateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="@string/dummy_end_date_value"
+        android:text="@string/no_date_set"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/setTermEndDateButton"
-        app:layout_constraintStart_toEndOf="@+id/termEndDateTextView"
+        app:layout_constraintStart_toStartOf="@+id/termStartDateValueTextView"
         app:layout_constraintTop_toTopOf="@+id/setTermEndDateButton" />
 
 
@@ -100,14 +98,14 @@
         android:layout_height="47dp"
         android:layout_marginTop="16dp"
         android:text="@string/set_end"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/termEndDateValueTextView"
+        app:layout_constraintEnd_toEndOf="@+id/setTermStartDateButton"
+        app:layout_constraintStart_toStartOf="@+id/setTermStartDateButton"
         app:layout_constraintTop_toBottomOf="@+id/setTermStartDateButton" />
 
 
     <Button
         android:id="@+id/cancelTermButton"
-        android:layout_width="88dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
@@ -120,10 +118,6 @@
         android:id="@+id/deleteTermButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
         android:text="@string/delete"
         app:layout_constraintBottom_toBottomOf="parent"

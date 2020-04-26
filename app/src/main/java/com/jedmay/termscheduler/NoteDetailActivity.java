@@ -10,11 +10,11 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
+import com.jedmay.termscheduler.model.Course;
+import com.jedmay.termscheduler.model.Note;
 
 import java.util.List;
-
-import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
-import com.jedmay.termscheduler.model.Note;
 
 public class NoteDetailActivity extends AppCompatActivity {
 
@@ -43,7 +43,8 @@ public class NoteDetailActivity extends AppCompatActivity {
 
         //Setup Resources
         courseId = intent.getLongExtra("courseId", 0);
-        title = "Notes For " + db.courseDao().getCourse(courseId).getMTitle();
+        Course course = db.courseDao().getCourse(courseId);
+        title = "Notes For " + course.getMTitle();
         setTitle(title);
 
         noteListView = findViewById(R.id.noteLVW);

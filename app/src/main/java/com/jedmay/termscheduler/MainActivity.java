@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     SampleData sampleData;
     WGUTermRoomDatabase db;
 
-    String title = "WGU Scheduler";
+    String title = "Term Scheduler";
 
     TextView inProgressCourseTextView, completedCourseTextView, droppedCourseTextView, failedCourseTextView, plannedToTakeTextView;
 

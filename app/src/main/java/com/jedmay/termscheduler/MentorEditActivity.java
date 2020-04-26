@@ -21,6 +21,7 @@ public class MentorEditActivity extends AppCompatActivity {
     boolean isEditing;
     long mentorId, courseId;
     Mentor mentor;
+    String title;
 
     EditText mentorName, mentorEmailAddress, mentorPhoneNumber;
     Button cancelButton, deleteButton, saveButton;
@@ -50,13 +51,16 @@ public class MentorEditActivity extends AppCompatActivity {
             mentorId = intent.getLongExtra("mentorId", 0);
             courseId = intent.getLongExtra("courseId", 0);
             mentor = db.mentorDao().getMentor(mentorId);
+            title = "Edit " + mentor.getMName();
 
             mentorName.setText(mentor.getMName());
             mentorEmailAddress.setText(mentor.getMEmail());
             mentorPhoneNumber.setText(mentor.getMPhone());
         } else {
             mentor = new Mentor();
+            title = "New Mentor";
         }
+        setTitle(title);
 
         // Listeners
         cancelButton.setOnClickListener(new View.OnClickListener() {

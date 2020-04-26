@@ -43,8 +43,6 @@ public class AssessmentEditActivity extends AppCompatActivity implements DatePic
 
     Spinner statusSpinner, typeSpinner;
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -103,18 +101,11 @@ public class AssessmentEditActivity extends AppCompatActivity implements DatePic
             courseId = intent.getLongExtra("courseId", 0);
             assessment.setMCourseId(courseId);
             deleteButton.setVisibility(View.INVISIBLE);
-
+            title = "New Assessment";
         }
         setTitle(title);
 
-        //Populate Data
-//        calendar = Calendar.getInstance();
-
         setUpDates();
-//
-//        year = calendar.get(Calendar.YEAR);
-//        month = calendar.get(Calendar.MONTH);
-//        day = calendar.get(Calendar.DAY_OF_MONTH);
 
         //On-click listeners
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -223,39 +214,6 @@ public class AssessmentEditActivity extends AppCompatActivity implements DatePic
         plannedDateTextView.setText(plannedDate);
 
     }
-//
-//    @Override
-//    protected Dialog onCreateDialog(int id) {
-//        if (id == 999) {
-//            return new DatePickerDialog(this,
-//                    plannedDateListener, year, month, day);
-//        }
-//        return null;
-//    }
-
-//    private DatePickerDialog.OnDateSetListener plannedDateListener = new
-//            DatePickerDialog.OnDateSetListener() {
-//                @Override
-//                public void onDateSet(DatePicker view,
-//                                      int arg1, int arg2, int arg3) {
-//                    year = arg1;
-//                    month = arg2;
-//                    day = arg3;
-//                    showDate(year, month + 1, day, plannedDateTextView);
-//                    plannedDate = Formatter.convertIntegersToDate(year, month, day);
-//                }
-//            };
-
-
-
-//    private void showDate(int year, int month, int day, TextView textView) {
-//
-//        String monthString = new DateFormatSymbols().getMonths()[month - 1];
-//
-//        textView.setText(new StringBuilder().append(monthString).append(" ")
-//                .append(day).append(", ").append(year));
-//
-//    }
 
     private String[] createValidationString() {
         return new String[] {assessmentNameEditView.getText().toString()};

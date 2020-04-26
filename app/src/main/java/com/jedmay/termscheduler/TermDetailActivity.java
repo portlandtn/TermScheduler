@@ -1,7 +1,5 @@
 package com.jedmay.termscheduler;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,18 +9,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
-
 import com.jedmay.termscheduler.dataProvider.Formatter;
 import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
 import com.jedmay.termscheduler.model.Course;
 import com.jedmay.termscheduler.model.Term;
 
+import java.util.List;
+
 public class TermDetailActivity extends AppCompatActivity {
 
-    Term term;
     long termId;
     String title;
     WGUTermRoomDatabase db;
@@ -90,7 +88,7 @@ public class TermDetailActivity extends AppCompatActivity {
     private void updateTextViews() {
 
         try {
-            term = db.termDao().getTerm(termId);
+            Term term = db.termDao().getTerm(termId);
             title = term.getMTitle();
             setTitle(title + " Detail");
             String start = Formatter.formatDate(term.getMStartDate());

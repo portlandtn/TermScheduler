@@ -21,8 +21,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
-import com.jedmay.termscheduler.model.Course;
 import com.jedmay.termscheduler.notificationProvider.Constants;
 import com.jedmay.termscheduler.notificationProvider.DatePickerFragment;
 import com.jedmay.termscheduler.notificationProvider.NotificationReceiver;
@@ -32,15 +30,12 @@ import java.util.Calendar;
 
 public class MilestoneNotificationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
-    WGUTermRoomDatabase db;
-
     long courseId;
-    Course course;
-    PendingIntent pi;
+    String title = "Set Milestone Alarm";
 
     TextView milestoneDateTextView, milestoneTimeTextView;
     EditText milestoneTitleEditText;
-    Button setDateButton, setTimeButton, newAlarmButton, cancelButton, saveButton;
+    Button setDateButton, setTimeButton, cancelButton, saveButton;
     ListView notificationsListView;
 
     Calendar cal;
@@ -53,7 +48,6 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
 
         setDateButton = findViewById(R.id.setMilestoneDateButton);
         setTimeButton = findViewById(R.id.setMilestoneTimeButton);
-        newAlarmButton = findViewById(R.id.newAlarmButton);
         saveButton = findViewById(R.id.saveMilestoneButton);
         cancelButton = findViewById(R.id.cancelMilestoneButton);
         milestoneTitleEditText = findViewById(R.id.milestoneTitleEditText);
@@ -61,12 +55,12 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
         milestoneTimeTextView = findViewById(R.id.milestoneTimeValueTextView);
         notificationsListView = findViewById(R.id.notificationsListView);
 
-        Intent i = getIntent();
+        setTitle(title);
+
         cal = Calendar.getInstance();
 
-        db = WGUTermRoomDatabase.getDatabase(getApplicationContext());
-        courseId = i.getLongExtra("courseId", 0);
-        course = db.courseDao().getCourse(courseId);
+        Intent intent = getIntent();
+        courseId = intent.getLongExtra("courseId", 0);
 
         setTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,13 +75,6 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
             public void onClick(View v) {
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(), "Date Picker Fragment");
-            }
-        });
-
-        newAlarmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                milestoneTitleEditText.setText("");
             }
         });
 
@@ -144,14 +131,19 @@ public class MilestoneNotificationActivity extends AppCompatActivity implements 
     private void startAlarm() {
         String title = milestoneTitleEditText.getText().toString();
         if (title.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "You must enter an alarm before creating an alarm.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "You must enter an title before creating an alarm.",Toast.LENGTH_SHORT).show();
         } else {
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Constants.notificationTitle = milestoneTitleEditText.getText().toString();
             Intent intent = new Intent(this, NotificationReceiver.class);
             PendingIntent pi = PendingIntent.getBroadcast(this, 1, intent, 0);
-            //am.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
-            am.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pi);
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                assert am != null;
+                am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+            } else {
+                assert am != null;
+                am.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+            }
         }
     }
 

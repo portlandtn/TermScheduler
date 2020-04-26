@@ -11,6 +11,7 @@
         android:id="@+id/noteEditText"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/enter_note_text_here"

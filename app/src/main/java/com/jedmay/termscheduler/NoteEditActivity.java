@@ -30,8 +30,6 @@ public class NoteEditActivity extends AppCompatActivity {
     Button cancelButton, deleteButton, saveButton;
     EditText noteEditText;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +46,18 @@ public class NoteEditActivity extends AppCompatActivity {
 
         courseId = intent.getLongExtra("courseId", 0);
         isEditing = intent.getBooleanExtra("isEditing", false);
+        Course course = db.courseDao().getCourse(courseId);
 
         if (isEditing) {
             noteId = intent.getLongExtra("noteId", 0);
             note = db.noteDao().getNote(noteId);
-            title = "Edit Note for " + db.courseDao().getCourse(courseId).getMTitle();
+            title = "Edit Note for " + course.getMTitle();
             noteEditText.setText(note.getMNote());
             deleteButton.setVisibility(View.VISIBLE);
         } else {
             note = new Note();
             note.setMCourseId(courseId);
-            title = "New Note for " + db.courseDao().getCourse(courseId).getMTitle();
+            title = "New Note for " + course.getMTitle();
             deleteButton.setVisibility(View.INVISIBLE);
         }
         setTitle(title);
@@ -73,10 +72,7 @@ public class NoteEditActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                                Intent intent = new Intent(getApplicationContext(), NoteDetailActivity.class);
-                                intent.putExtra("courseId", courseId);
-                                startActivity(intent);
-                                finish();
+                                navigateToActivity(NoteDetailActivity.class);
                             }
                         });
                 alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -100,10 +96,7 @@ public class NoteEditActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
                                 db.noteDao().delete(note);
-                                Intent intent = new Intent(getApplicationContext(), NoteDetailActivity.class);
-                                intent.putExtra("courseId", courseId);
-                                startActivity(intent);
-                                finish();
+                                navigateToActivity(NoteDetailActivity.class);
                             }
                         });
                 alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -123,9 +116,7 @@ public class NoteEditActivity extends AppCompatActivity {
                 if (noteEditText.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "The note cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
-                    String textString = noteEditText.getText().toString();
                     note.setMNote(noteEditText.getText().toString());
-                    Course course = db.courseDao().getCourse(courseId);
                     try {
                         if (!isEditing) {
                             db.noteDao().insert(note);
@@ -135,12 +126,16 @@ public class NoteEditActivity extends AppCompatActivity {
                     } catch (Exception ex) {
                         Log.d("SaveNote", ex.getLocalizedMessage());
                     }
-                    Intent intent = new Intent(getApplicationContext(), CourseDetailActivity.class);
-                    intent.putExtra("courseId", courseId);
-                    startActivity(intent);
-                    finish();
+                    navigateToActivity(CourseDetailActivity.class);
                 }
             }
         });
+    }
+
+    private void navigateToActivity(Class<?> activityClass) {
+        Intent intent = new Intent(getApplicationContext(), activityClass);
+        intent.putExtra("courseId", courseId);
+        startActivity(intent);
+        finish();
     }
 }

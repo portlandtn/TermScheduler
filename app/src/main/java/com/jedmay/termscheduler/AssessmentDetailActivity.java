@@ -46,7 +46,7 @@ public class AssessmentDetailActivity extends AppCompatActivity {
 
 
         editAssessment = findViewById(R.id.editAssessmentFAB);
-        addNotification = findViewById(R.id.addNotificationToAssessmentFAB);
+        addNotification = findViewById(R.id.addMilestoneNotification);
 
         intent = getIntent();
         assessmentId = intent.getLongExtra("assessmentId", 0);
@@ -69,7 +69,9 @@ public class AssessmentDetailActivity extends AppCompatActivity {
         addNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(), MilestoneNotificationActivity.class);
+                intent.putExtra("courseId", courseId);
+                startActivity(intent);
             }
         });
 

@@ -19,11 +19,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.DateFormatSymbols;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import com.jedmay.termscheduler.dataProvider.Formatter;
 import com.jedmay.termscheduler.dataProvider.Validator;
 import com.jedmay.termscheduler.database.WGUTermRoomDatabase;
@@ -31,22 +26,25 @@ import com.jedmay.termscheduler.model.Assessment;
 import com.jedmay.termscheduler.model.Course;
 import com.jedmay.termscheduler.model.Mentor;
 
+import java.text.DateFormatSymbols;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 public class CourseEditActivity extends AppCompatActivity {
+
+    private final int START_DATE_DIALOG = 999;
+    private final int END_DATE_DIALOG = 998;
 
     EditText courseNameEditText;
     boolean isEditing;
     WGUTermRoomDatabase db;
     Course course;
-    long courseId;
-    long termId;
+    long courseId, termId;
     Date startDate, endDate;
     String courseName, title;
     Button cancelButton, deleteButton, saveButton, editMentorButton, setStartButton, setEndButton;
-
     TextView startText, endText;
-
-    int month, day, year;
-    Calendar calendar;
 
     Spinner mentorSpinner, statusSpinner;
 
@@ -105,19 +103,9 @@ public class CourseEditActivity extends AppCompatActivity {
             course = new Course();
             termId = intent.getLongExtra("termId", 0);
             course.setMTermId(termId);
-        }
-
-        //Populate Data
-        calendar = Calendar.getInstance();
+        };
 
         setUpDates();
-
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        startDate = calendar.getTime();
-        endDate = calendar.getTime();
 
         populateScreenWithExistingData(isEditing);
 
@@ -251,13 +239,14 @@ public class CourseEditActivity extends AppCompatActivity {
         setStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(999);
+                showDialog(START_DATE_DIALOG);
             }
         });
         setEndButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(998);
+                showDialog(END_DATE_DIALOG);
+
             }
         });
     }
@@ -281,12 +270,16 @@ public class CourseEditActivity extends AppCompatActivity {
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        if (id == 999) {
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+        if (id == START_DATE_DIALOG) {
             return new DatePickerDialog(this,
-                    startDateListener, year, month, day);
-        } else if (id == 998) {
+                    startDateListener, year, month, dayOfMonth);
+        } else if (id == END_DATE_DIALOG) {
             return new DatePickerDialog(this,
-                    endDateListener, year, month, day);
+                    endDateListener, year, month, dayOfMonth);
         }
         return null;
     }
@@ -295,12 +288,9 @@ public class CourseEditActivity extends AppCompatActivity {
             DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view,
-                                      int arg1, int arg2, int arg3) {
-                    year = arg1;
-                    month = arg2;
-                    day = arg3;
-                    showDate(year, month + 1, day, startText);
-                    startDate = Formatter.convertIntegersToDate(year, month, day);
+                                      int year, int month, int dayOfMonth) {
+                    showDate(year, month + 1, dayOfMonth, startText);
+                    startDate = Formatter.convertIntegersToDate(year, month, dayOfMonth);
                 }
             };
 
@@ -308,12 +298,9 @@ public class CourseEditActivity extends AppCompatActivity {
             DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker arg0,
-                                      int arg1, int arg2, int arg3) {
-                    year = arg1;
-                    month = arg2;
-                    day = arg3;
-                    showDate(year, month + 1, day, endText);
-                    endDate = Formatter.convertIntegersToDate(year, month, day);
+                                      int year, int month, int dayOfMonth) {
+                    showDate(year, month + 1, dayOfMonth, endText);
+                    endDate = Formatter.convertIntegersToDate(year, month, dayOfMonth);
                 }
             };
 
@@ -338,8 +325,6 @@ public class CourseEditActivity extends AppCompatActivity {
             setTitle(title);
             return;
         }
-        course = db.courseDao().getCourse(courseId);
-        courseNameEditText.setText(course.getMTitle());
         title = course.getMTitle();
         setTitle(title);
     }
@@ -367,5 +352,4 @@ public class CourseEditActivity extends AppCompatActivity {
         }
 
     }
-
 }

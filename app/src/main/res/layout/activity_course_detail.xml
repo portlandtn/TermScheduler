@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".CourseDetailActivity">
 
-    <Button
-        android:id="@+id/milestonesButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/milestones"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mentorValueTextView" />
-
     <TextView
         android:id="@+id/mentorValueTextView"
         android:layout_width="wrap_content"
@@ -24,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/name"
+        android:text="@string/no_name_set"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toEndOf="@+id/courseStatusTextView"
         app:layout_constraintTop_toBottomOf="@+id/courseStatusValueTextView" />
@@ -57,7 +46,7 @@
         android:id="@+id/startCourseDateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dummy_start_date"
+        android:text="@string/no_date_set"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toEndOf="@+id/startCourseDateTextView"
         app:layout_constraintStart_toStartOf="@+id/courseStatusValueTextView"
@@ -80,10 +69,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/dummy_end_date_value"
+        android:text="@string/no_date_set"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/startCourseDateTextView"
-        app:layout_constraintStart_toStartOf="@+id/courseStatusValueTextView"
+        app:layout_constraintStart_toStartOf="@+id/startCourseDateValueTextView"
         app:layout_constraintTop_toBottomOf="@+id/startCourseDateValueTextView" />
 
 
@@ -106,7 +94,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/in_progress"
+        android:text="@string/no_status_set"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toEndOf="@+id/courseStatusTextView"
         app:layout_constraintTop_toBottomOf="@+id/endCourseDateValueTextView" />
@@ -125,23 +113,28 @@
 
     <Button
         android:id="@+id/viewNotesButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/view_notes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/milestonesButton" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mentorValueTextView" />
 
     <TextView
         android:id="@+id/assessmentsIncludedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/assessments_included"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/milestonesButton" />
+        app:layout_constraintTop_toBottomOf="@+id/viewNotesButton" />
 
     <ListView
         android:id="@+id/assessmentListView"

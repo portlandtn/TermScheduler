@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:text="@string/dummy_start_date"
+        android:text="@string/no_date_set"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toEndOf="@+id/termStartDateTextView"
         app:layout_constraintTop_toTopOf="@+id/termStartDateTextView" />
@@ -48,7 +48,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/dummy_end_date_value"
+        android:text="@string/no_date_set"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toEndOf="@+id/termStartDateTextView"
         app:layout_constraintTop_toBottomOf="@+id/termStartDateValueTextView" />

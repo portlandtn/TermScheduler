@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:text="@string/dummy_start_date"
+        android:text="@string/no_date_set"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/setAssessmentPlannedDateButton"
         app:layout_constraintStart_toEndOf="@+id/assessmentStartDateTextView"
@@ -122,7 +122,7 @@
 
     <Button
         android:id="@+id/cancelAssessmentButton"
-        android:layout_width="88dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
