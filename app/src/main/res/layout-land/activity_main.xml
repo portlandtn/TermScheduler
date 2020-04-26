@@ -7,15 +7,15 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/coursesPlannedToTakeTextView"
+        android:id="@+id/coursesFailedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="@string/plan_to_take"
+        android:text="@string/failed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coursesFailedTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/coursesDroppedTextView" />
 
     <TextView
         android:id="@+id/coursesPlannedToTakeCountTextView"
@@ -29,15 +29,15 @@
         app:layout_constraintTop_toBottomOf="@+id/coursesFailedTextView" />
 
     <TextView
-        android:id="@+id/coursesFailedTextView"
+        android:id="@+id/coursesPlannedToTakeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="@string/failed"
+        android:text="@string/plan_to_take"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coursesDroppedTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/coursesFailedTextView" />
 
     <TextView
         android:id="@+id/coursesFailedCountTextView"
@@ -58,10 +58,11 @@
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="12dp"
         android:text="@string/termsButton"
         app:layout_constraintBottom_toTopOf="@id/createSampleDataButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -124,34 +125,19 @@
         android:id="@+id/assessmentsPlannedCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/dummyNumber"
-        app:layout_constraintStart_toEndOf="@+id/assessmentsPlannedTextView"
+        app:layout_constraintEnd_toEndOf="@+id/assessmentsTitleTextView"
         app:layout_constraintTop_toBottomOf="@+id/assessmentsTitleTextView" />
 
     <TextView
         android:id="@+id/assessmentsPassedCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/dummyNumber"
-        app:layout_constraintStart_toEndOf="@+id/assessmentsPassedTextView"
+        app:layout_constraintEnd_toEndOf="@+id/assessmentsPlannedCountTextView"
         app:layout_constraintTop_toBottomOf="@+id/assessmentsPlannedCountTextView" />
-
-    <TextView
-        android:id="@+id/assessmentsFailedCountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/dummyNumber"
-        app:layout_constraintStart_toEndOf="@+id/assessmentsFailedTextView"
-        app:layout_constraintTop_toBottomOf="@+id/assessmentsPassedCountTextView" />
 
     <TextView
         android:id="@+id/coursesDroppedTextView"
@@ -201,45 +187,54 @@
         android:id="@+id/assessmentsTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="@string/assessments"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/coursesPlannedToTakeTextView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/assessmentsPlannedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/planned"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/assessmentsPlannedCountTextView"
         app:layout_constraintTop_toBottomOf="@+id/assessmentsTitleTextView" />
 
     <TextView
         android:id="@+id/assessmentsPassedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/passed"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/assessmentsPassedCountTextView"
         app:layout_constraintTop_toBottomOf="@+id/assessmentsPlannedTextView" />
 
     <TextView
         android:id="@+id/assessmentsFailedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/failed"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/assessmentsFailedCountTextView"
         app:layout_constraintTop_toBottomOf="@+id/assessmentsPassedTextView" />
+
+    <TextView
+        android:id="@+id/assessmentsFailedCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/dummyNumber"
+        app:layout_constraintEnd_toEndOf="@+id/assessmentsPassedCountTextView"
+        app:layout_constraintTop_toBottomOf="@+id/assessmentsPassedCountTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

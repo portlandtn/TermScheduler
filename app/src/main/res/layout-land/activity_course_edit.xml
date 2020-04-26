@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CourseEditActivity">
+
+    <Button
+        android:id="@+id/editMentorButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/edit_mentor"
+        app:layout_constraintStart_toEndOf="@+id/mentorSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/setCourseEndDateButton" />
+
+    <TextView
+        android:id="@+id/courseStatusTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="@string/mentor"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/mentorSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mentorSpinner" />
+
+    <Spinner
+        android:id="@+id/mentorSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:dropDownWidth="match_parent"
+        app:layout_constraintBottom_toBottomOf="@+id/editMentorButton"
+        app:layout_constraintStart_toEndOf="@+id/courseStatusTextView2"
+        app:layout_constraintTop_toTopOf="@+id/editMentorButton" />
+
+    <TextView
+        android:id="@+id/courseStatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/status"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseNameEditText" />
+
+    <Button
+        android:id="@+id/deleteCourseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/saveCourseButton"
+        app:layout_constraintStart_toEndOf="@+id/cancelCourseButton" />
+
+    <TextView
+        android:id="@+id/courseNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/courseNameEditText" />
+
+    <EditText
+        android:id="@+id/courseNameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/enter_course_name"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/courseNameTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="Autofill" />
+
+    <TextView
+        android:id="@+id/courseStartDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="@string/start_date"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/setCourseStartDateButton"
+        app:layout_constraintStart_toEndOf="@+id/courseNameEditText"
+        app:layout_constraintTop_toTopOf="@+id/setCourseStartDateButton" />
+
+    <TextView
+        android:id="@+id/courseStartDateValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:text="@string/no_date_set"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/setCourseStartDateButton"
+        app:layout_constraintStart_toEndOf="@+id/courseStartDateTextView"
+        app:layout_constraintTop_toTopOf="@+id/setCourseStartDateButton" />
+
+    <Button
+        android:id="@+id/setCourseStartDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:text="@string/set_start"
+        app:layout_constraintBottom_toBottomOf="@+id/courseNameEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/courseStartDateValueTextView"
+        app:layout_constraintTop_toTopOf="@+id/courseNameEditText" />
+
+    <TextView
+        android:id="@+id/courseEndDateValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/no_date_set"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/setCourseEndDateButton"
+        app:layout_constraintStart_toEndOf="@+id/courseStartDateTextView"
+        app:layout_constraintTop_toTopOf="@+id/setCourseEndDateButton" />
+
+    <Button
+        android:id="@+id/setCourseEndDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/set_end"
+        app:layout_constraintEnd_toEndOf="@+id/setCourseStartDateButton"
+        app:layout_constraintStart_toStartOf="@+id/setCourseStartDateButton"
+        app:layout_constraintTop_toBottomOf="@+id/setCourseStartDateButton" />
+
+    <TextView
+        android:id="@+id/courseEditEndDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/end_date"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/setCourseEndDateButton"
+        app:layout_constraintStart_toStartOf="@+id/courseStartDateTextView"
+        app:layout_constraintTop_toTopOf="@+id/setCourseEndDateButton" />
+
+    <Button
+        android:id="@+id/saveCourseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/cancelCourseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@android:string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/courseStatusSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:dropDownWidth="match_parent"
+        android:entries="@array/course_statuses"
+        app:layout_constraintStart_toEndOf="@+id/courseStatusTextView"
+        app:layout_constraintTop_toTopOf="@+id/courseStatusTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
